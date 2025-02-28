@@ -1,4 +1,4 @@
-# Desciption
+# Description
 Academy.Adconnect is an online learning platform designed to offer high-quality courses in various fields, including Digital Marketing, Web Development, Mobile Development, and Software Engineering. The platform allows users to enroll in courses on a pay-per-course basis, with payments seamlessly integrated using the M-Pesa payment system. The platform is built using **HTML**, **CSS**, **JavaScript** for the frontend and **Express.js** with **Node.js** and **PostgreSQL** for the backend.
 
 The platform is designed to provide a user-friendly experience for both students and administrators. Students can browse courses, enroll in them, and make payments securely via M-Pesa. Administrators can manage courses, track payments, and monitor user activity.
