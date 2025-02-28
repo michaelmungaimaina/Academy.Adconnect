@@ -1,0 +1,9 @@
+
+api/node_modules
+api/dist
+api/.env
+api/.env.local
+api/.env.development
+api/.env.test
+api/.env.production
+api/.env.staging   
