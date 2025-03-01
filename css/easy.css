@@ -1,0 +1,497 @@
+html {
+    scroll-behavior: smooth;
+}
+
+/* Flex Box */
+.flex {
+    display: flex;
+    align-items: center;
+}
+
+.flex-center {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.flex-space-betweeen {
+    justify-content: space-between;
+}
+
+.flex-start {
+    /* left side */
+    align-items: flex-start !important;
+    justify-content: flex-start !important;
+}
+
+.flex-end {
+    /* right side */
+    justify-content: flex-end !important;
+}
+
+.flex-column {
+    flex-direction: column;
+}
+
+.flex-wrap {
+    /* Wraps content if screen size changes */
+    display: flex;
+    flex-wrap: wrap;
+}
+
+/* Gap/Space for flex box */
+.gap-1 {
+    gap: 1rem !important;
+}
+
+.gap-15 {
+    gap: 1.5rem !important;
+}
+
+.gap-20 {
+    gap: 2rem !important;
+}
+
+.gap-3 {
+    gap: 3rem !important;
+}
+
+.p-0 {
+    /* padding zero */
+    padding: 0;
+}
+
+.m-0 {
+    /* margin zero */
+    margin: 0;
+}
+
+.p-relative {
+    /* relative position */
+    position: relative;
+}
+
+/* margin class */
+.mt-1 {
+    /* margin top */
+    margin-top: 1rem !important;
+}
+
+.mt-15 {
+    margin-top: 1rem !important;
+}
+
+.mt-20 {
+    margin-top: 2rem !important;
+}
+
+.mt-30 {
+    margin-top: 3rem !important;
+}
+
+.mt-40 {
+    margin-top: 4rem !important;
+}
+
+.mb-1 {
+    /* margin bottom */
+    margin-top: 1rem !important;
+}
+
+.mb-15 {
+    margin-top: 1rem !important;
+}
+
+.mb-20 {
+    margin-top: 2rem !important;
+}
+
+.mb-30 {
+    margin-top: 3rem !important;
+}
+
+.mb-40 {
+    margin-top: 4rem !important;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.w-16 {
+    width: 16.666666%;
+}
+
+.w-33 {
+    width: 33.333333%;
+}
+
+.d-block {
+    display: block;
+}
+
+.footer-bottom .fa-social {
+    width: 30px;
+    height: 30px;
+    display: inline-block;
+    position: relative;
+    border-radius: 15px;
+    border: 1.5px solid #F65730;
+    color: #F65730;
+    z-index: 1;
+    background: linear-gradient(42deg, #F65730 100%, #f3b3a3 0.100%);
+    cursor: pointer;
+}
+
+/* -- button CSS --*/
+.btn_hover1 {
+    display: inline-block;
+    position: relative;
+    overflow: hidden;
+    border-radius: 15px;
+    border: 1.5px solid #F65730;
+    color: #F65730;
+    z-index: 1;
+    letter-spacing: 0.8px;
+    background: linear-gradient(42deg, #F65730 100%, #f3b3a3 0.100%);
+    cursor: pointer;
+}
+
+.btn_hover1::before {
+    border: 1px solid #F65730;
+    border-radius: 15px;
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    transition: all 0.3s ease-in;
+    background: linear-gradient(42deg, #F65730 100%, #F65730 0.01%);
+    z-index: -1;
+    top: 0;
+    right: 0;
+}
+
+.small-button {
+    width: max-content;
+    height: 25px;
+    font-weight: bold;
+    font-size: 10px;
+    background-color: linear-gradient(45deg, #F65730, #646262);
+    justify-content: center;
+    border-radius: 12px;
+    border: 1.5px solid #F65730;
+    color: white;
+    padding: 4px 9px;
+    margin-top: 5px;
+    cursor: pointer;
+    z-index: 1;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+}
+
+.small-button:hover {
+    color: #F65730;
+    background: inherit;
+    border: 1.5px solid #F65730;
+}
+
+.btn_hover1:hover::before {
+    width: 0;
+    background: linear-gradient(42deg, #F65730 100%, #F65730 0.01%);
+}
+
+body main .page-sec {
+    padding: 20px 0;
+    background-image: linear-gradient(90deg, rgba(0, 0, 0, 0.66)1000%, rgba(255, 0, 0, 0.7)70%), url(/resources/pic-back.png);
+    text-align: center;
+    background-position: center;
+    background-size: cover;
+}
+
+--gradient {
+    background: linear-gradient(top, #243d6e 0%, #031b4d 61%, #011132 100%);
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+}
+
+.hero-sec-trasparent {
+    padding: 20px 0;
+    background-image: linear-gradient(90deg, rgba(0, 0, 0, 0.6)70%, rgba(0, 0, 0, 0.6)70%), url(/resources/background-image.jpeg);
+    text-align: center;
+    background-position: center;
+    background-size: cover;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 100vh;
+    width: 100%;
+}
+
+.outer-container {
+    /*margin: 30px 150px 10px 150px;*/
+    display: flex;
+    flex-direction: column;
+    background: linear-gradient(to left, #646464, #4D4C4B);
+    height: 100vh;
+    border: 1.5px solid #7D8489;
+    border-radius: 10px;
+}
+
+.header-text {
+    font-family: "DM Sans";
+    font-weight: bolder;
+    color: white;
+    text-align: left;
+    overflow: hidden;
+    font-size: large;
+    margin: 0 4px;
+}
+
+.slash-rect {
+    width: 5px;
+    height: 25px;
+    background-color: #F65730;
+}
+
+.label {
+    font-size: 12px;
+    font-family: "IBM Plex Sans hebrew";
+    font-weight: lighter;
+    color: #FFFFFF;
+}
+
+.input-field {
+    background-color: #737373;
+    border-radius: 5px;
+    width: 150px;
+    height: 25px;
+    color: white;
+    font-size: 11px;
+    border: none;
+    outline: none;
+    padding-left: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3)
+}
+
+.form-section {
+    width: fit-content;
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    justify-content: start;
+}
+
+.background-tint-black {
+    display: flex;
+    justify-content: center;
+    background-color: #000000a6;
+    width: 100%;
+    height: 0%;
+    position: fixed;
+    z-index: 9999;
+    border-radius: 0px;
+    bottom: 0;
+    transition: all 0.5s ease;
+    overflow: scroll;
+}
+
+.background-tint-black-appt {
+    display: flex;
+    justify-content: center;
+    background-color: #000000a6;
+    width: 100%;
+    height: 0%;
+    position: fixed;
+    z-index: 9999;
+    border-radius: 0px;
+    bottom: 0;
+    transition: all 0.5s ease;
+    overflow: scroll;
+}
+
+.black-background-tint-faq {
+    display: flex;
+    justify-content: center;
+    background-color: #000000a6;
+    width: 100%;
+    height: 0%;
+    position: fixed;
+    z-index: 3;
+    border-radius: 0px;
+    bottom: 0;
+    transition: all 0.5s ease;
+    overflow: scroll;
+}
+
+.black-background-tint-lead-capture {
+    display: flex;
+    justify-content: center;
+    background-color: #000000a6;
+    width: 100%;
+    height: 0%;
+    position: fixed;
+    z-index: 3;
+    border-radius: 0px;
+    bottom: 0;
+    transition: all 0.5s ease;
+    overflow: scroll;
+}
+
+.black-background-tint-thank-section {
+    display: flex;
+    justify-content: center;
+    background-color: #000000a6;
+    width: 100%;
+    height: 0%;
+    position: fixed;
+    z-index: 2;
+    border-radius: 0px;
+    bottom: 0;
+    transition: all 0.5s ease;
+    overflow: scroll;
+}
+
+.h-layout{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.v-layout{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.round-image-icon{
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+}
+
+.grey-bordered{
+    width: fit-content block;
+    border-radius: 5px;
+    border: 1.5px solid #7D8489;
+    box-shadow: #F65730;
+}
+
+.hidden{
+    display: none;
+    transform: translateY(0%);
+    overflow: hidden;
+}
+
+.fa-trash{
+    color: rgb(255, 0, 0);
+}
+.fa-envelope{
+    color: #009a08;
+}
+.fa-envelope-open{
+    color: #00a2ff;
+}
+.fa-sign-out{
+    color: rgb(255, 157, 0);
+}
+.fa-clock{
+    color: rgb(0, 255, 255);
+}
+.fa-download{
+    color: #0077ff;
+    margin-right: 30px;
+}
+.fa-calendar{
+    color: chocolate;
+}
+.fa-video-camera{
+    color: #0e00a8;
+}
+.fa-check-circle{
+    color: #009a08;
+}
+
+.fa-download:hover,
+.fa-video-camera:hover,
+.fa-calendar:hover,
+.fa-clock:hover,
+.fa-check-circle:hover,
+.fa-sign-out:hover,
+.fa-envelope-open:hover,
+.fa-envelope:hover,
+.fa-trash:hover{
+    color: white;
+}
+
+#leadsContentMgt .icon-container {
+    position: relative;
+    display: inline-block;
+}
+
+#leadsContentMgt .tooltip {
+    visibility: hidden; /* Initially hidden */
+    background-color: #333; /* Background color for the tooltip */
+    color: #fff; /* Text color */
+    text-align: center;
+    padding: 5px 10px;
+    border-radius: 5px;
+    position: absolute;
+    z-index: 1;
+    bottom: 125%; /* Position tooltip above the icon */
+    left: 50%;
+    transform: translateX(-50%);
+    white-space: nowrap; /* Prevents wrapping */
+    font-size: 14px;
+    opacity: 0;
+    transition: opacity 0.3s; /* Smooth fade-in effect */
+}
+
+#leadsContentMgt .tooltip::after {
+    content: '';
+    position: absolute;
+    top: 100%; /* Arrow at the bottom of the tooltip */
+    left: 50%;
+    transform: translateX(-50%);
+    border-width: 5px;
+    border-style: solid;
+    border-color: #333 transparent transparent transparent; /* Creates a small triangle */
+}
+
+#leadsContentMgt .fa-envelope-open:hover #leadsContentMgt .tooltip {
+    visibility: visible;
+    opacity: 1; /* Fade-in effect */
+}
+
+.activ{
+    width: 100%;
+    color: #ffffff;
+    background: #302E2C;
+}
+
+.overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.4); /* Semi-transparent black */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 18px;
+    z-index: 2; /* Ensures it stays above the content */
+    pointer-events: none; /* Makes the overlay non-interactive */
+}
+
+@keyframes loadFromLeft {
+    0% {
+        transform: translateX(-50px); /* Start off-screen to the left */
+    }
+    100% {
+        transform: translateX(0); /* End at the normal position */
+    }
+}
+.star{
+    height: 8px;
+    width: 8px;
+}

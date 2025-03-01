@@ -9,6 +9,8 @@ const nodemailer = require('nodemailer');
 const config = require('./config.js');
 const readline = require('readline');
 const multer = require('multer');
+const axios = require('axios');
+const moment = require('moment');
 const ExcelJS = require("exceljs");
 
 const app = express();
@@ -109,6 +111,125 @@ const createdAt = () => {
 
     return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
 };
+
+// Function to handle user creation (register a new user)
+app.post('/api/users', (req, res) => {
+    const {name, email, password, role, access_level} = req.body;
+
+    // Validate that all required fields are provided
+    if (!name || !email || !password || !role || !access_level) {
+        return res.status(400).json({error: 'All fields are required'});
+    }
+
+    // Check if a user with the same name and email already exists
+    const query1 = 'SELECT * FROM users WHERE name = ? AND email = ?';
+    db.query(query1, [name, email], (err, rows) => {
+        if (err) {
+            console.error(err); // Log the error
+            return res.status(500).json({error: 'Database error'}); // Return a server error response
+        }
+        // If the user already exists, return an error
+        if (rows.length > 0) {
+            return res.status(400).json({error: 'User Already Exists!'});
+        }
+
+        const clientID = regId();
+        const timestamp = createdAt();
+
+        // Insert the new user into the database
+        const query = `INSERT INTO users (id, name, email, password, role, access_level, created_at) VALUES (?, ?, ?, ?, ?, ?, ?)`;
+        db.query(query, [clientID, name, email, password, role, access_level, timestamp], (err) => {
+            if (err) {
+                console.error(err); // Log the error
+                return res.status(500).json({error: 'Database error'}); // Return a server error response
+            }
+
+            // Return a success response with the generated user information
+            res.status(201).json({
+                message: 'User created successfully',
+                user: {clientID, name, email, role, access_level, timestamp},
+            });
+        });
+    });
+});
+
+// Function to handle user authentication (Login user)
+app.post('/api/auth', (req, res) => {
+    const {email, password} = req.body;
+    // Ensure email and password values are provided
+    if (!email || !password) {
+        return res.status(400).json({error: 'Email and password are required'});
+    }
+    const query = 'SELECT * FROM users WHERE email = ? AND password = ?';
+    db.query(query, [email, password], (err, rows) => {
+        // Log database error if any occurs
+        if (err) {
+            console.error(err);
+            return res.status(500).json({error: 'Database error'});
+        }
+        // Check if user exists in the database
+        if (rows.length === 0) {
+            return res.status(404).json({error: 'User not found'});
+        }
+        // Return login success message along with username
+        res.status(200).json({message: 'Login successful', username: rows[0].name});
+    });
+});
+
+
+// Endpoint to get all users
+app.get('/api/users', (req, res) => {
+    const query = 'SELECT * FROM users';
+    db.query(query, (err, users) => {
+        if (err) {
+            console.error(err);
+            return res.status(500).json({error: 'Database error'});
+        }
+        res.status(200).json(users);
+    });
+});
+
+// Endpoint to get user by id
+app.get('/api/users/:id', (req, res) => {
+    const {id} = req.params; // Extract the user ID from request parameters
+    const query = 'SELECT * FROM users WHERE id = ?'; // Query to retrieve the user by ID
+    db.query(query, [id], (err, rows) => {
+        if (err) {
+            console.error(err); // Log the error if any occurs
+            return res.status(500).json({error: 'Database error'}); // Send a 500 response for database error
+        }
+        if (rows.length === 0) {
+            return res.status(404).json({error: 'User not found'}); // Send a 404 response if no user is found
+        }
+        res.status(200).json(rows[0]); // Send the user data in a success response
+    });
+});
+// Endpoint to update user by id
+app.put('/api/users/:id', (req, res) => {
+    const {id} = req.params; // Extract the user ID from request parameters
+    const {name, email, password, role, access_level} = req.body; // Extract the fields to be updated from the request body
+    const query = `UPDATE users SET name = ?, email = ?, password = ?, role = ?, access_level = ? WHERE id = ?`; // Query to update the user
+    db.query(query, [name, email, password, role, access_level, id], (err) => {
+        if (err) {
+            console.error(err); // Log the error if any occurs
+            return res.status(500).json({error: 'Database error'}); // Send a 500 response for database error
+        }
+        res.status(200).json({message: 'User updated successfully', user: req.body}); // Send a success response
+    });
+});
+
+// Endpoint to delete user by id
+app.delete('/api/users/:id', (req, res) => {
+    const {id} = req.params; // Extract the user ID from request parameters
+    const query = 'DELETE FROM users WHERE id = ?'; // Query to delete the user
+    db.query(query, [id], (err) => {
+        if (err) {
+            console.error(err); // Log the error if any occurs
+            return res.status(500).json({error: 'Database error'}); // Send a 500 response for database error
+        }
+        res.status(200).json({message: 'User deleted successfully'}); // Send a success response
+    });
+});
 // 
 const upload = multer({ storage: storage });
 
@@ -258,9 +379,11 @@ app.put('/api/students/:id', upload.single('icon'), (req, res) => {
         let imageUrl = null;
         if (req.file) {
             const serverUrl = `${req.protocol}://${req.get('host')}`;
-            imageUrl = `${serverUrl}/api/uploads/${req.file.filename}`;
+            const firstSection = `${serverUrl}/api/`;
+            const secondSection = `uploads/${req.file.filename}`;
+            imageUrl = `${firstSection}${secondSection}`;
             fieldsToUpdate.push('icon = ?');
-            updateValues.push(imageUrl);
+            updateValues.push(secondSection);
 
             // Delete the existing icon file if it exists
             if (student.icon) {
@@ -601,7 +724,7 @@ app.post('/api/courses', (req, res) => {
 
 // Endpoint to get all courses
 app.get('/api/courses', (req, res) => {
-    const query = 'SELECT * FROM courses';
+    const query = 'SELECT courses.*, packages.package_name AS pname FROM courses JOIN packages ON courses.package = packages.id';
 
     db.query(query, (err, courses) => {
         if (err) {
@@ -742,6 +865,554 @@ app.delete('/api/courses/:id', (req, res) => {
     });
 });
 
+
+// Function to handle Module creation
+app.post('/api/modules', (req, res) => {
+    const { title, about, video, resource, course } = req.body;
+
+    // Validate that all required fields are provided
+    if (!title || !about || !video || !resource || !course) {
+        return res.status(400).json({ error: 'All fields are required' });
+    }
+
+    const id = regId();
+
+    // Check if a module with the same title already exists
+    const checkQuery = 'SELECT * FROM modules WHERE title = ?';
+    db.query(checkQuery, [title], (err, rows) => {
+        if (err) {
+            console.error(err); // Log the error
+            return res.status(500).json({ error: 'Database error' }); // Return a server error response
+        }
+
+        // If the module already exists, return an error
+        if (rows.length > 0) {
+            return res.status(400).json({ error: 'Module Already Exists!' });
+        }
+
+        // Insert the new module into the database
+        const query = `INSERT INTO modules (id, title, about, video, resource, course) VALUES (?, ?, ?, ?, ?, ?)`;
+        db.query(query, [id, title, about, video, resource, course], (err) => {
+            if (err) {
+                console.error(err); // Log the error
+                return res.status(500).json({ error: 'Database error' }); // Return a server error response
+            }
+
+            // Return a success response with the generated module information
+            res.status(201).json({
+                message: 'Module created successfully',
+                module: { id, title, about, video, resource, course },
+            });
+        });
+    });
+});
+
+// Endpoint to get all modules for all courses
+app.get('/api/modules', (req, res) => {
+    const query = 'SELECT modules.*, courses.title AS cname FROM modules JOIN courses ON modules.course = courses.id';
+
+    db.query(query, (err, modules) => {
+        if (err) {
+            console.error('Database Error:', err);
+            return res.status(500).json({ error: 'An error occurred while fetching the modules' });
+        }
+
+        res.status(200).json(modules);
+    });
+});
+
+// Endpoint to get all modules for a single course
+app.get('/api/modules/:id', (req, res) => {
+    const id = req.params.id;
+    const query = 'SELECT modules.*, courses.title AS cname FROM modules JOIN courses ON modules.course = courses.id WHERE modules.course = ?';
+
+    db.query(query, [id], (err, module) => {
+        if (err) {
+            console.error('Database Error:', err);
+            return res.status(500).json({ error: 'An error occurred while fetching the module' });
+        }
+
+        if (module.length === 0) {
+            return res.status(404).json({ error: 'Module not found' });
+        }
+
+        res.status(200).json(module[0]);
+    });
+});
+
+// Endpoint to update a module
+app.put('/api/modules/:id', (req, res) => {
+    const { id } = req.params;
+    const { title, about, video, resource, course } = req.body;
+
+    // Validate that at least one field is provided for update
+    if (!title && !about && !video && !resource && !course) {
+        return res.status(400).json({ error: 'At least one field is required for update.' });
+    }
+
+    // Check if the module exists
+    const checkQuery = 'SELECT * FROM modules WHERE id = ?';
+    db.query(checkQuery, [id], (err, rows) => {
+        if (err) {
+            console.error(err);
+            return res.status(500).json({ error: 'Database error' });
+        }
+
+        if (rows.length === 0) {
+            return res.status(404).json({ error: 'Module not found.' });
+        }
+
+        // Prepare the update query and values
+        let updateQuery = 'UPDATE modules SET ';
+        const updateValues = [];
+        let fieldsToUpdate = [];
+
+        if (title) {
+            fieldsToUpdate.push('title = ?');
+            updateValues.push(title);
+        }
+        if (about) {
+            fieldsToUpdate.push('about = ?');
+            updateValues.push(about);
+        }
+        if (video) {
+            fieldsToUpdate.push('video = ?');
+            updateValues.push(video);
+        }
+        if (resource) {
+            fieldsToUpdate.push('resource = ?');
+            updateValues.push(resource);
+        }
+        if (course) {
+            fieldsToUpdate.push('course = ?');
+            updateValues.push(course);
+        }
+
+        // If no fields are provided for update, return an error
+        if (fieldsToUpdate.length === 0) {
+            return res.status(400).json({ error: 'No valid fields provided for update.' });
+        }
+
+        // Construct the final query
+        updateQuery += fieldsToUpdate.join(', ') + ' WHERE id = ?';
+        updateValues.push(id);
+
+        // Execute the update query
+        db.query(updateQuery, updateValues, (err, result) => {
+            if (err) {
+                console.error(err);
+                return res.status(500).json({ error: 'Database error' });
+            }
+
+            // Fetch the updated module details
+            const fetchQuery = 'SELECT * FROM modules WHERE id = ?';
+            db.query(fetchQuery, [id], (err, rows) => {
+                if (err) {
+                    console.error(err);
+                    return res.status(500).json({ error: 'Database error' });
+                }
+
+                const updatedModule = rows[0];
+                res.status(200).json({
+                    message: 'Module updated successfully',
+                    module: updatedModule,
+                });
+            });
+        });
+    });
+});
+
+// Endpoint to delete a module
+app.delete('/api/modules/:id', (req, res) => {
+    const { id } = req.params;
+
+    // Check if the module exists
+    const checkQuery = 'SELECT * FROM modules WHERE id = ?';
+    db.query(checkQuery, [id], (err, rows) => {
+        if (err) {
+            console.error(err);
+            return res.status(500).json({ error: 'Database error' });
+        }
+
+        if (rows.length === 0) {
+            return res.status(404).json({ error: 'Module not found.' });
+        }
+
+        // Check if the module is linked to any resources
+        const resourceCheckQuery = 'SELECT * FROM resources WHERE module = ?';
+        db.query(resourceCheckQuery, [id], (err, resourceRows) => {
+            if (err) {
+                console.error(err);
+                return res.status(500).json({ error: 'Database error' });
+            }
+
+            if (resourceRows.length > 0) {
+                return res.status(400).json({ error: 'Module is linked to resources and cannot be deleted.' });
+            }
+
+            // Delete the module from the database
+            const deleteQuery = 'DELETE FROM modules WHERE id = ?';
+            db.query(deleteQuery, [id], (err, result) => {
+                if (err) {
+                    console.error(err);
+                    return res.status(500).json({ error: 'Database error' });
+                }
+
+                res.status(200).json({
+                    message: 'Module deleted successfully',
+                    module: rows[0],
+                });
+            });
+        });
+    });
+});
+
+// Function to handle Resource creation
+app.post('/api/resources', upload.single('resource'), (req, res) => {
+    const { title, module } = req.body;
+
+    // Validate that all required fields are provided
+    if (!title || !module) {
+        return res.status(400).json({ error: 'All fields are required' });
+    }
+
+    const id = regId();
+
+    const filePath = req.file ? req.file.path : null;
+    if (!filePath) {
+        return res.status(400).json({ error: 'File upload failed.' });
+    }
+
+    // Check if a resource with the same title already exists
+    const checkQuery = 'SELECT * FROM resources WHERE title = ? and module = ?';
+    db.query(checkQuery, [title, module], (err, rows) => {
+        if (err) {
+            console.error(err); // Log the error
+            return res.status(500).json({ error: 'Database error' }); // Return a server error response
+        }
+
+        // If the resource already exists, return an error
+        if (rows.length > 0) {
+            return res.status(400).json({ error: 'Resource Already Exists!' });
+        }
+
+        // Insert the new resource into the database
+        const query = `INSERT INTO resources (id, title, resource, module) VALUES (?, ?, ?, ?)`;
+        db.query(query, [id, title, filePath, module], (err) => {
+            if (err) {
+                console.error(err); // Log the error
+                return res.status(500).json({ error: 'Database error' }); // Return a server error response
+            }
+
+            // Return a success response with the generated resource information
+            res.status(201).json({
+                message: 'Resource created successfully',
+                resource: { id, title, resource: filePath, module },
+            });
+        });
+    });
+});
+
+// Endpoint to get all resources for a specific module
+app.get('/api/resources/:id', (req, res) => {
+    id = req.params.id;
+    const query = 'SELECT resources.*, modules.title AS mname FROM resources JOIN modules ON resources.module = modules.id where resources.module = ?';
+
+    db.query(query,[id], (err, resources) => {
+        if (err) {
+            console.error('Database Error:', err);
+            return res.status(500).json({ error: 'An error occurred while fetching the resources' });
+        }
+
+        res.status(200).json(resources);
+    });
+});
+
+// Endpoint to get resources for all modules
+app.get('/api/resources', (req, res) => {
+    const query = 'SELECT resources.*, modules.title AS mname FROM resources JOIN modules ON resources.module = modules.id';
+
+    db.query(query, (err, resources) => {
+        if (err) {
+            console.error('Database Error:', err);
+            return res.status(500).json({ error: 'An error occurred while fetching the resources' });
+        }
+
+        res.status(200).json(resources);
+    });
+});
+
+// Endpoint to update a resource
+app.put('/api/resources/:id', upload.single('resource'), (req, res) => {
+    const { id } = req.params;
+    const { title, module } = req.body;
+
+    // Validate that at least one field is provided for update
+    if (!title && !module && !req.file) {
+        return res.status(400).json({ error: 'At least one field is required for update.' });
+    }
+
+    // Check if the resource exists
+    const checkQuery = 'SELECT * FROM resources WHERE id = ?';
+    db.query(checkQuery, [id], (err, rows) => {
+        if (err) {
+            console.error(err);
+            return res.status(500).json({ error: 'Database error' });
+        }
+
+        if (rows.length === 0) {
+            return res.status(404).json({ error: 'Resource not found.' });
+        }
+
+        resource = rows[0];
+
+        // Prepare the update query and values
+        let updateQuery = 'UPDATE resources SET ';
+        const updateValues = [];
+        let fieldsToUpdate = [];
+
+        if (title) {
+            fieldsToUpdate.push('title = ?');
+            updateValues.push(title);
+        }
+        if (module) {
+            fieldsToUpdate.push('module = ?');
+            updateValues.push(module);
+        }
+
+        // Handle file upload (resource)
+        let resourceUrl = null;
+        if (req.file) {
+            const serverUrl = `${req.protocol}://${req.get('host')}`;
+            const firstSection = `${serverUrl}/api/`;
+            const secondSection = `uploads/${req.file.filename}`;
+            resourceUrl = `${firstSection}${secondSection}`;
+            fieldsToUpdate.push('resource = ?');
+            updateValues.push(secondSection);
+
+            // Delete the existing resource file if it exists
+            if (resource.resource) {
+                const existingResourcePath = path.join(__dirname, 'uploads', path.basename(resource.resource));
+                fs.unlink(existingResourcePath, (err) => {
+                    if (err) {
+                        console.error('Failed to delete existing resource file:', err);
+                    }
+                });
+            }
+        }
+
+        // If no fields are provided for update, return an error
+        if (fieldsToUpdate.length === 0) {
+            return res.status(400).json({ error: 'No valid fields provided for update.' });
+        }
+
+        // Construct the final query
+        updateQuery += fieldsToUpdate.join(', ') + ' WHERE id = ?';
+        updateValues.push(id);
+
+        // Execute the update query
+        db.query(updateQuery, updateValues, (err, result) => {
+            if (err) {
+                console.error(err);
+                return res.status(500).json({ error: 'Database error' });
+            }
+
+            // Fetch the updated resource details
+            const fetchQuery = 'SELECT * FROM resources WHERE id = ?';
+            db.query(fetchQuery, [id], (err, rows) => {
+                if (err) {
+                    console.error(err);
+                    return res.status(500).json({ error: 'Database error' });
+                }
+
+                const updatedResource = rows[0];
+                res.status(200).json({
+                    message: 'Resource updated successfully',
+                    resource: updatedResource,
+                });
+            });
+        });
+    });
+});
+
+// Endpoint to delete a resource
+app.delete('/api/resources/:id', (req, res) => {
+    const { id } = req.params;
+
+    // Check if the resource exists
+    const checkQuery = 'SELECT * FROM resources WHERE id = ?';
+    db.query(checkQuery, [id], (err, rows) => {
+        if (err) {
+            console.error(err);
+            return res.status(500).json({ error: 'Database error' });
+        }
+
+        if (rows.length === 0) {
+            return res.status(404).json({ error: 'Resource not found.' });
+        }
+
+        resource = rows[0];
+
+        // Delete the resource from the database
+        const deleteQuery = 'DELETE FROM resources WHERE id = ?';
+        db.query(deleteQuery, [id], (err, result) => {
+            if (err) {
+                console.error(err);
+                return res.status(500).json({ error: 'Database error' });
+            }
+
+            // Delete the resource file if it exists
+            if (resource.resource) {
+                const resourcePath = path.join(__dirname, 'uploads', path.basename(resource.resource));
+                fs.unlink(resourcePath, (err) => {
+                    if (err) {
+                        console.error('Failed to delete resource file:', err);
+                    }
+                });
+            }
+
+            res.status(200).json({
+                message: 'Resource deleted successfully',
+                resource: rows[0],
+            });
+        });
+    });
+});
+
+// Function to get M-Pesa access token
+const getMpesaAccessToken = async () => {
+    try {
+        console.log('Getting M-Pesa access token');
+        
+        // Log the consumer key and secret to check if they are loaded correctly
+        console.log('MPESA_CONSUMER_KEY:', process.env.MPESA_CONSUMER_KEY);
+        console.log('MPESA_CONSUMER_SECRET:', process.env.MPESA_CONSUMER_SECRET);
+
+        // Create the base64-encoded Authorization header
+        const auth = Buffer.from(`${process.env.MPESA_CONSUMER_KEY}:${process.env.MPESA_CONSUMER_SECRET}`).toString('base64');
+        console.log('Authorization token:', auth);
+
+        // Make the request to get the access token
+        const response = await axios.get('https://sandbox.safaricom.co.ke/oauth/v1/generate?grant_type=client_credentials', {
+            headers: {
+                Authorization: `Basic ${auth}`
+            }
+        });
+
+        console.log('Access token response:', response.data);
+
+        // Return the access token
+        return response.data.access_token;
+    } catch (error) {
+        // Log error details
+        if (error.response) {
+            console.error('Response error:', error.response.data);
+            console.error('Status code:', error.response.status);
+        } else if (error.request) {
+            console.error('Request error:', error.request);
+        } else {
+            console.error('Error:', error.message);
+        }
+    }
+};
+
+
+
+//getMpesaAccessToken();
+app.post('/api/payments/initiate', async (req, res) => {
+    const { phoneNumber, amount, course, package, client } = req.body;
+
+    // Validate that all required fields are provided
+    if (!phoneNumber || !amount || !course || !package || !client) {
+        return res.status(400).json({ error: 'All fields are required' });
+    }
+
+    const id = regId();
+    const status = 'Pending';
+
+    try {
+        // Get access token
+        const accessToken = await getMpesaAccessToken();
+        console.log('Access Token:', accessToken); // Debug log for token
+
+        // Initiate M-Pesa payment
+        const response = await axios.post('https://sandbox.safaricom.co.ke/mpesa/stkpush/v1/processrequest', {
+            BusinessShortCode: process.env.MPESA_BUSINESS_SHORT_CODE,
+            Password: process.env.MPESA_PASSWORD,
+            Timestamp: moment().format('YYYYMMDDHHmmss'),
+            TransactionType: 'CustomerPayBillOnline',
+            Amount: amount,
+            PartyA: phoneNumber,
+            PartyB: process.env.MPESA_BUSINESS_SHORT_CODE,
+            PhoneNumber: phoneNumber,
+            //CallBackURL: `${req.protocol}://${req.get('host')}/api/payments/callback`,
+            CallBackURL: ` https://d8f9-197-232-93-27.ngrok-free.app/api/payments/callback`,
+            AccountReference: 'Adconnect',
+            TransactionDesc: 'Payment for course'
+        }, {
+            headers: {
+                Authorization: `Bearer ${accessToken}`,
+            }
+        });
+
+        // Store the payment initiation details in the database
+        const query = `INSERT INTO payments (id, course, date, package, status, client, amount_paid) VALUES (?, ?, ?, ?, ?, ?, ?)`;
+        db.query(query, [id, course, createdAt(), package, status, client, amount], (err) => {
+            if (err) {
+                console.error(err); // Log the error
+                return res.status(500).json({ error: 'Database error' });
+            }
+
+            // Return a success response with the payment initiation details
+            res.status(201).json({
+                message: 'Payment initiated successfully',
+                payment: { id, course, date: createdAt(), package, status, client, amount }
+            });
+        });
+    } catch (error) {
+        console.error('Error initiating M-Pesa payment:', error);
+
+        if (error.response) {
+            // Log detailed error response from M-Pesa
+            console.error('Error response from M-Pesa:', error.response.data);
+            console.error('Error status code:', error.response.status);
+        } else if (error.request) {
+            // Log error related to the request
+            console.error('Error with the request:', error.request);
+        } else {
+            // Log other types of errors
+            console.error('Error message:', error.message);
+        }
+
+        res.status(500).json({ error: 'M-Pesa payment initiation failed' });
+    }
+});
+
+
+
+// Function to handle M-Pesa payment callback
+app.post('/api/payments/callback', (req, res) => {
+    const { Body: { stkCallback } } = req.body;
+
+    if (stkCallback.ResultCode === 0) {
+        const mpesa_code = stkCallback.CallbackMetadata.Item.find(item => item.Name === 'MpesaReceiptNumber').Value;
+        const amount_paid = stkCallback.CallbackMetadata.Item.find(item => item.Name === 'Amount').Value;
+        const id = stkCallback.CallbackMetadata.Item.find(item => item.Name === 'InvoiceNumber').Value;
+
+        // Update the payment details in the database
+        const query = `UPDATE payments SET mpesa_code = ?, amount_paid = ?, status = 'Completed' WHERE id = ?`;
+        db.query(query, [mpesa_code, amount_paid, id], (err) => {
+            if (err) {
+                console.error('Error updating payment details:', err);
+                return res.status(500).json({ error: 'Database error' });
+            }
+
+            res.status(200).json({ message: 'Payment completed successfully' });
+        });
+    } else {
+        res.status(400).json({ error: 'Payment failed' });
+    }
+});
 
 app.post('/api/test-server', (req, res) => {
     res.status(200).json({ message: 'Test route works!' });

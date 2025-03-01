@@ -1,0 +1,1176 @@
+
+#login-page{
+    width: 100%;
+    height: 100vh;
+    position: fixed;
+    background: linear-gradient(to left, #646464, #4D4C4B);
+    z-index: 2;
+    flex-direction: column;
+    align-items: center;
+    align-content: center;
+}
+#login-form{
+    margin-top: 7%;
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    padding: 5% 10%;
+    background-color: #737373;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3)
+}
+#login-form h6{
+    justify-self: center;
+    text-align: center;
+    width: 100%;
+    margin: 0 0 10px 0px;
+    font-size: 20px;
+    font-weight: bolder;
+    font-family: 'DM Sans';
+    color: azure;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.5)
+}
+#login-form label{
+    margin: 10px 0 0px 0;
+    font-family: 'DM Sans';
+    font-size: 14px;
+    font-weight: 600;
+}
+#login-form input{
+    height: 30px;
+    width: 200px;
+    margin-top: 2px;
+    border-radius: 5px;
+    padding: 5px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3)
+}
+#login-form button{
+    width: 200px;
+    height: 26px;
+    background-color: #F65730;
+    color: azure;
+    border-radius: 5px;
+    font-family: 'DM Sans';
+    font-weight: bolder;
+    font-size: 14px;
+    margin-top: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3)
+}
+#nav-bar{
+    position: fixed;
+    width: 100%;
+    height: 5%;
+    background-color: #302E2C;
+    justify-content: space-between;
+    align-items: center;
+    align-content: center;
+    align-self: center;
+    top: 0%;
+}
+.left-nav-section{
+    height: 100%;
+    width: fit-content;
+    margin-left: 20px;
+    align-items: center;
+}
+.left-nav-section p{
+    color: azure;
+    font-size: 15px;
+    font-family: 'DM Sans';
+    font-weight: bolder;
+    margin-left: 20px;
+}
+.right-nav-section{
+    height: 100%;
+    width: fit-content;
+    margin-right: 20px;
+    align-items: center;
+}
+.right-nav-section img{
+    height: 90%;
+    width: fit-content;
+}
+.right-nav-section #username{
+    color: azure;
+    font-size: 11px;
+    font-family: 'DM Sans';
+    font-weight: bolder;
+    margin-left: 20px;
+    margin-right: 20px;
+    margin-top: 2px;
+}
+.right-nav-section p{
+    color: rgb(164, 164, 164);
+    font-size: 10px;
+    font-family: 'DM Sans';
+    font-weight: 400;
+    margin-left: 20px;
+    margin-right: 20px;
+    margin-top: -5px;
+}
+nav a{
+    height: 90%;
+    width: 80px;
+}
+nav a img{
+    height: 80%;
+    width: 80px;
+}
+
+footer{
+    width: 100%;
+    height: 5%;
+    position: fixed;
+    bottom: 0%;
+    background-color: #302E2C;
+    align-items: center;
+}
+footer div{
+    align-items: center;
+    justify-items: center;
+}
+footer p{
+    color: azure;
+    font-size: 12px;
+    font-family: 'DM Sans';
+    font-weight: 500;
+    margin-left: 40px;
+}
+
+.admin-hero{
+    display: none;
+    width: 100%;
+    height: 100vh;
+    margin-top: 2.3%;
+    position: fixed;
+    background: linear-gradient(to left, #646464, #4D4C4B);
+}
+
+.admin-header-text{
+    position: fixed;
+    top: 0%;
+    left: 0%;
+    margin-top: 3%;
+    margin-left: 0.7%;
+    width: 12%;
+}
+.admin-header-text p{
+    font-size: 15px;
+}
+.admin-sidebar{
+    position: fixed;
+    top: 0%;
+    left: 0%;
+    margin-top: 8%;
+    margin-left: 0%;
+    background-color: #737373;
+    border-radius: 0 10px 10px 0;
+    border: 1.5px solid #7D8489;
+    padding: 0px 0px;
+    height: 78%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+.admin-sidebar ul{
+    top: 0%;
+}
+.admin-sidebar li{
+    list-style: none;
+    height: 25px;
+    background-color: #5f5f5f00;
+    border-radius: 0 3px 3px 0;
+    border: 1.5px solid #7D8489;
+    margin-top: 8px;
+    cursor: pointer;
+    font-size: 12px;
+    font-weight: 700;
+    padding: 0 0 0 10px;
+    align-items: center;
+    align-content: center;
+    color: white;
+    font-family: 'DM Sans';
+    transition: all 0.3s ease-in-out;
+}
+.admin-sidebar .activ{
+    color: #ffffff;
+    background-color: #302E2C;
+}
+.admin-sidebar li:hover,
+.admin-sidebar li:focus{
+    color: #ffffff;
+    background-color: #302E2C;
+}
+.admin-sidebar li:hover a,
+.admin-sidebar li:focus a{
+    color: #ffffff;
+    background-color: #302E2C;
+}
+.admin-sidebar a{
+    font-size: 12px;
+    margin-left: 8px;
+}
+
+.content{
+    height: 90.3%;
+    width: 100%;
+    margin-left: 11%;
+    padding: 20px 10px;
+    position: fixed;
+    align-items: start;
+}
+.content p{
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    align-items: left;
+}
+
+#userContentMgt{
+    align-items: start;
+    justify-content: start;
+    justify-self: start;
+    height: 100%;
+    width: 85%;
+    margin-left: 20px;
+}
+#userTopHeader{
+    position: fixed;
+    z-index: 1;
+    margin-top: 0%;
+}
+#userContentMgt .contact-top-controls{
+    display: flex;
+    flex-direction: row;
+    justify-content:space-between;
+    width: 100%;
+    margin-bottom: 20px;
+}
+#searchBar{
+    border-radius: 5px;
+    width: fit-content;
+    align-items: center;
+    margin-left: 10px;
+}
+#searchUserInput{
+    margin-right: 8px;
+    border-radius: 5px;
+    border: 0;
+    height: 30px;
+    background-color: #adaeae;
+    margin-left: 8px;
+    padding-left: 10px;
+}
+#createUserButton{
+    height: 30px;
+    background: #358939;
+    padding: 5px 30px;
+    right: 0%;
+}
+#createUserButton:hover{
+    background: #F65730;
+}
+
+#refreshUserButton{
+    height: 30px;
+    background-color: #302E2C;
+    padding: 5px 30px;
+}
+#refreshUserButton:hover{
+    background: #e86d4e;
+}
+button{
+    height: 20px;
+    padding: 0 10px;
+    font-size: 11px;
+    font-weight: 500;
+    border-radius: 5px;
+    border: 0px;
+    color: white;
+    transition: all 0.5s ease;
+    cursor: pointer;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+button:hover{
+    background: #F65730;
+}
+.field-bar{
+    height: 40px;
+    background-color: #F65730;
+    border-radius: 6px 6px 0 0;
+    width: 100%;
+    align-items: center;
+}
+
+#userContentMgt .field-bar p{
+    font-size: 14px;
+    font-weight: 700;
+    font-family: 'DM Sans';
+    color: aliceblue;
+    text-align: start;
+}
+
+#userContentMgt .field-bar .title-user-id{
+    margin: 0 20px 0 10px;
+    width: 160px;
+    text-align: start;
+}
+#userContentMgt .field-bar .title-user-name{
+    margin: 0 20px 0 10px;
+    width: 170px;
+}
+#userContentMgt .field-bar .title-user-email{
+    margin: 0 5px 0 5px;
+    width: 170px;
+}
+#userContentMgt .field-bar .title-user-roles{
+    margin: 0 10px 0 0px;
+    width: 100px;
+}
+#userContentMgt .field-bar .title-user-access{
+    margin: 0 20px 0 0px;
+    width: 110px;
+}
+#userContentMgt .field-bar .title-user-action{
+    margin: 0 50px 0 50px;
+    width: 100px;
+}
+.admin-hero .content #userContentMgt .field-item{
+    height: 90%;
+    overflow-y: auto;
+    overflow-x: hidden;
+    margin-top: 8.2%;
+    padding-top: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+
+.item-content{
+    align-items: center;
+    height: 30px;
+    background-color: rgba(48, 46, 44, 0.25);
+    margin-bottom: 2px;
+}
+.item-content:hover{
+    background-color: #F65730;
+}
+.content #userContentMgt .field-item .item-content p{
+    font-size: 12px;
+    font-weight: light;
+    font-family: 'DM Sans';
+    color: aliceblue;
+    text-align: left;
+}
+.admin-hero .content #userContentMgt .field-item .item-content .item-user-id{
+    margin: 0 20px 0 10px;
+    width: 160px;
+    text-align: start;
+}
+.item-content .item-user-name{
+    margin: 0 20px 0 10px;
+    width: 170px;
+}
+.item-content .item-user-email{
+    margin: 0 20px 0 10px;
+    width: 170px;
+}
+.item-content .item-user-roles{
+    margin: 0 20px 0 10px;
+    width: 100px;
+}
+.item-content .item-user-access{
+    margin: 0 20px 0 10px;
+    width: 100px;
+}
+#userUpdateBtn{
+    background-color: darkorange;
+    margin: 0 20px 0 10px;
+}
+#userUpdateBtn:hover{
+    background-color: #F65730;
+}
+#userDeleteBtn{
+    background-color: rgb(131, 8, 8);
+    margin: 0 10px 0 0px;
+}
+#userDeleteBtn:hover{
+    background-color: #F65730;
+}
+
+#submitButton{
+    height: 25px;
+    width: 230px;
+    margin-left: 17px;
+    margin-top: 30px;
+    background-color: rgb(68, 135, 1);
+    color: rgb(255, 255, 255);
+}
+#submitButton:hover{
+    background-color: #F65730;
+}
+
+#btnClosePopup {
+    width: 44px;
+    height: 44px;
+    position: absolute;
+    right: 0px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 0.25em;
+    border: 1.5px solid #F65730;
+    color: white;
+    margin: 40px;
+    cursor: pointer;
+}
+
+#btnClosePopup:hover{
+    border: 1.5px solid #F65730;
+    background: inherit;
+    color: #F65730;
+}
+
+.admin-hero .content #leadsContentMgt .field-item{
+    height: 90%;
+    overflow-y: auto;
+    overflow-x: hidden;
+    margin-top: 8.2%;
+    padding-top: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+#leadsContentMgt{
+    align-items: start;
+    justify-content: start;
+    justify-self: start;
+    height: 100%;
+    width: 85%;
+    margin-left: 20px;
+}
+#leadsContentMgt .contact-top-controls{
+    display: flex;
+    flex-direction: row;
+    justify-content:space-between;
+    width: 100%;
+    margin-bottom: 20px;
+}
+#leadsContentMgt #createUserButton{
+    color: transparent;
+    background-color: transparent;
+}
+#searchLeadsInput{
+    margin-right: 8px;
+    border-radius: 5px;
+    border: 0;
+    height: 30px;
+    width: 250px;
+    background-color: #adaeae;
+    margin-left: 8px;
+    padding-left: 10px;
+}
+#leadsContentMgt .field-bar p{
+    font-size: 13px;
+    font-weight: 700;
+    font-family: 'DM Sans';
+    color: aliceblue;
+    text-align: start;
+}
+
+#leadsContentMgt .field-bar .title-lead-id{
+    margin: 0 0px 0 10px;
+    width: 105px;
+    text-align: start;
+}
+.field-bar .title-lead-name{
+    margin: 0 10px 0 25px;
+    width: 120px;
+}
+.field-bar .title-lead-email{
+    margin: 0 15px 0 0px;
+    width: 170px;
+}
+.field-bar .title-lead-phone{
+    margin: 0 0px 0 0px;
+    width: 70px;
+}
+.field-bar .title-lead-source{
+    margin: 0 10px 0 0px;
+    width: 70px;
+}
+.field-bar .title-lead-status{
+    margin: 0 5px 0 0px;
+    width: 75px;
+}
+.field-bar .title-lead-subscription{
+    margin: 0 5px 0 5px;
+    width: 100px;
+}
+.field-bar .title-lead-date{
+    margin: 0 5px 0 15px;
+    width: 100px;
+}
+.field-bar .title-lead-action{
+    margin: 0 35px 0 40px;
+    width: 100px;
+}
+.content #leadsContentMgt .field-item .item-content p{
+    font-size: 11px;
+    font-weight: light;
+    font-family: 'DM Sans';
+    color: aliceblue;
+    text-align: left;
+}
+.admin-hero .content #leadsContentMgt .field-item .item-content .item-lead-id{
+    margin: 0 5px 0 5px;
+    width: 130px;
+    text-align: start;
+}
+.item-content .item-lead-name{
+    margin: 0 5px 0 0px;
+    width: 123px;
+}
+.item-content .item-lead-email{
+    margin: 0 5px 0 0px;
+    width: 190px;
+}
+.item-content .item-lead-phone{
+    margin: 0 5px 0 0px;
+    width: 70px;
+}
+.item-content .item-lead-source{
+    margin: 0 5px 0 0px;
+    width: 70px;
+}
+.item-content .item-lead-status{
+    margin: 0 5px 0 0px;
+    width: 90px;
+}
+.item-content .item-lead-subscription{
+    margin: 0 5px 0 0px;
+    width: 100px;
+}
+.item-content .item-lead-date{
+    margin: 0 5px 0 0px;
+    width: 110px;
+}
+#leadPreviewMailBtn{
+    margin: 01px 5px 01px 20px;
+    width: 30px;
+    padding: 0 10px;
+    background-color: #35893900;
+    cursor: pointer;
+}
+#leadSendMailBtn{
+    margin: 01px 5px 01px 0px;
+    width: 30px;
+    padding: 0 10px;
+    background-color: #35893900;
+    cursor: pointer;
+}
+#leadUnsubscribeBtn{
+    margin: 1px 5px 01px 0px;
+    width: 30px;
+    padding: 0 10px;
+    background-color: rgba(255, 140, 0, 0);
+    cursor: pointer;
+}
+#leadDeleteBtn{
+    margin: 1px 5px 1px 0px;
+    width: 30px;
+    padding: 0 10px;
+    background-color: rgba(139, 0, 0, 0);
+    cursor: pointer;
+}
+
+#leadSendMailBtn:hover, #leadUnsubscribeBtn:hover,
+#leadDeleteBtn:hover{
+    background-color: #F65730;
+}
+
+.admin-hero .content #appointmentContentMgt .field-item{
+    height: 90%;
+    overflow-y: auto;
+    overflow-x: hidden;
+    margin-top: 8.2%;
+    padding-top: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+.admin-hero .content #applictionContentMgt .field-item{
+    height: 90%;
+    overflow-y: auto;
+    overflow-x: hidden;
+    margin-top: 8.2%;
+    padding-top: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+#appointmentContentMgt{
+    align-items: start;
+    justify-content: start;
+    justify-self: start;
+    height: 100%;
+    width: 88%;
+    margin-left: 1%;
+}
+#appointmentContentMgt .contact-top-controls{
+    display: flex;
+    flex-direction: row;
+    justify-content:space-between;
+    width: 100%;
+    margin-bottom: 20px;
+}
+#appointmentContentMgt #createUserButton{
+    color: transparent;
+    background-color: transparent;
+}
+#searchAppointmentInput{
+    margin-right: 8px;
+    border-radius: 5px;
+    border: 0;
+    height: 30px;
+    width: 250px;
+    background-color: #adaeae;
+    margin-left: 8px;
+    padding-left: 10px;
+}
+#applictionContentMgt{
+    align-items: start;
+    justify-content: start;
+    justify-self: start;
+    height: 100%;
+    width: 88%;
+    margin-left: 1%;
+}
+#applictionContentMgt .contact-top-controls{
+    display: flex;
+    flex-direction: row;
+    justify-content:space-between;
+    width: 100%;
+    margin-bottom: 20px;
+}
+#applictionContentMgt #createUserButton{
+    color: transparent;
+    background-color: transparent;
+}
+#searchApplicationInput{
+    margin-right: 8px;
+    border-radius: 5px;
+    border: 0;
+    height: 30px;
+    width: 250px;
+    background-color: #adaeae;
+    margin-left: 8px;
+    padding-left: 10px;
+}
+#appointmentContentMgt .field-bar p{
+    font-size: 13px;
+    font-weight: 700;
+    font-family: 'DM Sans';
+    color: aliceblue;
+    text-align: start;
+}
+#applictionContentMgt .field-bar p{
+    font-size: 13px;
+    font-weight: 700;
+    font-family: 'DM Sans';
+    color: aliceblue;
+    text-align: start;
+}
+
+#appointmentContentMgt .field-bar .title-appointment-id{
+    margin: 0 0px 0 10px;
+    width: 80px;
+    text-align: start;
+}
+#applictionContentMgt .field-bar .title-user-id{
+    margin: 0 0px 0 10px;
+    width: 80px;
+    text-align: start;
+}
+#applictionContentMgt .field-bar .title-user-email{
+    margin: 0 0px 0 40px;
+    width: 180px;
+    text-align: start;
+}
+#applictionContentMgt .field-bar .title-appointment-phone{
+    margin: 0 9px 0 11px;
+    width: 55px;
+}
+.field-bar .title-appointment-name{
+    margin: 0 10px 0 10px;
+    width: 120px;
+}
+.field-bar .title-appointment-email{
+    margin: 0 5px 0 10px;
+    width: 160px;
+}
+.field-bar .title-appointment-phone{
+    margin: 0 9px 0 0px;
+    width: 50px;
+}
+.field-bar .title-appointment-location{
+    margin: 0 5px 0 0px;
+    width: 70px;
+}
+.field-bar .title-appointment-date{
+    margin: 0 5px 0 10px;
+    width: 70px;
+}
+.field-bar .title-appointment-time{
+    margin: 0 5px 0 0px;
+    width: 60px;
+}
+.field-bar .title-appointment-type{
+    margin: 0 5px 0 0px;
+    width: 60px;
+}
+.field-bar .title-appointment-status{
+    margin: 0 5px 0 0px;
+    width: 60px;
+}
+.field-bar .title-appointment-notes{
+    margin: 0 5px 0 0px;
+    width: 120px;
+}
+.field-bar .title-appointment-action{
+    margin: 0 52px 0 20px;
+    width: 70px;
+}
+.content #appointmentContentMgt .field-item .item-content p{
+    font-size: 11px;
+    font-weight: light;
+    font-family: 'DM Sans';
+    color: aliceblue;
+    text-align: left;
+}
+.content #applictionContentMgt .field-item .item-content p{
+    font-size: 11px;
+    font-weight: light;
+    font-family: 'DM Sans';
+    color: aliceblue;
+    text-align: left;
+}
+.admin-hero .content #applictionContentMgt .field-item .item-content .item-user-id{
+    margin: 0 5px 0 5px;
+    width: 75px;
+    text-align: start;
+}
+.admin-hero .content #appointmentContentMgt .field-item .item-content .item-appointment-id{
+    margin: 0 5px 0 5px;
+    width: 75px;
+    text-align: start;
+}
+.item-content .item-appointment-name{
+    margin: 0 5px 0 0px;
+    width: 145px;
+}
+#applicationList .item-content .item-user-name{
+    margin: 0 5px 0 0px;
+    width: 110px;
+}
+.item-content .item-appointment-email{
+    margin: 0 5px 0 0px;
+    width: 165px;
+}
+.item-content .item-appointment-phone{
+    margin: 0 5px 0 0px;
+    width: 70px;
+}
+.item-content .item-appointment-location{
+    margin: 0 5px 0 0px;
+    width: 60px;
+}
+.item-content .item-appointment-date{
+    margin: 0 5px 0 0px;
+    width: 70px;
+}
+.item-content .item-appointment-time{
+    margin: 0 5px 0 0px;
+    width: 60px;
+}
+.item-content .item-appointment-type{
+    margin: 0 5px 0 0px;
+    width: 60px;
+}
+.item-content .item-appointment-status{
+    margin: 0 5px 0 0px;
+    width: 60px;
+}
+.item-content .item-appointment-notes{
+    margin: 0 5px 0 0px;
+    width: 80px;
+}
+#applicationList .item-content .item-appointment-notes{
+    margin: 0 5px 0 0px;
+    width: 120px;
+}
+#apptReschedule{
+    margin: 01px 5px 01px 5px;
+    width: 30px;
+    padding: 0 10px;
+    background-color: #35893900;
+    cursor: pointer;
+}
+
+
+/** About Section **/
+.admin-hero .content #videoContentMgt #aboutSec .field-item{
+    height: 90%;
+    overflow-y: auto;
+    overflow-x: visible;
+    margin-top: 8.2%;
+    padding-top: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    width: 100%;
+}
+#videoContentMgt{
+    align-items: start;
+    justify-content: start;
+    justify-self: start;
+    height: 100%;
+    width: 85%;
+    margin-left: 10px;
+    overflow-y: visible;
+}
+#videoContentMgt #aboutSec{
+    align-items: start;
+    justify-content: start;
+    justify-self: start;
+    height: 50%;
+    width: 100%;
+    margin-left: 20px;
+}
+#videoContentMgt #vidSec{
+    align-items: start;
+    justify-content: start;
+    justify-self: start;
+    height: 50%;
+    width: 100%;
+    margin-left: 20px;
+}
+#videoContentMgt .contact-top-controls{
+    display: flex;
+    flex-direction: row;
+    justify-content:space-between;
+    width: 100%;
+    margin-bottom: 20px;
+}
+#videoContentMgt #createUserButton{
+    color: transparent;
+    background-color: transparent;
+}
+#searchAppointmentInput{
+    margin-right: 8px;
+    border-radius: 5px;
+    border: 0;
+    height: 30px;
+    width: 250px;
+    background-color: #adaeae;
+    margin-left: 8px;
+    padding-left: 10px;
+}
+#videoContentMgt .field-bar p{
+    font-size: 13px;
+    font-weight: 700;
+    font-family: 'DM Sans';
+    color: aliceblue;
+    text-align: start;
+}
+
+#videoContentMgt .field-bar .title-about-id{
+    margin: 0 5px 0 5px;
+    width: 75px;
+    text-align: start;
+}
+.field-bar .title-about-name{
+    margin: 0 10px 0 10px;
+    width: 120px;
+}
+.field-bar .title-about-title{
+    margin: 0 5px 0 0px;
+    width: 145px;
+}
+.field-bar .title-about-introduction{
+    margin: 0 5px 0 0px;
+    width: 195px;
+}
+.field-bar .title-about-experience{
+    margin: 0 5px 0 0px;
+    width: 195px;
+}
+.field-bar .title-about-mission{
+    margin: 0 5px 0 0px;
+    width: 195px;
+}
+.field-bar .title-about-status{
+    margin: 0 5px 0 0px;
+    width: 90px;
+}
+.field-bar .title-about-image{
+    margin: 0 50px 0 10px;
+    width: 45px;
+}
+.content #videoContentMgt .field-item .item-content p{
+    font-size: 11px;
+    font-weight: light;
+    font-family: 'DM Sans';
+    color: aliceblue;
+    text-align: left;
+}
+.admin-hero .content #videoContentMgt #aboutSec .field-item .item-content .item-about-id{
+    margin: 0 5px 0 5px;
+    width: 75px;
+    text-align: start;
+}
+.admin-hero .content #videoContentMgt #vidSec .field-item .item-content .item-about-id{
+    margin: 0 5px 0 5px;
+    width: 75px;
+    text-align: start;
+}
+.item-content .item-about-title{
+    margin: 0 5px 0 0px;
+    width: 145px;
+}
+.item-content .item-about-introduction{
+    margin: 0 5px 0 0px;
+    width: 195px;
+}
+.item-content .item-about-experience{
+    margin: 0 5px 0 0px;
+    width: 195px;
+}
+.item-content .item-about-mission{
+    margin: 0 5px 0 0px;
+    width: 195px;
+}
+.item-content .item-about-status{
+    margin: 0 5px 0 0px;
+    width: 90px;
+}
+#videoList .item-content .item-about-status{
+    margin: 0 5px 0 0px;
+    width: 90px;
+    cursor: pointer;
+}
+.item-content .item-about-image{
+    height: 45px;
+    margin: 0px 50px 0 10px;
+    width: 45px;
+    top: 15px;
+    border-radius: 5px;
+    background-image: linear-gradient(90deg, rgba(46, 35, 1, 0.1)100%, rgba(235, 206, 39, 0.0)70%), url(../resources/pic-back.png);
+    background-size: cover;
+    cursor: pointer;
+}
+#videoList .item-content .item-about-image{
+    height: 45px;
+    margin: 0 50px 0 10px;
+    width: 45px;
+    border-radius: 8px;
+    background-image: linear-gradient(90deg, rgba(46, 35, 1, 0.1)100%, rgba(235, 206, 39, 0.0)70%), url(../resources/vid-thumbnail.png);
+    background-size: cover;
+    cursor: pointer;
+}
+#aboutList .item-content{
+    align-items: center;
+    height: 46px;
+    background-color: rgba(48, 46, 44, 0.25);
+    margin-bottom: 2px;
+}
+#aboutList .item-content:hover{
+    background-color: #F65730;
+}
+
+
+/** Video */
+.admin-hero .content #videoContentMgt .field-item{
+    height: 90%;
+    overflow-y: auto;
+    overflow-x: hidden;
+    margin-top: 8.2%;
+    padding-top: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+#videoContentMgt{
+    align-items: start;
+    justify-content: start;
+    justify-self: start;
+    height: 100%;
+    width: 85%;
+    margin-left: 20px;
+}
+#videoContentMgt .contact-top-controls{
+    display: flex;
+    flex-direction: row;
+    justify-content:space-between;
+    width: 100%;
+    margin-bottom: 20px;
+}
+#videoContentMgt #createUserButton{
+    color: transparent;
+    background-color: transparent;
+}
+#searchAppointmentInput{
+    margin-right: 8px;
+    border-radius: 5px;
+    border: 0;
+    height: 30px;
+    width: 250px;
+    background-color: #adaeae;
+    margin-left: 8px;
+    padding-left: 10px;
+}
+#videoContentMgt .field-bar p{
+    font-size: 13px;
+    font-weight: 700;
+    font-family: 'DM Sans';
+    color: aliceblue;
+    text-align: start;
+}
+
+#videoContentMgt .field-bar .title-appointment-id{
+    margin: 0 0px 0 10px;
+    width: 80px;
+    text-align: start;
+}
+.field-bar .title-appointment-name{
+    margin: 0 10px 0 10px;
+    width: 120px;
+}
+.content #videoContentMgt .field-item .item-content p{
+    font-size: 11px;
+    font-weight: light;
+    font-family: 'DM Sans';
+    color: aliceblue;
+    text-align: left;
+}
+.admin-hero .content #videoContentMgt .field-item .item-content .item-appointment-id{
+    margin: 0 5px 0 5px;
+    width: 75px;
+    text-align: start;
+}
+.item-content .item-appointment-name{
+    margin: 0 5px 0 0px;
+    width: 145px;
+}
+#createAboutButton{
+    background-color: #009a08;
+    height: 35px;
+    cursor: pointer;
+}
+#createAboutButton:hover{
+    background-color: #d84520;
+}
+
+#createNewVideoButton{
+    background-color: #009a08;
+    height: 35px;
+    cursor: pointer;
+}
+#createNewVideoButton:hover{
+    background-color: #d84520;
+}
+#photoViewArea{
+    width: 400px;
+    height: 480px;
+    background-image: linear-gradient(90deg, rgba(46, 35, 1, 0.4)100%, rgba(235, 206, 39, 0.4)70%), url(../resources/pic-back.png);
+    border-radius: 20px;
+    margin: 6px;
+    background-size: 100% 100%;
+}
+#popupVideo{
+    width: 400px;
+    height: 480px;
+    border-radius: 20px;
+    margin: 70px 0 0;
+    background-size: 100% 100%;
+}
+.mobile-warning {
+    display: none; /* Hide by default */
+}
+
+@media (max-width: 1024px) { /* Adjust breakpoint as needed */
+    body > * {
+        display: none; /* Hide all direct children of body */
+    }
+
+    .mobile-warning {
+        display: block; /* Show only the warning section */
+        text-align: center;
+        font-size: 20px;
+        color: red;
+        padding: 20px;
+        z-index: 20;
+        height: 100%;
+    }
+}
+
+#errorContainer {
+    width: 20%;
+    height: 80%;
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    display: flex;
+    flex-direction: column-reverse; /* New messages appear at the bottom */
+    align-items: flex-end;
+    gap: 10px;
+    z-index: 1000;
+    overflow-x: auto;
+}
+
+/* Message container */
+.message {
+    display: flex;
+    align-items: center;
+    padding: 10px 15px;
+    border-radius: 5px;
+    font-size: 14px;
+    position: relative;
+    animation: slideIn 0.5s ease-out;
+}
+
+/* Error message */
+.error-display {
+    background-color: #fc7b7b;
+    color: rgb(236, 2, 2);
+}
+
+/* Success message */
+.success {
+    background-color: #0b6b2d;
+    color: rgb(255, 255, 255);
+}
+
+/* Close button */
+.error-close-btn {
+    cursor: pointer;
+    margin-left: 10px;
+    position: absolute;
+    top: 4px;
+    right: 4px;
+}
+
+/* Slide-in animation */
+@keyframes slideIn {
+    from {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
