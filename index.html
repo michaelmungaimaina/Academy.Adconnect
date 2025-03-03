@@ -20,8 +20,8 @@
 
     <!-- Font awesome cdn -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.0/css/all.min.css"
-          integrity="sha512-9xKTRVabjVeZmc+GUW8GgSmcREDunMM+Dt/GrzchfN8tkwHizc5RP4Ok/MXFFy5rIjJjzhndFScTceq5e6GvVQ=="
-          crossorigin="anonymous" referrerpolicy="no-referrer" />
+        integrity="sha512-9xKTRVabjVeZmc+GUW8GgSmcREDunMM+Dt/GrzchfN8tkwHizc5RP4Ok/MXFFy5rIjJjzhndFScTceq5e6GvVQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
     <!-- Font Oregano -->
@@ -30,711 +30,914 @@
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet" />
     <!-- Font IBM Plex Sans Hebrew sans-serif -->
     <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Hebrew:wght@400;500;700&display=swap"
-          rel="stylesheet" />
+        rel="stylesheet" />
 
 </head>
 
 <body>
-<header id="admin-header">
-    <nav id="nav-bar" class="h-layout">
-        <div class="left-nav-section h-layout">
-            <a href="/">
-                <img src="../resources/logo.png" alt="" />
-            </a>
-            <p>Dashboard</p>
-        </div>
-        <div class="right-nav-section h-layout">
-            <div class="v-layout">
-                <p id="usernameSession">John Doe</p>
-                <p>Kenya</p>
+    <header id="admin-header">
+        <nav id="nav-bar" class="h-layout">
+            <div class="left-nav-section h-layout">
+                <a href="/">
+                    <img src="../resources/logo.png" alt="" />
+                </a>
+                <p>Dashboard</p>
             </div>
-        </div>
-    </nav>
-</header>
-
-<!-- Login Page -->
-<section id="login-page" class="hidden">
-    <div class="h-layout">
-        <form id="login-form">
-            <div id="errorMessage"
-                 style="color: rgb(236, 2, 2); display: none; margin: 65px 10px 2px 10px; background-color: #fc7b7b; text-align: center; font-size: 11px; padding: 4px 15px; border-radius: 5px; position: fixed; margin-top: 65px;">
+            <div class="right-nav-section h-layout">
+                <div class="v-layout">
+                    <p id="usernameSession">John Doe</p>
+                    <p>Kenya</p>
+                </div>
             </div>
-            <h6>LOGIN</h6>
-            <label for="email">E-Mail:</label>
-            <input type="email" id="email" name="email" placeholder="example@example.com" required>
+        </nav>
+    </header>
 
-            <label for="password">Password:</label>
-            <input type="password" id="password" name="password" placeholder="password" required>
-
-            <button onclick="handleLogin()">LOGIN</button>
-        </form>
-    </div>
-</section>
-
-<section id="adminHero" class="admin-hero">
-    <!-- Header Text -->
-    <div class="v-layout admin-header-text">
+    <!-- Login Page -->
+    <section id="login-page" class="hidden">
         <div class="h-layout">
-            <div class="slash-rect"></div>
-            <p class="header-text">Admin Dashboard</p>
+            <form id="login-form">
+                <div id="errorMessage"
+                    style="color: rgb(236, 2, 2); display: none; margin: 65px 10px 2px 10px; background-color: #fc7b7b; text-align: center; font-size: 11px; padding: 4px 15px; border-radius: 5px; position: fixed; margin-top: 65px;">
+                </div>
+                <h6>LOGIN</h6>
+                <label for="email">E-Mail:</label>
+                <input type="email" id="email" name="email" placeholder="example@example.com" required>
+
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password" placeholder="password" required>
+
+                <button onclick="handleLogin()">LOGIN</button>
+            </form>
         </div>
-        <img src="../resources/elipsis-line.png" alt="">
-    </div>
+    </section>
 
-    <!-- Navigation Section -->
-    <div class="admin-sidebar v-layout">
-        <ul>
-            <li id="userMgt">User Management</li>
-            <li id="contentMgt" class="dropdown">
-                <a href="#" class="nav-link dropdown-toggle">Content Management</a>
-                <ul class="dropdown-menu" style="width: 140px; margin-left: 2px; background-color: #737373;">
-                    <li id="aboutMgt" class="dropdown-item" style="padding-top: 2px;">About</li>
-                    <li id="videoMgt" class="dropdown-item" style="padding-top: 2px;">Video</li>
-                </ul>
-            </li>
-            <li id="leadMgt">Leads</li>
-            <li id="apptMgt">Appointments</li>
-            <li id="applicationMgt">Applications</li>
-            <li id="courseMgt">Courses</li>
-            <li id="crmMgt">CRM</li>
-            <li id="reportMgt">Reports & Analytics</li>
-            <li id="settingMgt">Settings & Customization</li>
-            <li id="workflowMgt">Automated Workflows</li>
-            <li id="commMgt">Communication Center</li>
-            <li id="docsMgt">Document Management</li>
-        </ul>
-    </div>
-
-    <!-- Right Dashboard Content-->
-    <div id="content" class="v-layout content">
-        <!-- Manage Users -->
-        <div id="userContentMgt" class="v-layout">
-            <div id="userTopHeader">
-                <div class="h-layout contact-top-controls">
-                    <div id="searchBar" class="h-layout">
-                        <i id="searchBarIcon" class="fa-solid fa-magnifying-glass"></i>
-                        <input id="searchUserInput" type="text" placeholder="Search User">
-                    </div>
-                    <button id="refreshUserButton" onclick="refreshUserTable()" class="buttons">REFRESH
-                        TABLE</button>
-                    <button id="createUserButton" class="buttons">CREATE NEW USER</button>
-                </div>
-                <!-- Title Bar -->
-                <div class="h-layout field-bar">
-                    <p class="title-user-id">USER ID</p>
-                    <p class="title-user-name">USER NAME</p>
-                    <p class="title-user-email">USER EMAIL</p>
-                    <p class="title-user-roles">USER ROLES</p>
-                    <p class="title-user-access">ACCESS LEVEL</p>
-                    <p class="title-user-action">ACTIONS</p>
-                </div>
+    <section id="adminHero" class="admin-hero">
+        <!-- Header Text -->
+        <div class="v-layout admin-header-text">
+            <div class="h-layout">
+                <div class="slash-rect"></div>
+                <p class="header-text">Admin Dashboard</p>
             </div>
-            <div id="userList" class="v-layout field-item">
-                <!-- Control Data -->
-                <div class="h-layout item-content">
-                    <p class="item-user-id">USER ID</p>
-                    <p class="item-user-name">USER NAME</p>
-                    <p class="item-user-email">USER EMAIL</p>
-                    <p class="item-user-roles">USER ROLES</p>
-                    <p class="item-user-access">ACCESS LEVEL</p>
-                    <button id="userUpdateBtn">UPDATE</button>
-                    <button id="userDeleteBtn">DELETE</button>
-                </div>
-            </div>
+            <img src="../resources/elipsis-line.png" alt="">
         </div>
 
-        <!-- Manage About -->
-        <div id="videoContentMgt" class="v-layout hidden">
-            <div id="aboutSec" class="v-layout">
+        <!-- Navigation Section -->
+        <div class="admin-sidebar v-layout">
+            <ul>
+                <li id="userMgt">User Management</li>
+                <li id="contentMgt" class="dropdown">
+                    <a href="#" class="nav-link dropdown-toggle">Content Management</a>
+                    <ul class="dropdown-menu" style="width: 140px; margin-left: 2px; background-color: #737373;">
+                        <li id="aboutMgt" class="dropdown-item" style="padding-top: 2px;">About</li>
+                        <li id="videoMgt" class="dropdown-item" style="padding-top: 2px;">Video</li>
+                    </ul>
+                </li>
+                <li id="leadMgt">Leads</li>
+                <li id="apptMgt">Appointments</li>
+                <li id="applicationMgt">Applications</li>
+                <li id="courseMgt">Courses</li>
+                <li id="crmMgt">CRM</li>
+                <li id="reportMgt">Reports & Analytics</li>
+                <li id="settingMgt">Settings & Customization</li>
+                <li id="workflowMgt">Automated Workflows</li>
+                <li id="commMgt">Communication Center</li>
+                <li id="docsMgt">Document Management</li>
+            </ul>
+        </div>
+
+        <!-- Right Dashboard Content-->
+        <div id="content" class="v-layout content">
+            <!-- Manage Users -->
+            <div id="userContentMgt" class="v-layout hidden">
                 <div id="userTopHeader">
                     <div class="h-layout contact-top-controls">
-                        <button id="refreshUserButton" class="buttons" style="visibility: hidden;">REFRESH
-                            TABLE</button>
                         <div id="searchBar" class="h-layout">
-                            <p style="color: white; font-family: 'DM Sans'; font-size: 16px; font-weight: 700;">
-                                MANAGE ABOUT SECTION </p>
+                            <i id="searchBarIcon" class="fa-solid fa-magnifying-glass"></i>
+                            <input id="searchUserInput" type="text" placeholder="Search User">
                         </div>
-                        <button id="createAboutButton" onclick="openaboutRegisterPopup()" class="buttons" style="visibility: visible;">ADD NEW
-                            ABOUT</button>
+                        <button id="refreshUserButton" onclick="refreshUserTable()" class="buttons">REFRESH
+                            TABLE</button>
+                        <button id="createUserButton" class="buttons">CREATE NEW USER</button>
                     </div>
                     <!-- Title Bar -->
                     <div class="h-layout field-bar">
-                        <p class="title-about-id">PROF ID</p>
-                        <p class="title-about-title">TITLE</p>
-                        <p class="title-about-introduction">INTRODUCTION</p>
-                        <p class="title-about-experience">EXPERiENCE</p>
-                        <p class="title-about-mission">MISSION</p>
-                        <p class="title-about-status">STATUS</p>
-                        <p class="title-about-image">ICON</p>
-                        <i id="leadUnsubscribeBtn" onclick="refreshAbout()" class="fa fa-refresh" aria-hidden="true"></i>
+                        <p class="title-user-id">USER ID</p>
+                        <p class="title-user-name">USER NAME</p>
+                        <p class="title-user-email">USER EMAIL</p>
+                        <p class="title-user-roles">USER ROLES</p>
+                        <p class="title-user-access">ACCESS LEVEL</p>
+                        <p class="title-user-action">ACTIONS</p>
                     </div>
                 </div>
-                <div id="aboutList" class="v-layout field-item">
+                <div id="userList" class="v-layout field-item">
                     <!-- Control Data -->
                     <div class="h-layout item-content">
-                        <p class="item-about-id">123456789012</p>
-                        <p class="item-about-title">MICHAEL MUNGAI MAINA</p>
-                        <p class="item-about-introduction">michaelmunaimaina@gmail.com</p>
-                        <p class="item-about-experience">0799292048</p>
-                        <p class="item-about-mission">NAIROBI</p>
-                        <p class="item-about-status">2025-01-27</p>
-                        <p class="item-about-image">11.30 AM</p>
-                        <i id="leadDeleteBtn" class="fa fa-trash" aria-hidden="true"></i>
+                        <p class="item-user-id">USER ID</p>
+                        <p class="item-user-name">USER NAME</p>
+                        <p class="item-user-email">USER EMAIL</p>
+                        <p class="item-user-roles">USER ROLES</p>
+                        <p class="item-user-access">ACCESS LEVEL</p>
+                        <button id="userUpdateBtn">UPDATE</button>
+                        <button id="userDeleteBtn">DELETE</button>
                     </div>
-                    <div class="h-layout item-content">
-                        <p class="item-about-id">123456789012</p>
-                        <p class="item-about-title">MICHAEL MUNGAI MAINA</p>
-                        <p class="item-about-introduction">michaelmunaimaina@gmail.com</p>
-                        <p class="item-about-experience">0799292048</p>
-                        <p class="item-about-mission">NAIROBI</p>
-                        <p class="item-about-status">2025-01-27</p>
-                        <p class="item-about-image">11.30 AM</p>
-                        <i id="leadDeleteBtn" class="fa fa-trash" aria-hidden="true"></i>
-                    </div>
-                    <div class="h-layout item-content">
-                        <p class="item-about-id">123456789012</p>
-                        <p class="item-about-title">MICHAEL MUNGAI MAINA</p>
-                        <p class="item-about-introduction">michaelmunaimaina@gmail.com</p>
-                        <p class="item-about-experience">0799292048</p>
-                        <p class="item-about-mission">NAIROBI</p>
-                        <p class="item-about-status">2025-01-27</p>
-                        <p class="item-about-image">11.30 AM</p>
-                        <i id="leadDeleteBtn" class="fa fa-trash" aria-hidden="true"></i>
-                    </div>
-                    <div class="h-layout item-content">
-                        <p class="item-about-id">123456789012</p>
-                        <p class="item-about-title">MICHAEL MUNGAI MAINA</p>
-                        <p class="item-about-introduction">michaelmunaimaina@gmail.com</p>
-                        <p class="item-about-experience">0799292048</p>
-                        <p class="item-about-mission">NAIROBI</p>
-                        <p class="item-about-status">2025-01-27</p>
-                        <p class="item-about-image">11.30 AM</p>
-                        <i id="leadDeleteBtn" class="fa fa-trash" aria-hidden="true"></i>
-                    </div>
-                    <div class="h-layout item-content">
-                        <p class="item-about-id">123456789012</p>
-                        <p class="item-about-title">MICHAEL MUNGAI MAINA</p>
-                        <p class="item-about-introduction">michaelmunaimaina@gmail.com</p>
-                        <p class="item-about-experience">0799292048</p>
-                        <p class="item-about-mission">NAIROBI</p>
-                        <p class="item-about-status">2025-01-27</p>
-                        <p class="item-about-image">11.30 AM</p>
-                        <i id="leadDeleteBtn" class="fa fa-trash" aria-hidden="true"></i>
-                    </div>
-                    <div class="h-layout item-content">
-                        <p class="item-about-id">123456789012</p>
-                        <p class="item-about-title">MICHAEL MUNGAI MAINA</p>
-                        <p class="item-about-introduction">michaelmunaimaina@gmail.com</p>
-                        <p class="item-about-experience">0799292048</p>
-                        <p class="item-about-mission">NAIROBI</p>
-                        <p class="item-about-status">2025-01-27</p>
-                        <p class="item-about-image">11.30 AM</p>
-                        <i id="leadDeleteBtn" class="fa fa-trash" aria-hidden="true"></i>
-                    </div>
-
                 </div>
             </div>
-            <div id="vidSec" class="v-layout">
+
+            <!-- Manage About -->
+            <div id="videoContentMgt" class="v-layout hidden">
+                <div id="aboutSec" class="v-layout">
+                    <div id="userTopHeader">
+                        <div class="h-layout contact-top-controls">
+                            <button id="refreshUserButton" class="buttons" style="visibility: hidden;">REFRESH
+                                TABLE</button>
+                            <div id="searchBar" class="h-layout">
+                                <p style="color: white; font-family: 'DM Sans'; font-size: 16px; font-weight: 700;">
+                                    MANAGE ABOUT SECTION </p>
+                            </div>
+                            <button id="createAboutButton" onclick="openaboutRegisterPopup()" class="buttons"
+                                style="visibility: visible;">ADD NEW
+                                ABOUT</button>
+                        </div>
+                        <!-- Title Bar -->
+                        <div class="h-layout field-bar">
+                            <p class="title-about-id">PROF ID</p>
+                            <p class="title-about-title">TITLE</p>
+                            <p class="title-about-introduction">INTRODUCTION</p>
+                            <p class="title-about-experience">EXPERiENCE</p>
+                            <p class="title-about-mission">MISSION</p>
+                            <p class="title-about-status">STATUS</p>
+                            <p class="title-about-image">ICON</p>
+                            <i id="leadUnsubscribeBtn" onclick="refreshAbout()" class="fa fa-refresh"
+                                aria-hidden="true"></i>
+                        </div>
+                    </div>
+                    <div id="aboutList" class="v-layout field-item">
+                        <!-- Control Data -->
+                        <div class="h-layout item-content">
+                            <p class="item-about-id">123456789012</p>
+                            <p class="item-about-title">MICHAEL MUNGAI MAINA</p>
+                            <p class="item-about-introduction">michaelmunaimaina@gmail.com</p>
+                            <p class="item-about-experience">0799292048</p>
+                            <p class="item-about-mission">NAIROBI</p>
+                            <p class="item-about-status">2025-01-27</p>
+                            <p class="item-about-image">11.30 AM</p>
+                            <i id="leadDeleteBtn" class="fa fa-trash" aria-hidden="true"></i>
+                        </div>
+                        <div class="h-layout item-content">
+                            <p class="item-about-id">123456789012</p>
+                            <p class="item-about-title">MICHAEL MUNGAI MAINA</p>
+                            <p class="item-about-introduction">michaelmunaimaina@gmail.com</p>
+                            <p class="item-about-experience">0799292048</p>
+                            <p class="item-about-mission">NAIROBI</p>
+                            <p class="item-about-status">2025-01-27</p>
+                            <p class="item-about-image">11.30 AM</p>
+                            <i id="leadDeleteBtn" class="fa fa-trash" aria-hidden="true"></i>
+                        </div>
+                        <div class="h-layout item-content">
+                            <p class="item-about-id">123456789012</p>
+                            <p class="item-about-title">MICHAEL MUNGAI MAINA</p>
+                            <p class="item-about-introduction">michaelmunaimaina@gmail.com</p>
+                            <p class="item-about-experience">0799292048</p>
+                            <p class="item-about-mission">NAIROBI</p>
+                            <p class="item-about-status">2025-01-27</p>
+                            <p class="item-about-image">11.30 AM</p>
+                            <i id="leadDeleteBtn" class="fa fa-trash" aria-hidden="true"></i>
+                        </div>
+                        <div class="h-layout item-content">
+                            <p class="item-about-id">123456789012</p>
+                            <p class="item-about-title">MICHAEL MUNGAI MAINA</p>
+                            <p class="item-about-introduction">michaelmunaimaina@gmail.com</p>
+                            <p class="item-about-experience">0799292048</p>
+                            <p class="item-about-mission">NAIROBI</p>
+                            <p class="item-about-status">2025-01-27</p>
+                            <p class="item-about-image">11.30 AM</p>
+                            <i id="leadDeleteBtn" class="fa fa-trash" aria-hidden="true"></i>
+                        </div>
+                        <div class="h-layout item-content">
+                            <p class="item-about-id">123456789012</p>
+                            <p class="item-about-title">MICHAEL MUNGAI MAINA</p>
+                            <p class="item-about-introduction">michaelmunaimaina@gmail.com</p>
+                            <p class="item-about-experience">0799292048</p>
+                            <p class="item-about-mission">NAIROBI</p>
+                            <p class="item-about-status">2025-01-27</p>
+                            <p class="item-about-image">11.30 AM</p>
+                            <i id="leadDeleteBtn" class="fa fa-trash" aria-hidden="true"></i>
+                        </div>
+                        <div class="h-layout item-content">
+                            <p class="item-about-id">123456789012</p>
+                            <p class="item-about-title">MICHAEL MUNGAI MAINA</p>
+                            <p class="item-about-introduction">michaelmunaimaina@gmail.com</p>
+                            <p class="item-about-experience">0799292048</p>
+                            <p class="item-about-mission">NAIROBI</p>
+                            <p class="item-about-status">2025-01-27</p>
+                            <p class="item-about-image">11.30 AM</p>
+                            <i id="leadDeleteBtn" class="fa fa-trash" aria-hidden="true"></i>
+                        </div>
+
+                    </div>
+                </div>
+                <div id="vidSec" class="v-layout">
+                    <div id="userTopHeader">
+                        <div class="h-layout contact-top-controls">
+                            <button id="refreshUserButton" class="buttons" style="visibility: hidden;">REFRESH
+                                TABLE</button>
+                            <div id="searchBar" class="h-layout">
+                                <p style="color: white; font-family: 'DM Sans'; font-size: 16px; font-weight: 700;">
+                                    MANAGE VIDEO SECTION </p>
+                            </div>
+                            <button id="createNewVideoButton" onclick="openVideoRegisterPopup()" class="buttons"
+                                style="visibility: visible;">NEW
+                                VIDEO</button>
+                        </div>
+                        <!-- Title Bar -->
+                        <div class="h-layout field-bar">
+                            <p class="title-about-id">VIDEO ID</p>
+                            <p class="title-about-title">TITLE</p>
+                            <p class="title-about-introduction">CREATED BY</p>
+                            <p class="title-about-introduction">CREATED ON</p>
+                            <p class="title-about-status">STATUS</p>
+                            <p class="title-about-image">VIDEO</p>
+                            <i id="leadUnsubscribeBtn" onclick="refreshVideos()" class="fa fa-refresh"
+                                aria-hidden="true"></i>
+                        </div>
+                    </div>
+                    <div id="videoList" class="v-layout field-item">
+                        <!-- Control Data -->
+                        <div class="h-layout item-content">
+                            <p class="item-about-id">123456789012</p>
+                            <p class="item-about-title">FIRST VIDEO</p>
+                            <p class="item-about-introduction">2025-02-10</p>
+                            <p class="item-about-introduction">2025-02-10</p>
+                            <p class="item-about-status">ACTIVE</p>
+                            <p class="item-about-image"></p>
+                            <i id="leadDeleteBtn" class="fa fa-trash" aria-hidden="true"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- MAnage Leads -->
+            <div id="leadsContentMgt" class="v-layout hidden">
                 <div id="userTopHeader">
                     <div class="h-layout contact-top-controls">
-                        <button id="refreshUserButton" class="buttons" style="visibility: hidden;">REFRESH
+                        <button id="refreshUserButton" onclick="refreshLeadsTable()" class="buttons">REFRESH
                             TABLE</button>
                         <div id="searchBar" class="h-layout">
-                            <p style="color: white; font-family: 'DM Sans'; font-size: 16px; font-weight: 700;">
-                                MANAGE VIDEO SECTION </p>
+                            <i id="searchBarIcon" class="fa-solid fa-magnifying-glass"></i>
+                            <input id="searchLeadsInput" type="text" placeholder="Filter Lead(s)">
                         </div>
-                        <button id="createNewVideoButton" onclick="openVideoRegisterPopup()" class="buttons" style="visibility: visible;">NEW
-                            VIDEO</button>
+                        <button id="createUserButton" class="buttons">CREATE NEW USER</button>
+                        <i id="downloadButton" class="fa fa-download" aria-hidden="true"></i>
                     </div>
                     <!-- Title Bar -->
                     <div class="h-layout field-bar">
-                        <p class="title-about-id">VIDEO ID</p>
-                        <p class="title-about-title">TITLE</p>
-                        <p class="title-about-introduction">CREATED BY</p>
-                        <p class="title-about-introduction">CREATED ON</p>
-                        <p class="title-about-status">STATUS</p>
-                        <p class="title-about-image">VIDEO</p>
-                        <i id="leadUnsubscribeBtn" onclick="refreshVideos()" class="fa fa-refresh" aria-hidden="true"></i>
+                        <p class="title-lead-id">LEAD ID</p>
+                        <p class="title-lead-name">LEAD NAME</p>
+                        <p class="title-lead-email">LEAD EMAIL</p>
+                        <p class="title-lead-phone">PHONE</p>
+                        <p class="title-lead-source">SOURCE</p>
+                        <p class="title-lead-status">STATUS</p>
+                        <p class="title-lead-subscription">SUBSCRIPTION</p>
+                        <p class="title-lead-date">DATE</p>
+                        <p class="title-lead-action">ACTIONS</p>
                     </div>
                 </div>
-                <div id="videoList" class="v-layout field-item">
+
+                <div id="leadList" class="v-layout field-item">
                     <!-- Control Data -->
                     <div class="h-layout item-content">
-                        <p class="item-about-id">123456789012</p>
-                        <p class="item-about-title">FIRST VIDEO</p>
-                        <p class="item-about-introduction">2025-02-10</p>
-                        <p class="item-about-introduction">2025-02-10</p>
-                        <p class="item-about-status">ACTIVE</p>
-                        <p class="item-about-image"></p>
+                        <p class="item-lead-id">1234567890123456789</p>
+                        <p class="item-lead-name">Michael Maina Mungai</p>
+                        <p class="item-lead-email">michaelmungaimaina@gmail.com</p>
+                        <p class="item-lead-phone">0799292048</p>
+                        <p class="item-lead-source">WEBSITE</p>
+                        <p class="item-lead-status">1ST CONTACT</p>
+                        <p class="item-lead-subscription">UNSUBSCRIBED</p>
+                        <p class="item-lead-date">2025-01-26 10:11:15</p>
+                        <i id="leadPreviewMailBtn" class="fa fa-envelope-open" aria-hidden="true"></i>
+                        <i id="leadSendMailBtn" class="fa fa-envelope" aria-hidden="true"></i>
+                        <i id="leadUnsubscribeBtn" class="fa fa-sign-out" aria-hidden="true"></i>
+                        <i id="leadDeleteBtn" class="fa fa-trash" aria-hidden="true"></i>
+
+                    </div>
+                </div>
+            </div>
+
+            <!-- Manage Courses -->
+            <div id="courseContentMgt" class="v-layout hidden">
+                <div class="v-layout">
+                    <div class="h-layout course-header">
+                        <div id="package-mgt" class="c-nav-start">
+                            <p>PACKAGES</p>
+                        </div>
+                        <div id="course-mgt" class="c-nav">
+                            <p>COURSES</p>
+                        </div>
+                        <div id="module-mgt" class="c-nav">
+                            <p>MODULES</p>
+                        </div>
+                        <div id="resource-mgt" class="c-nav">
+                            <p>RESOURCES</p>
+                        </div>
+                        <div id="client-mgt" class="c-nav">
+                            <p>CLIENTS</p>
+                        </div>
+                        <div id="payment-mgt" class="c-nav">
+                            <p>PAYMENTS</p>
+                        </div>
+                        <div id="subscription-mgt" class="c-nav-end">
+                            <p>SUBSCRIPTIONS</p>
+                        </div>
+                    </div>
+                    <div id="course-c-c" class="v-layout">
+                        <div id="packages-content" class="v-layout">
+                            <div class="v-layout">
+                                <div id="package-header" class="h-layout">
+                                    <div class="h-layout">
+                                        <img src="/resources/search-icon.png" alt="">
+                                        <input type="text" placeholder="Search Packages">
+                                    </div>
+                                    <div class="h-layout" style="background-color: rgba(240, 248, 255, 0);">
+                                        <i id="btnCreatePackage" class="fa fa-plus-square" aria-hidden="true"></i>
+                                        <i onclick="refreshPackagesTable()" class="fa fa-refresh" aria-hidden="true"></i>
+                                    </div>
+                                </div>
+                                    <div class="h-layout field-bar">
+                                        <p class="title-plan-name">PLAN NAME</p>
+                                        <p class="title-plan-period">PERIOD</p>
+                                        <p class="title-plan-amount">AMOUNT(KSH)</p>
+                                        <p class="title-plan-period">PERIOD</p>
+                                        <p class="title-plan-amount">AMOUNT(KSH)</p>
+                                        <p class="title-plan-period">PERIOD</p>
+                                        <p class="title-plan-amount">AMOUNT(KSH)</p>
+                                        <p class="title-plan-period">PERIOD</p>
+                                        <p class="title-plan-amount">AMOUNT(KSH)</p>
+                                        <p class="title-plan-action">ACTIONS</p>
+                                    </div>
+                            </div>
+                            <div id="packageList" class="v-layout field-item">
+                                <!-- Control Data -->
+                                <div class="h-layout item-content">
+                                    <p class="item-plan-name">Digital Marketing Plan</p>
+                                    <p class="item-plan-period">3 Months</p>
+                                    <p class="item-plan-amount">4,000</p>
+                                    <p class="item-plan-period">6 Months</p>
+                                    <p class="item-plan-amount">8,000</p>
+                                    <p class="item-plan-period">9 Months</p>
+                                    <p class="item-plan-amount">12,000</p>
+                                    <p class="item-plan-period">12 Months</p>
+                                    <p class="item-plan-amount">16,000</p>
+                                    <i id="leadPreviewMailBtn" class="fa fa-pencil-square" aria-hidden="true"></i>
+                                    <i id="leadDeleteBtn" class="fa fa-trash" aria-hidden="true"></i>
+                                </div>
+                                <div class="h-layout item-content">
+                                    <p class="item-plan-name">Digital Marketing Plan</p>
+                                    <p class="item-plan-period">3 Months</p>
+                                    <p class="item-plan-amount">4,000</p>
+                                    <p class="item-plan-period">6 Months</p>
+                                    <p class="item-plan-amount">8,000</p>
+                                    <p class="item-plan-period">9 Months</p>
+                                    <p class="item-plan-amount">12,000</p>
+                                    <p class="item-plan-period">12 Months</p>
+                                    <p class="item-plan-amount">16,000</p>
+                                    <i id="leadPreviewMailBtn" class="fa fa-pencil-square" aria-hidden="true"></i>
+                                    <i id="leadDeleteBtn" class="fa fa-trash" aria-hidden="true"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="courses-content" class="v-layout hidden"></div>
+                        <div id="modules-content" class="v-layout hidden"></div>
+                        <div id="resources-content" class="v-layout hidden"></div>
+                        <div id="clients-content" class="v-layout hidden"></div>
+                        <div id="payments-content" class="v-layout hidden"></div>
+                        <div id="subscriptions-content" class="v-layout hidden"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Manage Reports -->
+            <div id="reportsContentMgt" class="v-layout hidden"></div>
+
+            <!-- Manage Settings -->
+            <div id="settingsContentMgt" class="v-layout"></div>
+
+            <!-- Manage Workflows -->
+            <div id="workflowsContentMgt" class="v-layout"></div>
+
+            <!-- Manage Communications -->
+            <div id="communicationContentMgt" class="v-layout"></div>
+
+            <!-- Manage Documents -->
+            <div id="documentContentMgt" class="v-layout"></div>
+
+            <!-- Manage Applications -->
+            <div id="applictionContentMgt" class="v-layout hidden">
+                <div id="userTopHeader">
+                    <div class="h-layout contact-top-controls">
+                        <div id="searchBar" class="h-layout">
+                            <i id="searchBarIcon" class="fa-solid fa-magnifying-glass"></i>
+                            <input id="searchApplicationInput" type="text" placeholder="Search Applications">
+                        </div>
+                        <button id="refreshUserButton" onclick="refreshApplicationTable()" class="buttons">REFRESH
+                            TABLE</button>
+                        <button id="createUserButton" class="buttons" style="visibility: collapse"></button>
+                    </div>
+                    <!-- Title Bar -->
+                    <div class="h-layout field-bar">
+                        <p class="title-user-id">CLIENT ID</p>
+                        <p class="title-user-name">CLIENT NAME</p>
+                        <p class="title-user-email">EMAIL</p>
+                        <p class="title-appointment-phone">PHONE</p>
+                        <p class="title-appointment-notes">OCCUPATION</p>
+                        <p class="title-appointment-notes">TRIGGER</p>
+                        <p class="title-appointment-notes">GOAL</p>
+                        <p class="title-appointment-notes">INVESTMENT</p>
+                        <p class="title-appointment-status">STATUS</p>
+                        <p class="title-user-action">ACTIONS</p>
+                    </div>
+                </div>
+                <div id="applicationList" class="v-layout field-item">
+                    <!-- Control Data -->
+                    <div class="h-layout item-content">
+                        <p class="item-user-id">202502081700</p>
+                        <p class="item-user-name">Michael Maina</p>
+                        <p class="item-user-email">maina@gmail.com</p>
+                        <p class="item-appointment-phone">0799292048</p>
+                        <p class="item-appointment-notes">Digital Marketting</p>
+                        <p class="item-appointment-notes">I have to</p>
+                        <p class="item-appointment-notes">My goal is to have a </p>
+                        <p class="item-appointment-notes">75,000 - 110,000</p>
+                        <p class="item-appointment-status">UNRESOLVED</p>
+                        <button id="userDeleteBtn">DELETE</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Manage Appointment -->
+            <div id="appointmentContentMgt" class="v-layout hidden">
+                <div id="userTopHeader">
+                    <div class="h-layout contact-top-controls">
+                        <button id="refreshUserButton" onclick="refreshAppointmentTable()" class="buttons">REFRESH
+                            TABLE</button>
+                        <div id="searchBar" class="h-layout">
+                            <i id="searchBarIcon" class="fa-solid fa-magnifying-glass"></i>
+                            <input id="searchAppointmentInput" type="text" placeholder="Filter Appointments">
+                        </div>
+                        <button id="createUserButton" class="buttons">CREATE NEW USER</button>
+                    </div>
+                    <!-- Title Bar -->
+                    <div class="h-layout field-bar">
+                        <p class="title-appointment-id">CLIENT ID</p>
+                        <p class="title-appointment-name">CLIENT NAME</p>
+                        <p class="title-appointment-email">CLIENT EMAIL</p>
+                        <p class="title-appointment-phone">PHONE</p>
+                        <p class="title-appointment-location">LOCATION</p>
+                        <p class="title-appointment-date">DATE</p>
+                        <p class="title-appointment-time">TIME</p>
+                        <p class="title-appointment-type">TYPE</p>
+                        <p class="title-appointment-status">STATUS</p>
+                        <p class="title-appointment-notes">NOTES</p>
+                        <p class="title-appointment-action">ACTIONS</p>
+                    </div>
+                </div>
+                <div id="appointmentList" class="v-layout field-item">
+                    <!-- Control Data -->
+                    <div class="h-layout item-content">
+                        <p class="item-appointment-id">123456789012</p>
+                        <p class="item-appointment-name">MICHAEL MUNGAI MAINA</p>
+                        <p class="item-appointment-email">michaelmunaimaina@gmail.com</p>
+                        <p class="item-appointment-phone">0799292048</p>
+                        <p class="item-appointment-location">NAIROBI</p>
+                        <p class="item-appointment-date">2025-01-27</p>
+                        <p class="item-appointment-time">11.30 AM</p>
+                        <p class="item-appointment-type">ONLINE</p>
+                        <p class="item-appointment-status">UPCOMING</p>
+                        <p class="item-appointment-notes">I WOULD LIKE TO FIX BLA BLA BLA</p>
+                        <i id="apptReschedule" class="fa fa-calendar" aria-hidden="true"></i>
+                        <i id="apptReschedule" class="fa fa-clock" aria-hidden="true"></i>
+                        <i id="leadSendMailBtn" class="fa fa-video-camera" aria-hidden="true"></i>
+                        <i id="leadUnsubscribeBtn" class="fa fa-check-circle" aria-hidden="true"></i>
                         <i id="leadDeleteBtn" class="fa fa-trash" aria-hidden="true"></i>
                     </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- MAnage Leads -->
-        <div id="leadsContentMgt" class="v-layout hidden">
-            <div id="userTopHeader">
-                <div class="h-layout contact-top-controls">
-                    <button id="refreshUserButton" onclick="refreshLeadsTable()" class="buttons">REFRESH
-                        TABLE</button>
-                    <div id="searchBar" class="h-layout">
-                        <i id="searchBarIcon" class="fa-solid fa-magnifying-glass"></i>
-                        <input id="searchLeadsInput" type="text" placeholder="Filter Lead(s)">
+                    <div class="h-layout item-content">
+                        <p class="item-appointment-id">123456789012</p>
+                        <p class="item-appointment-name">MICHAEL MUNGAI MAINA</p>
+                        <p class="item-appointment-email">michaelmunaimaina@gmail.com</p>
+                        <p class="item-appointment-phone">0799292048</p>
+                        <p class="item-appointment-location">NAIROBI</p>
+                        <p class="item-appointment-date">2025-01-27</p>
+                        <p class="item-appointment-time">11.30 AM</p>
+                        <p class="item-appointment-type">ONLINE</p>
+                        <p class="item-appointment-status">UPCOMING</p>
+                        <p class="item-appointment-notes">I WOULD LIKE TO FIX BLA BLA BLA</p>
+                        <i id="apptReschedule" class="fa fa-envelope-open" aria-hidden="true"></i>
+                        <i id="apptReschedule" class="fa fa-envelope-open" aria-hidden="true"></i>
+                        <i id="leadSendMailBtn" class="fa fa-envelope" aria-hidden="true"></i>
+                        <i id="leadUnsubscribeBtn" class="fa fa-sign-out" aria-hidden="true"></i>
+                        <i id="leadDeleteBtn" class="fa fa-trash" aria-hidden="true"></i>
                     </div>
-                    <button id="createUserButton" class="buttons">CREATE NEW USER</button>
-                    <i id="downloadButton" class="fa fa-download" aria-hidden="true"></i>
-                </div>
-                <!-- Title Bar -->
-                <div class="h-layout field-bar">
-                    <p class="title-lead-id">LEAD ID</p>
-                    <p class="title-lead-name">LEAD NAME</p>
-                    <p class="title-lead-email">LEAD EMAIL</p>
-                    <p class="title-lead-phone">PHONE</p>
-                    <p class="title-lead-source">SOURCE</p>
-                    <p class="title-lead-status">STATUS</p>
-                    <p class="title-lead-subscription">SUBSCRIPTION</p>
-                    <p class="title-lead-date">DATE</p>
-                    <p class="title-lead-action">ACTIONS</p>
-                </div>
-            </div>
-
-            <div id="leadList" class="v-layout field-item">
-                <!-- Control Data -->
-                <div class="h-layout item-content">
-                    <p class="item-lead-id">1234567890123456789</p>
-                    <p class="item-lead-name">Michael Maina Mungai</p>
-                    <p class="item-lead-email">michaelmungaimaina@gmail.com</p>
-                    <p class="item-lead-phone">0799292048</p>
-                    <p class="item-lead-source">WEBSITE</p>
-                    <p class="item-lead-status">1ST CONTACT</p>
-                    <p class="item-lead-subscription">UNSUBSCRIBED</p>
-                    <p class="item-lead-date">2025-01-26 10:11:15</p>
-                    <i id="leadPreviewMailBtn" class="fa fa-envelope-open" aria-hidden="true"></i>
-                    <i id="leadSendMailBtn" class="fa fa-envelope" aria-hidden="true"></i>
-                    <i id="leadUnsubscribeBtn" class="fa fa-sign-out" aria-hidden="true"></i>
-                    <i id="leadDeleteBtn" class="fa fa-trash" aria-hidden="true"></i>
 
                 </div>
             </div>
+
         </div>
+    </section>
 
-        <!-- Manage Reports -->
-        <div id="reportsContentMgt" class="v-layout hidden"></div>
+    <!-- Show A Dark Overlay While loading -->
+    <section id="loaderPopup" class="background-tint-black" style="z-index: 10000000;">
+        <p id="loadingText" style="margin-top: 16%; color: #466b44; font-weight: 600; font-family: 'DM Sans';">Loading .
+            . .</p>
+    </section>
 
-        <!-- Manage Settings -->
-        <div id="settingsContentMgt" class="v-layout"></div>
-
-        <!-- Manage Workflows -->
-        <div id="workflowsContentMgt" class="v-layout"></div>
-
-        <!-- Manage Communications -->
-        <div id="communicationContentMgt" class="v-layout"></div>
-
-        <!-- Manage Documents -->
-        <div id="documentContentMgt" class="v-layout"></div>
-
-        <!-- Manage Applications -->
-        <div id="applictionContentMgt" class="v-layout">
-            <div id="userTopHeader">
-                <div class="h-layout contact-top-controls">
-                    <div id="searchBar" class="h-layout">
-                        <i id="searchBarIcon" class="fa-solid fa-magnifying-glass"></i>
-                        <input id="searchApplicationInput" type="text" placeholder="Search Applications">
+    <!-- User Popup -->
+    <section id="userPopUp" class="background-tint-black">
+        <div id="btnClosePopup" onclick="closePopup()" class="btn_hover1" style="position: fixed;">
+            <i class="fa-solid fa-xmark"></i>
+        </div>
+        <div id="errorMessage"
+            style="color: rgb(236, 2, 2); display: none; margin: 65px 10px 2px 10px; background-color: #fc7b7b; text-align: center; font-size: 11px; padding: 4px 15px; border-radius: 5px; position: fixed; margin-top: 65px;">
+        </div>
+        <div class="appointment-layout outer-container">
+            <div class="h-layout" style="justify-content: space-between; width: 100%; padding-right: 20px;">
+                <div class="slash-rect"></div>
+                <p id="popupHeaderText" class="header-text" style="font-size: 16px;">Register A New User</p>
+                <div class="slash-rect"></div>
+            </div>
+            <div id="loader" class="loader hidden"></div>
+            <form class="form-section">
+                <div class="h-layout">
+                    <div>
+                        <label class="label" for="name">Full Name:</label>
+                        <img class="star" src="/resources/starr.png" alt="">
                     </div>
-                    <button id="refreshUserButton" onclick="refreshApplicationTable()" class="buttons">REFRESH
-                        TABLE</button>
-                    <button id="createUserButton" class="buttons" style="visibility: collapse"></button>
+                    <input id="name" type="text" class="input-field" placeholder="John Doe Doe"
+                        style="margin-left: 20px;">
                 </div>
-                <!-- Title Bar -->
-                <div class="h-layout field-bar">
-                    <p class="title-user-id">CLIENT ID</p>
-                    <p class="title-user-name">CLIENT NAME</p>
-                    <p class="title-user-email">EMAIL</p>
-                    <p class="title-appointment-phone">PHONE</p>
-                    <p class="title-appointment-notes">OCCUPATION</p>
-                    <p class="title-appointment-notes">TRIGGER</p>
-                    <p class="title-appointment-notes">GOAL</p>
-                    <p class="title-appointment-notes">INVESTMENT</p>
-                    <p class="title-appointment-status">STATUS</p>
-                    <p class="title-user-action">ACTIONS</p>
-                </div>
-            </div>
-            <div id="applicationList" class="v-layout field-item">
-                <!-- Control Data -->
-                <div class="h-layout item-content">
-                    <p class="item-user-id">202502081700</p>
-                    <p class="item-user-name">Michael Maina</p>
-                    <p class="item-user-email">maina@gmail.com</p>
-                    <p class="item-appointment-phone">0799292048</p>
-                    <p class="item-appointment-notes">Digital Marketting</p>
-                    <p class="item-appointment-notes">I have to</p>
-                    <p class="item-appointment-notes">My goal is to have a </p>
-                    <p class="item-appointment-notes">75,000 - 110,000</p>
-                    <p class="item-appointment-status">UNRESOLVED</p>
-                    <button id="userDeleteBtn">DELETE</button>
-                </div>
-            </div>
-        </div>
-
-        <!-- Manage Appointment -->
-        <div id="appointmentContentMgt" class="v-layout hidden">
-            <div id="userTopHeader">
-                <div class="h-layout contact-top-controls">
-                    <button id="refreshUserButton" onclick="refreshAppointmentTable()"
-                            class="buttons">REFRESH
-                        TABLE</button>
-                    <div id="searchBar" class="h-layout">
-                        <i id="searchBarIcon" class="fa-solid fa-magnifying-glass"></i>
-                        <input id="searchAppointmentInput" type="text" placeholder="Filter Appointments">
+                <div class="h-layout">
+                    <div>
+                        <label class="label" for="userEmail">E-Mail:</label>
+                        <img class="star" src="/resources/starr.png" alt="">
                     </div>
-                    <button id="createUserButton" class="buttons">CREATE NEW USER</button>
+                    <input id="userEmail" type="text" class="input-field" placeholder="johndoe@example.com"
+                        style="margin-left: 40px;">
                 </div>
-                <!-- Title Bar -->
-                <div class="h-layout field-bar">
-                    <p class="title-appointment-id">CLIENT ID</p>
-                    <p class="title-appointment-name">CLIENT NAME</p>
-                    <p class="title-appointment-email">CLIENT EMAIL</p>
-                    <p class="title-appointment-phone">PHONE</p>
-                    <p class="title-appointment-location">LOCATION</p>
-                    <p class="title-appointment-date">DATE</p>
-                    <p class="title-appointment-time">TIME</p>
-                    <p class="title-appointment-type">TYPE</p>
-                    <p class="title-appointment-status">STATUS</p>
-                    <p class="title-appointment-notes">NOTES</p>
-                    <p class="title-appointment-action">ACTIONS</p>
+                <div class="h-layout">
+                    <div>
+                        <label class="label" for="role">User Roles:</label>
+                        <img class="star" src="/resources/starr.png" alt="">
+                    </div>
+                    <select id="role" class="input-field" style="margin-left: 18px;">
+                        <option value="" disabled selected>Select User Role</option>
+                        <option value="SUPER_ADMIN">SUPER ADMIN</option>
+                        <option value="ADMIN">ADMIN</option>
+                        <option value="GEN_USER">GEN USER</option>
+                    </select>
                 </div>
-            </div>
-            <div id="appointmentList" class="v-layout field-item">
-                <!-- Control Data -->
-                <div class="h-layout item-content">
-                    <p class="item-appointment-id">123456789012</p>
-                    <p class="item-appointment-name">MICHAEL MUNGAI MAINA</p>
-                    <p class="item-appointment-email">michaelmunaimaina@gmail.com</p>
-                    <p class="item-appointment-phone">0799292048</p>
-                    <p class="item-appointment-location">NAIROBI</p>
-                    <p class="item-appointment-date">2025-01-27</p>
-                    <p class="item-appointment-time">11.30 AM</p>
-                    <p class="item-appointment-type">ONLINE</p>
-                    <p class="item-appointment-status">UPCOMING</p>
-                    <p class="item-appointment-notes">I WOULD LIKE TO FIX BLA BLA BLA</p>
-                    <i id="apptReschedule" class="fa fa-calendar" aria-hidden="true"></i>
-                    <i id="apptReschedule" class="fa fa-clock" aria-hidden="true"></i>
-                    <i id="leadSendMailBtn" class="fa fa-video-camera" aria-hidden="true"></i>
-                    <i id="leadUnsubscribeBtn" class="fa fa-check-circle" aria-hidden="true"></i>
-                    <i id="leadDeleteBtn" class="fa fa-trash" aria-hidden="true"></i>
+                <div class="h-layout">
+                    <div>
+                        <label class="label" for="access">User Access:</label>
+                        <img class="star" src="/resources/starr.png" alt="">
+                    </div>
+                    <select id="access" class="input-field" style="margin-left: 10px;">
+                        <option value="" disabled selected>Select User Access</option>
+                        <option value="CRUD">CRUD</option>
+                        <option value="0RUD">0RUD</option>
+                        <option value="0RU0">0RU0</option>
+                        <option value="0R00">0R00</option>
+                        <option value="0R0D">0R0D</option>
+                    </select>
                 </div>
-                <div class="h-layout item-content">
-                    <p class="item-appointment-id">123456789012</p>
-                    <p class="item-appointment-name">MICHAEL MUNGAI MAINA</p>
-                    <p class="item-appointment-email">michaelmunaimaina@gmail.com</p>
-                    <p class="item-appointment-phone">0799292048</p>
-                    <p class="item-appointment-location">NAIROBI</p>
-                    <p class="item-appointment-date">2025-01-27</p>
-                    <p class="item-appointment-time">11.30 AM</p>
-                    <p class="item-appointment-type">ONLINE</p>
-                    <p class="item-appointment-status">UPCOMING</p>
-                    <p class="item-appointment-notes">I WOULD LIKE TO FIX BLA BLA BLA</p>
-                    <i id="apptReschedule" class="fa fa-envelope-open" aria-hidden="true"></i>
-                    <i id="apptReschedule" class="fa fa-envelope-open" aria-hidden="true"></i>
-                    <i id="leadSendMailBtn" class="fa fa-envelope" aria-hidden="true"></i>
-                    <i id="leadUnsubscribeBtn" class="fa fa-sign-out" aria-hidden="true"></i>
-                    <i id="leadDeleteBtn" class="fa fa-trash" aria-hidden="true"></i>
+                <div class="h-layout">
+                    <div>
+                        <label class="label" for="userPassword">Password:</label>
+                        <img class="star" src="/resources/starr.png" alt="">
+                    </div>
+                    <input id="userPassword" type="password" class="input-field" placeholder="Password"
+                        style="margin-left: 23px;">
                 </div>
-
-            </div>
+                <button id="submitButton">SUBMIT</button>
+            </form>
         </div>
+    </section>
 
-    </div>
-</section>
-
-<!-- Show A Dark Overlay While loading -->
-<section id="loaderPopup" class="background-tint-black" style="z-index: 10000000;">
-    <p id="loadingText" style="margin-top: 16%; color: #466b44; font-weight: 600; font-family: 'DM Sans';">Loading .
-        . .</p>
-</section>
-
-<!-- User Popup -->
-<section id="userPopUp" class="background-tint-black">
-    <div id="btnClosePopup" onclick="closePopup()" class="btn_hover1" style="position: fixed;">
-        <i class="fa-solid fa-xmark"></i>
-    </div>
-    <div id="errorMessage"
-         style="color: rgb(236, 2, 2); display: none; margin: 65px 10px 2px 10px; background-color: #fc7b7b; text-align: center; font-size: 11px; padding: 4px 15px; border-radius: 5px; position: fixed; margin-top: 65px;">
-    </div>
-    <div class="appointment-layout outer-container">
-        <div class="h-layout" style="justify-content: space-between; width: 100%; padding-right: 20px;">
-            <div class="slash-rect"></div>
-            <p id="popupHeaderText" class="header-text" style="font-size: 16px;">Register A New User</p>
-            <div class="slash-rect"></div>
+    <!-- Package Registraion -->
+    <section id="package-popup" class="background-tint-black">
+        <div id="btnClosePopup" onclick="closePopup()" class="btn_hover1" style="position: fixed; ">
+            <i class="fa-solid fa-xmark"></i>
         </div>
-        <div id="loader" class="loader hidden"></div>
-        <form class="form-section">
-            <div class="h-layout">
-                <div>
-                    <label class="label" for="name">Full Name:</label>
-                    <img class="star" src="/resources/starr.png" alt="">
-                </div>
-                <input id="name" type="text" class="input-field" placeholder="John Doe Doe"
-                       style="margin-left: 20px;">
-            </div>
-            <div class="h-layout">
-                <div>
-                    <label class="label" for="userEmail">E-Mail:</label>
-                    <img class="star" src="/resources/starr.png" alt="">
-                </div>
-                <input id="userEmail" type="text" class="input-field" placeholder="johndoe@example.com"
-                       style="margin-left: 40px;">
-            </div>
-            <div class="h-layout">
-                <div>
-                    <label class="label" for="role">User Roles:</label>
-                    <img class="star" src="/resources/starr.png" alt="">
-                </div>
-                <select id="role" class="input-field" style="margin-left: 18px;">
-                    <option value="" disabled selected>Select User Role</option>
-                    <option value="SUPER_ADMIN">SUPER ADMIN</option>
-                    <option value="ADMIN">ADMIN</option>
-                    <option value="GEN_USER">GEN USER</option>
-                </select>
-            </div>
-            <div class="h-layout">
-                <div>
-                    <label class="label" for="access">User Access:</label>
-                    <img class="star" src="/resources/starr.png" alt="">
-                </div>
-                <select id="access" class="input-field" style="margin-left: 10px;">
-                    <option value="" disabled selected>Select User Access</option>
-                    <option value="CRUD">CRUD</option>
-                    <option value="0RUD">0RUD</option>
-                    <option value="0RU0">0RU0</option>
-                    <option value="0R00">0R00</option>
-                    <option value="0R0D">0R0D</option>
-                </select>
-            </div>
-            <div class="h-layout">
-                <div>
-                    <label class="label" for="userPassword">Password:</label>
-                    <img class="star" src="/resources/starr.png" alt="">
-                </div>
-                <input id="userPassword" type="password" class="input-field" placeholder="Password"
-                       style="margin-left: 23px;">
-            </div>
-            <button id="submitButton">SUBMIT</button>
-        </form>
-    </div>
-</section>
-
-<!-- Appointment Popup -->
-<section id="appointmentPopup" class="background-tint-black">
-    <div id="btnClosePopup" onclick="closePopup()" class="btn_hover1" style="position: fixed;">
-        <i class="fa-solid fa-xmark"></i>
-    </div>
-    <div id="errorMessage"
-         style="color: rgb(236, 2, 2); display: none; margin: 65px 10px 2px 10px; background-color: #fc7b7b; text-align: center; font-size: 11px; padding: 4px 15px; border-radius: 5px; position: fixed; margin-top: 65px;">
-    </div>
-    <div class="appointment-layout outer-container">
-        <div class="h-layout" style="justify-content: space-between; width: 100%; padding-right: 20px;">
-            <div class="slash-rect"></div>
-            <p id="popupHeaderTextAppt" class="header-text" style="font-size: 16px;">Register A New User</p>
-            <div class="slash-rect"></div>
+        <div id="packageErrorMessage"
+            style="color: rgb(236, 2, 2); display: none; margin: 65px 10px 2px 10px; background-color: #fc7b7b; text-align: center; font-size: 11px; padding: 4px 15px; border-radius: 5px; position: fixed; margin-top: 65px;">
         </div>
-        <div class="v-layout" style="margin: 0 10px 0 30px;">
-            <p id="titleText"
-               style="height: 150px; width: 400px; visibility: collapse; background-color: grey; color: azure; border-radius: 5px; padding: 10px; font-size: 12px; font-family: 'DM Sans';">
-                Content Here</p>
-            <p id="subtitleText"
-               style="font-size: 13px; visibility: collapse; font-family: 'DM Sans'; margin: 10px 0; color: azure;">
-                Reschedule appointment date and time to:</p>
-            <input id="appointmentInput" type="text" style="height: 30px; width: 100%; visibility: collapse;"
-                   class="input-field" placeholder="2025-01-20, 01.30 PM - 02.00 PM">
-            <button id="btnReschedule" onclick="rescheduleMeeting()"
+        <div class="appointment-layout outer-container">
+            <div class="h-layout" style="justify-content: space-between; width: 100%; padding-right: 20px;">
+                <div class="slash-rect"></div>
+                <p id="popupPackageHeaderText" class="header-text" style="font-size: 16px;">Register A New Package</p>
+                <div class="slash-rect"></div>
+            </div>
+            <div id="loader" class="loader hidden"></div>
+            <form class="form-section">
+                <div class="h-layout">
+                    <div>
+                        <label class="label" for="plan-name">Plan Name:</label>
+                        <img class="star" src="/resources/starr.png" alt="">
+                    </div>
+                    <input id="plan-name" type="text" class="input-field" placeholder="Digital Marketing Plan"
+                        style="margin-left: 20px;">
+                </div>
+                <div class="h-layout">
+                    <div>
+                        <label class="label" for="basic-period">Basic Plan Period:</label>
+                        <img class="star" src="/resources/starr.png" alt="">
+                    </div>
+                    <select id="basic-period" class="input-field" style="margin-left: 10px;">
+                        <option value="" disabled selected>Select Package Period</option>
+                        <option value="3MONTHS">3 Months</option>
+                        <option value="6MONTHS">6 Months</option>
+                        <option value="9MONTHS">9 months</option>
+                        <option value="12MONTHS">12 Months</option>
+                    </select>
+                </div>
+                <div class="h-layout">
+                    <div>
+                        <label class="label" for="basic-amount">Basic Plan Amount:</label>
+                        <img class="star" src="/resources/starr.png" alt="">
+                    </div>
+                    <input id="basic-amount" type="text" class="input-field" placeholder="Basic Plan Amount"
+                        style="margin-left: 40px;">
+                </div>
+                <div class="h-layout">
+                    <div>
+                        <label class="label" for="bronze-period">Bronze Plan Period:</label>
+                        <img class="star" src="/resources/starr.png" alt="">
+                    </div>
+                    <select id="bronze-period" class="input-field" style="margin-left: 10px;">
+                        <option value="" disabled selected>Select Package Period</option>
+                        <option value="3MONTHS">3 Months</option>
+                        <option value="6MONTHS">6 Months</option>
+                        <option value="9MONTHS">9 months</option>
+                        <option value="12MONTHS">12 Months</option>
+                    </select>
+                </div>
+                <div class="h-layout">
+                    <div>
+                        <label class="label" for="bronze-amount">Bronze Plan Amount:</label>
+                        <img class="star" src="/resources/starr.png" alt="">
+                    </div>
+                    <input id="bronze-amount" type="text" class="input-field" placeholder="Bronze Plan Amount"
+                        style="margin-left: 40px;">
+                </div>
+                <div class="h-layout">
+                    <div>
+                        <label class="label" for="silver-period">Silver Plan Period:</label>
+                        <img class="star" src="/resources/starr.png" alt="">
+                    </div>
+                    <select id="silver-period" class="input-field" style="margin-left: 10px;">
+                        <option value="" disabled selected>Select Package Period</option>
+                        <option value="3MONTHS">3 Months</option>
+                        <option value="6MONTHS">6 Months</option>
+                        <option value="9MONTHS">9 months</option>
+                        <option value="12MONTHS">12 Months</option>
+                    </select>
+                </div>
+                <div class="h-layout">
+                    <div>
+                        <label class="label" for="silver-amount">Silver Plan Amount:</label>
+                        <img class="star" src="/resources/starr.png" alt="">
+                    </div>
+                    <input id="silver-amount" type="text" class="input-field" placeholder="Silver Plan Amount"
+                        style="margin-left: 40px;">
+                </div>
+                <div class="h-layout">
+                    <div>
+                        <label class="label" for="gold-period">Gold Plan Period:</label>
+                        <img class="star" src="/resources/starr.png" alt="">
+                    </div>
+                    <select id="gold-period" class="input-field" style="margin-left: 10px;">
+                        <option value="" disabled selected>Select Package Period</option>
+                        <option value="3MONTHS">3 Months</option>
+                        <option value="6MONTHS">6 Months</option>
+                        <option value="9MONTHS">9 months</option>
+                        <option value="12MONTHS">12 Months</option>
+                    </select>
+                </div>
+                <div class="h-layout">
+                    <div>
+                        <label class="label" for="gold-amount">Gold Plan Amount:</label>
+                        <img class="star" src="/resources/starr.png" alt="">
+                    </div>
+                    <input id="gold-amount" type="text" class="input-field" placeholder="Gold Plan Amount"
+                        style="margin-left: 40px;">
+                </div>
+                <button id="submitNewPackage">SUBMIT</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Appointment Popup -->
+    <section id="appointmentPopup" class="background-tint-black">
+        <div id="btnClosePopup" onclick="closePopup()" class="btn_hover1" style="position: fixed;">
+            <i class="fa-solid fa-xmark"></i>
+        </div>
+        <div id="errorMessage"
+            style="color: rgb(236, 2, 2); display: none; margin: 65px 10px 2px 10px; background-color: #fc7b7b; text-align: center; font-size: 11px; padding: 4px 15px; border-radius: 5px; position: fixed; margin-top: 65px;">
+        </div>
+        <div class="appointment-layout outer-container">
+            <div class="h-layout" style="justify-content: space-between; width: 100%; padding-right: 20px;">
+                <div class="slash-rect"></div>
+                <p id="popupHeaderTextAppt" class="header-text" style="font-size: 16px;">Register A New User</p>
+                <div class="slash-rect"></div>
+            </div>
+            <div class="v-layout" style="margin: 0 10px 0 30px;">
+                <p id="titleText"
+                    style="height: 150px; width: 400px; visibility: collapse; background-color: grey; color: azure; border-radius: 5px; padding: 10px; font-size: 12px; font-family: 'DM Sans';">
+                    Content Here</p>
+                <p id="subtitleText"
+                    style="font-size: 13px; visibility: collapse; font-family: 'DM Sans'; margin: 10px 0; color: azure;">
+                    Reschedule appointment date and time to:</p>
+                <input id="appointmentInput" type="text" style="height: 30px; width: 100%; visibility: collapse;"
+                    class="input-field" placeholder="2025-01-20, 01.30 PM - 02.00 PM">
+                <button id="btnReschedule" onclick="rescheduleMeeting()"
                     style="height: 30px; visibility: collapse; margin: 10px 0; color: azure; background-color: coral; border-radius: 5px; font-size: 13px; font-weight: bold; font-family: 'DM Sans'; padding: 5px 30px; ">RESCHEDULE</button>
+            </div>
         </div>
-    </div>
-</section>
+    </section>
 
-<!-- About Popup -->
-<section id="aboutPopup" class="background-tint-black">
-    <div id="btnClosePopup" onclick="closePopup()" class="btn_hover1" style="position: fixed;">
-        <i class="fa-solid fa-xmark"></i>
-    </div>
-    <div id="errorMessage"
-         style="color: rgb(236, 2, 2); display: none; margin: 65px 10px 2px 10px; background-color: #fc7b7b; text-align: center; font-size: 11px; padding: 4px 15px; border-radius: 5px; position: fixed; margin-top: 65px;">
-    </div>
-    <div class="appointment-layout outer-container">
-        <div class="h-layout" style="justify-content: space-between; width: 100%; padding-right: 20px;">
-            <div class="slash-rect"></div>
-            <p id="popupHeaderTextAbout" class="header-text" style="font-size: 16px;">ABOUT - MISSION</p>
-            <div class="slash-rect"></div>
+    <!-- About Popup -->
+    <section id="aboutPopup" class="background-tint-black">
+        <div id="btnClosePopup" onclick="closePopup()" class="btn_hover1" style="position: fixed;">
+            <i class="fa-solid fa-xmark"></i>
         </div>
-        <div class="v-layout" style="margin: 0 10px 0 30px;">
-            <p id="titleText"
-               style="height: 150px; width: 400px; visibility: collapse; background-color: grey; color: azure; border-radius: 5px; padding: 10px; font-size: 12px; font-family: 'DM Sans';">
-                Content Here</p>
-            <p id="subtitleText"
-               style="font-size: 13px; visibility: collapse; font-family: 'DM Sans'; margin: 10px 0; color: azure;">
-                Reschedule appointment date and time to:</p>
-            <textarea id="aboutInput" type="text" style="height: 200px; width: 500px;  max-width: 500px; max-height: 250px; visibility: visible; text-align: start; text-overflow: clip; padding: 15px; margin-top: 20px;"
-                      class="input-field" placeholder="Content Goes Here"></textarea>
-            <button id="btnUpdateAbout" onclick="updateAboutSection()"
+        <div id="errorMessage"
+            style="color: rgb(236, 2, 2); display: none; margin: 65px 10px 2px 10px; background-color: #fc7b7b; text-align: center; font-size: 11px; padding: 4px 15px; border-radius: 5px; position: fixed; margin-top: 65px;">
+        </div>
+        <div class="appointment-layout outer-container">
+            <div class="h-layout" style="justify-content: space-between; width: 100%; padding-right: 20px;">
+                <div class="slash-rect"></div>
+                <p id="popupHeaderTextAbout" class="header-text" style="font-size: 16px;">ABOUT - MISSION</p>
+                <div class="slash-rect"></div>
+            </div>
+            <div class="v-layout" style="margin: 0 10px 0 30px;">
+                <p id="titleText"
+                    style="height: 150px; width: 400px; visibility: collapse; background-color: grey; color: azure; border-radius: 5px; padding: 10px; font-size: 12px; font-family: 'DM Sans';">
+                    Content Here</p>
+                <p id="subtitleText"
+                    style="font-size: 13px; visibility: collapse; font-family: 'DM Sans'; margin: 10px 0; color: azure;">
+                    Reschedule appointment date and time to:</p>
+                <textarea id="aboutInput" type="text"
+                    style="height: 200px; width: 500px;  max-width: 500px; max-height: 250px; visibility: visible; text-align: start; text-overflow: clip; padding: 15px; margin-top: 20px;"
+                    class="input-field" placeholder="Content Goes Here"></textarea>
+                <button id="btnUpdateAbout" onclick="updateAboutSection()"
                     style="height: 30px; visibility: visible; margin: 10px 0; color: azure; background-color: coral; border-radius: 5px; font-size: 13px; font-weight: bold; font-family: 'DM Sans'; padding: 5px 30px; ">UPDATE</button>
+            </div>
         </div>
-    </div>
-</section>
+    </section>
 
-<!-- Application Popup -->
-<section id="applicationPopup" class="background-tint-black">
-    <div id="btnClosePopup" onclick="closePopup()" class="btn_hover1" style="position: fixed;">
-        <i class="fa-solid fa-xmark"></i>
-    </div>
-    <div id="errorMessage"
-         style="color: rgb(236, 2, 2); display: none; margin: 65px 10px 2px 10px; background-color: #fc7b7b; text-align: center; font-size: 11px; padding: 4px 15px; border-radius: 5px; position: fixed; margin-top: 65px;">
-    </div>
-    <div class="appointment-layout outer-container">
-        <div class="h-layout" style="justify-content: space-between; width: 100%; padding-right: 20px;">
-            <div class="slash-rect"></div>
-            <p id="popupHeaderTextApplication" class="header-text" style="font-size: 16px;">ABOUT - MISSION</p>
-            <div class="slash-rect"></div>
+    <!-- Application Popup -->
+    <section id="applicationPopup" class="background-tint-black">
+        <div id="btnClosePopup" onclick="closePopup()" class="btn_hover1" style="position: fixed;">
+            <i class="fa-solid fa-xmark"></i>
         </div>
-        <div class="v-layout" style="margin: 0 10px 0 30px;">
-            <p id="titleTextApplication"
-               style="height: 150px; width: 400px; background-color: grey; color: azure; border-radius: 5px; padding: 10px; font-size: 12px; font-family: 'DM Sans';">
-                Content Here</p>
-            <p id="subtitleText"
-               style="font-size: 13px; visibility: collapse; font-family: 'DM Sans'; margin: 10px 0; color: azure;">
-                Reschedule appointment date and time to:</p>
-            <button id="btnUpdateAbout"
+        <div id="errorMessage"
+            style="color: rgb(236, 2, 2); display: none; margin: 65px 10px 2px 10px; background-color: #fc7b7b; text-align: center; font-size: 11px; padding: 4px 15px; border-radius: 5px; position: fixed; margin-top: 65px;">
+        </div>
+        <div class="appointment-layout outer-container">
+            <div class="h-layout" style="justify-content: space-between; width: 100%; padding-right: 20px;">
+                <div class="slash-rect"></div>
+                <p id="popupHeaderTextApplication" class="header-text" style="font-size: 16px;">ABOUT - MISSION</p>
+                <div class="slash-rect"></div>
+            </div>
+            <div class="v-layout" style="margin: 0 10px 0 30px;">
+                <p id="titleTextApplication"
+                    style="height: 150px; width: 400px; background-color: grey; color: azure; border-radius: 5px; padding: 10px; font-size: 12px; font-family: 'DM Sans';">
+                    Content Here</p>
+                <p id="subtitleText"
+                    style="font-size: 13px; visibility: collapse; font-family: 'DM Sans'; margin: 10px 0; color: azure;">
+                    Reschedule appointment date and time to:</p>
+                <button id="btnUpdateAbout"
                     style="height: 30px; visibility: visible; margin: 10px 0; color: azure; background-color: coral; border-radius: 5px; font-size: 13px; font-weight: bold; font-family: 'DM Sans'; padding: 5px 30px;visibility: collapse ">UPDATE</button>
+            </div>
         </div>
-    </div>
-</section>
+    </section>
 
-<!-- Photo Popup -->
-<section id="aboutPhotoPopup" class="background-tint-black">
-    <div id="btnClosePopup" onclick="closePopup()" class="btn_hover1" style="position: fixed;">
-        <i class="fa-solid fa-xmark"></i>
-    </div>
-    <div class="h-layout">
-        <div class="border center">
-            <div id="photoViewArea"></div>
+    <!-- Photo Popup -->
+    <section id="aboutPhotoPopup" class="background-tint-black">
+        <div id="btnClosePopup" onclick="closePopup()" class="btn_hover1" style="position: fixed;">
+            <i class="fa-solid fa-xmark"></i>
         </div>
-    </div>
-</section>
-
-<!-- Video Popup -->
-<div class="background-tint-black" id="aboutVideoPopup">
-    <div id="btnClosePopup" onclick="closePopup()" class="btn_hover1" style="position: fixed;">
-        <i class="fa-solid fa-xmark"></i>
-    </div>
-    <video id="popupVideo" controls autoplay muted></video>
-</div>
-
-<!-- New About Registration Popup -->
-<section id="aboutRegisterPopup" class="background-tint-black" style="height: 0%;">
-    <div id="btnClosePopup" onclick="closePopup()" class="btn_hover1" style="position: fixed;">
-        <i class="fa-solid fa-xmark"></i>
-    </div>
-    <div id="errorMessage1"
-         style="color: rgb(236, 2, 2); display: none; margin: 65px 10px 2px 10px; background-color: #fc7b7b; text-align: center; font-size: 11px; padding: 4px 15px; border-radius: 5px; position: fixed; margin-top: 65px;">
-    </div>
-    <div class="appointment-layout outer-container">
-        <div class="h-layout" style="justify-content: space-between; width: 100%; padding-right: 20px;">
-            <div class="slash-rect"></div>
-            <p id="popupHeaderTextAbout" class="header-text" style="font-size: 16px;">NEW ABOUT INFO</p>
-            <div class="slash-rect"></div>
+        <div class="h-layout">
+            <div class="border center">
+                <div id="photoViewArea"></div>
+            </div>
         </div>
-        <div class="v-layout">
-            <label for="inputTitle" style="font-size: 13px; font-family: 'DM Sans'; margin: 10px 0; color: azure;">Title</label>
-            <textarea id="inputTitle1" type="text" style="height: 50px; width: 500px;  max-width: 500px; max-height: 250px; visibility: visible; text-align: start; text-overflow: clip; padding: 15px; margin-top: 20px;"
-                      class="input-field" placeholder="Title Goes Here">
+    </section>
+
+    <!-- Video Popup -->
+    <div class="background-tint-black" id="aboutVideoPopup">
+        <div id="btnClosePopup" onclick="closePopup()" class="btn_hover1" style="position: fixed;">
+            <i class="fa-solid fa-xmark"></i>
+        </div>
+        <video id="popupVideo" controls autoplay muted></video>
+    </div>
+
+    <!-- New About Registration Popup -->
+    <section id="aboutRegisterPopup" class="background-tint-black" style="height: 0%;">
+        <div id="btnClosePopup" onclick="closePopup()" class="btn_hover1" style="position: fixed;">
+            <i class="fa-solid fa-xmark"></i>
+        </div>
+        <div id="errorMessage1"
+            style="color: rgb(236, 2, 2); display: none; margin: 65px 10px 2px 10px; background-color: #fc7b7b; text-align: center; font-size: 11px; padding: 4px 15px; border-radius: 5px; position: fixed; margin-top: 65px;">
+        </div>
+        <div class="appointment-layout outer-container">
+            <div class="h-layout" style="justify-content: space-between; width: 100%; padding-right: 20px;">
+                <div class="slash-rect"></div>
+                <p id="popupHeaderTextAbout" class="header-text" style="font-size: 16px;">NEW ABOUT INFO</p>
+                <div class="slash-rect"></div>
+            </div>
+            <div class="v-layout">
+                <label for="inputTitle"
+                    style="font-size: 13px; font-family: 'DM Sans'; margin: 10px 0; color: azure;">Title</label>
+                <textarea id="inputTitle1" type="text"
+                    style="height: 50px; width: 500px;  max-width: 500px; max-height: 250px; visibility: visible; text-align: start; text-overflow: clip; padding: 15px; margin-top: 20px;"
+                    class="input-field" placeholder="Title Goes Here">
                 </textarea>
-            <label for="inputIntroduction" style="font-size: 13px; font-family: 'DM Sans'; margin: 10px 0; color: azure;">Introduction</label>
-            <textarea id="inputIntroduction" type="text" style="height: 50px; width: 500px;  max-width: 500px; max-height: 250px; visibility: visible; text-align: start; text-overflow: clip; padding: 15px; margin-top: 20px;"
-                      class="input-field" placeholder="Introduction Goes Here">
+                <label for="inputIntroduction"
+                    style="font-size: 13px; font-family: 'DM Sans'; margin: 10px 0; color: azure;">Introduction</label>
+                <textarea id="inputIntroduction" type="text"
+                    style="height: 50px; width: 500px;  max-width: 500px; max-height: 250px; visibility: visible; text-align: start; text-overflow: clip; padding: 15px; margin-top: 20px;"
+                    class="input-field" placeholder="Introduction Goes Here">
                 </textarea>
-            <label for="inputExperience" style="font-size: 13px; font-family: 'DM Sans'; margin: 10px 0; color: azure;">Experience</label>
-            <textarea id="inputExperience" type="text" style="height: 50px; width: 500px;  max-width: 500px; max-height: 250px; visibility: visible; text-align: start; text-overflow: clip; padding: 15px; margin-top: 20px;"
-                      class="input-field" placeholder="Experience Goes Here">
+                <label for="inputExperience"
+                    style="font-size: 13px; font-family: 'DM Sans'; margin: 10px 0; color: azure;">Experience</label>
+                <textarea id="inputExperience" type="text"
+                    style="height: 50px; width: 500px;  max-width: 500px; max-height: 250px; visibility: visible; text-align: start; text-overflow: clip; padding: 15px; margin-top: 20px;"
+                    class="input-field" placeholder="Experience Goes Here">
                 </textarea>
-            <label for="inputMission" style="font-size: 13px; font-family: 'DM Sans'; margin: 10px 0; color: azure;">Mission</label>
-            <textarea id="inputMission" type="text" style="height: 50px; width: 500px;  max-width: 500px; max-height: 250px; visibility: visible; text-align: start; text-overflow: clip; padding: 15px; margin-top: 20px;"
-                      class="input-field" placeholder="Mission Goes Here">
+                <label for="inputMission"
+                    style="font-size: 13px; font-family: 'DM Sans'; margin: 10px 0; color: azure;">Mission</label>
+                <textarea id="inputMission" type="text"
+                    style="height: 50px; width: 500px;  max-width: 500px; max-height: 250px; visibility: visible; text-align: start; text-overflow: clip; padding: 15px; margin-top: 20px;"
+                    class="input-field" placeholder="Mission Goes Here">
                 </textarea>
-            <label for="inputIcon" style="font-size: 13px; font-family: 'DM Sans'; margin: 10px 0; color: azure;">Select Image</label>
-            <input type="file" id="inputIcon" accept=".png" required="true">
-            <button id="btnRegisterAbout" onclick="registerAboutSection()"
+                <label for="inputIcon"
+                    style="font-size: 13px; font-family: 'DM Sans'; margin: 10px 0; color: azure;">Select Image</label>
+                <input type="file" id="inputIcon" accept=".png" required="true">
+                <button id="btnRegisterAbout" onclick="registerAboutSection()"
                     style="height: 30px; visibility: visible; margin: 10px 0; color: azure; background-color: coral; border-radius: 5px; font-size: 13px; font-weight: bold; font-family: 'DM Sans'; padding: 5px 30px; ">SUBMIT</button>
+            </div>
         </div>
-    </div>
-</section>
+    </section>
 
-<!-- New About Registration Popup -->
-<section id="videoRegisterPopup" class="background-tint-black" style="height: 0%;">
-    <div id="btnClosePopup" onclick="closePopup()" class="btn_hover1" style="position: fixed;">
-        <i class="fa-solid fa-xmark"></i>
-    </div>
-    <div id="errorMessage2"
-         style="color: rgb(236, 2, 2); display: none; margin: 65px 10px 2px 10px; background-color: #fc7b7b; text-align: center; font-size: 11px; padding: 4px 15px; border-radius: 5px; position: fixed; margin-top: 65px;">
-    </div>
-    <div class="appointment-layout outer-container">
-        <div class="h-layout" style="justify-content: space-between; width: 100%; padding-right: 20px;">
-            <div class="slash-rect"></div>
-            <p id="popupHeaderTextAbout" class="header-text" style="font-size: 16px;">NEW VIDEO UPLOAD</p>
-            <div class="slash-rect"></div>
+    <!-- New About Registration Popup -->
+    <section id="videoRegisterPopup" class="background-tint-black" style="height: 0%;">
+        <div id="btnClosePopup" onclick="closePopup()" class="btn_hover1" style="position: fixed;">
+            <i class="fa-solid fa-xmark"></i>
         </div>
-        <div class="v-layout">
-            <label for="inputTitle2" style="font-size: 13px; font-family: 'DM Sans'; margin: 10px 0; color: azure;">Title</label>
-            <input id="inputTitle2" type="text" style="height: 50px; width: 500px; visibility: visible; text-align: start; text-overflow: clip; padding: 15px; margin-top: 20px;"
-                   class="input-field" placeholder="Title Goes Here">
-            </input>
-            <label for="inputVideo" style="font-size: 13px; font-family: 'DM Sans'; margin: 10px 0; color: azure;">Select Video</label>
-            <input type="file" id="inputVideo" accept=".mp4" required="true">
-            <button id="btnRegisterVideo" onclick="registerVideoSection()"
+        <div id="errorMessage2"
+            style="color: rgb(236, 2, 2); display: none; margin: 65px 10px 2px 10px; background-color: #fc7b7b; text-align: center; font-size: 11px; padding: 4px 15px; border-radius: 5px; position: fixed; margin-top: 65px;">
+        </div>
+        <div class="appointment-layout outer-container">
+            <div class="h-layout" style="justify-content: space-between; width: 100%; padding-right: 20px;">
+                <div class="slash-rect"></div>
+                <p id="popupHeaderTextAbout" class="header-text" style="font-size: 16px;">NEW VIDEO UPLOAD</p>
+                <div class="slash-rect"></div>
+            </div>
+            <div class="v-layout">
+                <label for="inputTitle2"
+                    style="font-size: 13px; font-family: 'DM Sans'; margin: 10px 0; color: azure;">Title</label>
+                <input id="inputTitle2" type="text"
+                    style="height: 50px; width: 500px; visibility: visible; text-align: start; text-overflow: clip; padding: 15px; margin-top: 20px;"
+                    class="input-field" placeholder="Title Goes Here">
+                </input>
+                <label for="inputVideo"
+                    style="font-size: 13px; font-family: 'DM Sans'; margin: 10px 0; color: azure;">Select Video</label>
+                <input type="file" id="inputVideo" accept=".mp4" required="true">
+                <button id="btnRegisterVideo" onclick="registerVideoSection()"
                     style="height: 30px; visibility: visible; margin: 10px 0; color: azure; background-color: coral; border-radius: 5px; font-size: 13px; font-weight: bold; font-family: 'DM Sans'; padding: 5px 30px; ">UPLOAD</button>
+            </div>
         </div>
-    </div>
-</section>
+    </section>
 
-<section class="mobile-warning" style="z-index: 100000; height: 120%; ">
-    <h2>⚠ <br>This site is only available on desktops.</h2>
-</section>
+    <section class="mobile-warning" style="z-index: 100000; height: 120%; ">
+        <h2>⚠ <br>This site is only available on desktops.</h2>
+    </section>
 
-<section id="errorContainer">
-    <div class="error-display" style="color: rgb(236, 2, 2); background-color: #fc7b7b; text-align: center; font-size: 11px; padding: 4px 15px; border-radius: 5px;">
-        <div onclick="closePopup()" class="btn_hover1" style="cursor: pointer; position: absolute; height: 20px; width: 20px; right: 0; top: 4px; margin-right: 10px;">
-            <i class="fa-solid fa-xmark"></i>
-        </div>
-        <p id="error-text">style="color: rgb(236, 2, 2); display: flex; margin: 65px 10px 2px 10px; background-color: #fc7b7b; text-align: center; font-size: 11px; padding: 4px 15px; border-radius: 5px; position: fixed; margin-top: 65px;"</p>
-    </div>
-    <div class="success" style="color: rgb(255, 255, 255); background-color: #0b6b2d; text-align: center; font-size: 11px; padding: 4px 15px; border-radius: 5px;">
-        <div onclick="closePopup()" class="btn_hover1" style="cursor: pointer; position: absolute; height: 20px; width: 20px; right: 0; top: 4px; margin-right: 10px;">
-            <i class="fa-solid fa-xmark"></i>
-        </div>
-        <p id="success-text">style="color: rgb(236, 2, 2); display: flex; margin: 65px 10px 2px 10px; background-color: #fc7b7b; text-align: center; font-size: 11px; padding: 4px 15px; border-radius: 5px; position: fixed; margin-top: 65px;"</p>
-    </div> 
-    <div class="success" style="color: rgb(255, 255, 255); background-color: #0b6b2d; text-align: center; font-size: 11px; padding: 4px 15px; border-radius: 5px;">
-        <div onclick="closePopup()" class="btn_hover1" style="cursor: pointer; position: absolute; height: 20px; width: 20px; right: 0; top: 4px; margin-right: 10px;">
-            <i class="fa-solid fa-xmark"></i>
-        </div>
-        <p id="success-text">style="color: rgb(236, 2, 2); display: flex; margin: 65px 10px 2px 10px; background-color: #fc7b7b; text-align: center; font-size: 11px; padding: 4px 15px; border-radius: 5px; position: fixed; margin-top: 65px;"</p>
-    </div>
-</section>
+    <section id="errorContainer">
+    </section>
 
-<!-- Footer -->
-<footer id="admin-footer" class="h-layout">
-    <div class="h-layout">
-        <p id="footerText">©  AdConnect | All rights reserved.</p>
-        <p>Follow Us:</p>
-        <a href="https://www.facebook.com/profile.php?id=61567259036362" style="margin-left: 10px;"><i
-                class="fa-brands fa-facebook"></i></a>
-        <a href="#" style="margin-left: 10px;"><i class="fa-brands fa-x-twitter"></i></a>
-        <a href="#" style="margin-left: 10px;"><i class="fa-brands fa-tiktok"></i></a>
-        <a href="https://www.instagram.com/adconnect_digital/" style="margin-left: 10px;"><i
-                class="fa-brands fa-instagram"></i></a>
-        <a href="#" style="margin-left: 10px;"><i class="fa-brands fa-youtube"></i></a>
-    </div>
-</footer>
+    <!-- Footer -->
+    <footer id="admin-footer" class="h-layout">
+        <div class="h-layout">
+            <p id="footerText">© AdConnect | All rights reserved.</p>
+            <p>Follow Us:</p>
+            <a href="https://www.facebook.com/profile.php?id=61567259036362" style="margin-left: 10px;"><i
+                    class="fa-brands fa-facebook"></i></a>
+            <a href="#" style="margin-left: 10px;"><i class="fa-brands fa-x-twitter"></i></a>
+            <a href="#" style="margin-left: 10px;"><i class="fa-brands fa-tiktok"></i></a>
+            <a href="https://www.instagram.com/adconnect_digital/" style="margin-left: 10px;"><i
+                    class="fa-brands fa-instagram"></i></a>
+            <a href="#" style="margin-left: 10px;"><i class="fa-brands fa-youtube"></i></a>
+        </div>
+    </footer>
 </body>
 
 

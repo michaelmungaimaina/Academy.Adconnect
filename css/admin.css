@@ -1119,7 +1119,6 @@ button:hover{
 
 #errorContainer {
     width: 20%;
-    height: 80%;
     position: fixed;
     bottom: 20px;
     right: 20px;
@@ -1128,7 +1127,7 @@ button:hover{
     align-items: flex-end;
     gap: 10px;
     z-index: 1000;
-    overflow-x: auto;
+    /**overflow-x: auto;*/
 }
 
 /* Message container */
@@ -1144,12 +1143,14 @@ button:hover{
 
 /* Error message */
 .error-display {
+    width: 100%;
     background-color: #fc7b7b;
     color: rgb(236, 2, 2);
 }
 
 /* Success message */
 .success {
+    width: 100%;
     background-color: #0b6b2d;
     color: rgb(255, 255, 255);
 }
@@ -1157,7 +1158,8 @@ button:hover{
 /* Close button */
 .error-close-btn {
     cursor: pointer;
-    margin-left: 10px;
+    margin-left: 15px;
+    margin-right: 10px;
     position: absolute;
     top: 4px;
     right: 4px;
@@ -1173,4 +1175,178 @@ button:hover{
         transform: translateX(0);
         opacity: 1;
     }
+}
+
+/* Define the slide-left animation */
+@keyframes slideLeft {
+    from {
+        transform: translateX(0);
+        opacity: 1;
+    }
+    to {
+        transform: translateX(-100%);
+        opacity: 0;
+    }
+}
+
+/* Apply the animation to the message element */
+.message.slide-left {
+    animation: slideLeft 0.5s forwards;
+}
+
+/* Course Content Management */
+#courseContentMgt{
+    align-items: start;
+    justify-content: start;
+    justify-self: start;
+    height: 100%;
+    width: 87%;
+    background-color: #adaeae;
+    margin-left: 20px;
+}
+#courseContentMgt .course-header{
+    background-color: #d84520;
+    border-radius: 5px 5px 0px 0;
+    width: fit-content;
+}
+#courseContentMgt .course-header p{
+    color: white;
+    font-size: 11px;
+    font-family: 'DM Sans';
+    font-weight: 500;
+    margin: 0 10px;
+}
+#courseContentMgt .course-header .c-nav{
+    align-items: center;
+    margin: 1px;
+    background-color: #7D8489;
+}
+#courseContentMgt .course-header .c-nav-end{
+    align-items: center;
+    margin: 1px;
+    background-color: #7D8489;
+    border-radius: 0 5px 0 0 ;
+}
+#courseContentMgt .course-header .c-nav-start{
+    align-items: center;
+    margin: 1px;
+    background-color: #7D8489;
+    border-radius: 5px 0 0 0 ;
+}
+#courseContentMgt #course-c-c #packages-content #package-header{
+    justify-content: space-between;
+    width: 100%;
+    margin-top: 10px;
+}
+#courseContentMgt #course-c-c #packages-content #package-header div{
+    background-color: #7D8489;
+    border-radius: 3px;
+    height: 20px;
+    margin-left: 20px;
+}
+#courseContentMgt #course-c-c #packages-content #package-header div img{
+    height: fit-content;
+    width: 20px;
+    margin: 2px;
+}
+#courseContentMgt #course-c-c #packages-content #package-header div input{
+    background-color: #7D8489;
+    height: 19px;
+    width: 100px;
+    margin: 1px 10px;
+    color: #d0d0d0;
+    border: none;
+}
+#courseContentMgt #course-c-c #packages-content #package-header .fa-plus-square{
+    height: 20px;
+    width: 20px;
+    color: #08ff14;
+    cursor: pointer;
+}
+
+#courseContentMgt .field-item{
+    margin-top: 85px;
+}
+#courseContentMgt .field-bar{
+    height: 25px;
+    background-color: #F65730;
+    border-radius: 6px 6px 0 0;
+    width: 100%;
+    align-items: left;
+    align-self: start;
+    justify-content: start;
+    margin-top: 10px;
+}
+#courseContentMgt .field-bar p{
+    font-size: 11px;
+    font-weight: 700;
+    font-family: 'DM Sans';
+    color: aliceblue;
+    text-align: start;
+}
+
+#courseContentMgt .field-bar .title-plan-name{
+    margin: 0 5px 0 5px;
+    width: 150px;
+    text-align: start;
+}
+#courseContentMgt .field-bar .title-plan-period{
+    margin: 0 5px 0 5px;
+    width: 100px;
+    text-align: start;
+}
+#courseContentMgt .field-bar .title-plan-amount{
+    margin: 0 5px 0 5px;
+    width: 80px;
+    text-align: start;
+}
+#courseContentMgt .field-bar .title-plan-action{
+    margin: 0 5px 0 20px;
+    width: 65px;
+    text-align: start;
+}
+
+#courseContentMgt .field-item{
+    height: 25px;
+    align-items: left;
+    align-self: start;
+}
+
+#courseContentMgt .field-item p{
+    font-size: 11px;
+    font-weight: light;
+    font-family: 'DM Sans';
+    color: aliceblue;
+    text-align: left;
+}
+#courseContentMgt .field-item .item-plan-name{
+    margin: 0 5px 0 5px;
+    width: 150px;
+    text-align: start;
+}
+#courseContentMgt .field-item .item-plan-period{
+    margin: 0 5px 0 5px;
+    width: 100px;
+    text-align: start;
+}
+#courseContentMgt .field-item .item-plan-amount{
+    margin: 0 5px 0 5px;
+    width: 80px;
+    text-align: start;
+}
+
+#package-popup .form-section .h-layout{
+    width: 320px;
+    justify-content: space-between;
+}
+#submitNewPackage{
+    height: 25px;
+    width: 320px;
+    margin-left: 17px;
+    margin-top: 30px;
+    background-color: rgb(68, 135, 1);
+    color: rgb(255, 255, 255);
+}
+#submitNewPackage:hover{
+    background-color: #F65730;
 }

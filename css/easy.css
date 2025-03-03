@@ -385,8 +385,15 @@ body main .page-sec {
 .fa-trash{
     color: rgb(255, 0, 0);
 }
+.fa-pencil-square.fa-trash{
+    color: rgb(255, 255, 255);
+}
 .fa-envelope{
     color: #009a08;
+}
+.fa-refresh{
+    color: #ffffff;
+    cursor: pointer;
 }
 .fa-envelope-open{
     color: #00a2ff;
@@ -411,6 +418,8 @@ body main .page-sec {
     color: #009a08;
 }
 
+.fa-refresh,
+.fa-pencil-square.fa-trash,
 .fa-download:hover,
 .fa-video-camera:hover,
 .fa-calendar:hover,

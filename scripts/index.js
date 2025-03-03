@@ -25,11 +25,21 @@ const inputMission = document.getElementById('inputMission');
 const inputIcon = document.getElementById('inputIcon');
 const inputVideoTitle = document.getElementById('inputTitle2');
 const inputVideoFile = document.getElementById('inputVideo');
+const inputPlanName = document.getElementById('plan-name');
+const inputBasicPeriod = document.getElementById('basic-period');
+const inputBasicAmount = document.getElementById('basic-amount');
+const inputBronzePeriod = document.getElementById('bronze-period');
+const inputBronzeAmount = document.getElementById('bronze-amount');
+const inputSilverPeriod = document.getElementById('silver-period');
+const inputSilverAmount = document.getElementById('silver-amount');
+const inputGoldPeriod = document.getElementById('gold-period');
+const inputGoldAmount = document.getElementById('gold-amount');
 
 const textUsernameSession = document.getElementById('usernameSession');
 const textUserPopupHeader = document.getElementById('popupHeaderText');
 const textUserPopupHeaderAppt = document.getElementById('popupHeaderTextAppt');
 const textAboutPopupHeader = document.getElementById('popupHeaderTextAbout');
+const textPackagePopupHeader = document.getElementById('popupPackageHeaderText');
 const textApplicationPopupHeader = document.getElementById('popupHeaderTextApplication');
 const textApplicationContent = document.getElementById('titleTextApplication');
 const textErrorContainer = document.getElementById('errorMessage');
@@ -38,6 +48,7 @@ const textLoaderText = document.getElementById('loadingText');
 const textTitle = document.getElementById('titleText');
 const textSubTitle = document.getElementById('subtitleText');
 const textFooter = document.getElementById('footerText');
+const textPackageErroCo = document.getElementById('packageErrorMessage');
 
 const textAreaAboutContent = document.getElementById('aboutInput');
 
@@ -45,11 +56,13 @@ const loader = document.getElementById('loader');
 
 const btnClosePopup = document.getElementById('btnClosePopup');
 const btnSubmitUserData = document.getElementById('submitButton');
+const btnSubmitPackageData = document.getElementById('submitNewPackage');
 const btnCreateUser = document.getElementById('createUserButton');
 const btnReschedule = document.getElementById('btnReschedule');
 const btnUpdateAbout = document.getElementById('btnUpdateAbout');
 const btnRegisterAbout = document.getElementById('btnRegisterAbout');
 const btnDownload = document.getElementById('downloadButton');
+const btnCreatePackage = document.getElementById('btnCreatePackage');
 
 const sectionUserManagement = document.getElementById('userContentMgt');
 const sectionVideoManagement = document.getElementById('videoContentMgt');
@@ -61,6 +74,7 @@ const sectionCommunicationManagement = document.getElementById('communicationCon
 const sectionDocumentManagement = document.getElementById('documentContentMgt');
 const sectionAppointmentManagement = document.getElementById('appointmentContentMgt');
 const sectionApplicationManagement = document.getElementById('applictionContentMgt');
+const sectionCourseContentManagement = document.getElementById('courseContentMgt');
 
 const userMgt = document.getElementById('userMgt');
 const contentMgt = document.getElementById('contentMgt');
@@ -76,10 +90,19 @@ const commMgt = document.getElementById('commMgt');
 const docsMgt = document.getElementById('docsMgt');
 const applicationMgt = document.getElementById('applicationMgt');
 
+const packageMgt = document.getElementById('package-mgt');
+const courseMgt = document.getElementById('course-mgt');
+const moduleMgt = document.getElementById('module-mgt');
+const resourceMgt = document.getElementById('resource-mgt');
+const clientMgt = document.getElementById('client-mgt');
+const paymentMgt = document.getElementById('payment-mgt');
+const subscriptionMgt = document.getElementById('subscription-mgt');
+
 const popupUserMgt = document.getElementById('userPopUp');
 const popupAppointment = document.getElementById('appointmentPopup');
 const popupAbout = document.getElementById('aboutPopup');
 const popupLoader = document.getElementById('loaderPopup');
+const popupPackage = document.getElementById('package-popup');
 const aboutRegisterPopup = document.getElementById('aboutRegisterPopup');
 const videoRegisterPopup = document.getElementById('videoRegisterPopup');
 const aboutPhotoPopup = document.getElementById('aboutPhotoPopup');
@@ -87,6 +110,13 @@ const aboutVideoPopup = document.getElementById('aboutVideoPopup');
 const applicationPopup = document.getElementById('applicationPopup');
 const aboutPhotoViewArea = document.getElementById('photoViewArea');
 const aboutVideoViewArea = document.getElementById('popupVideo');
+
+const packagesContent = document.getElementById('packages-content');
+const coursesContent = document.getElementById('courses-content');
+const modulesContent = document.getElementById('modules-content');
+const clientsContent = document.getElementById('clients-content');
+const paymentsContent = document.getElementById('payments-content');
+const subscriptionsContent = document.getElementById('subscriptions-content');
 
 const formLogin = document.getElementById('login-form');
 
@@ -114,7 +144,9 @@ let appointmentList = [];
 let aboutList = [];
 let videoList = [];
 let applicationList = [];
+let packagesList = [];
 let aboutIndex = null;
+let packageIndex = null;
 
 let errorMessages = '';
 
@@ -181,6 +213,7 @@ function userManagement(){
     sectionDocumentManagement.style.display = 'none';
     sectionAppointmentManagement.style.display = 'none';
     sectionApplicationManagement.style.display = 'none';
+    sectionCourseContentManagement.style.display = 'none';
 
     userMgt.classList.add('activ');
     contentMgt.classList.remove('activ');
@@ -195,6 +228,7 @@ function userManagement(){
     commMgt.classList.remove('activ');
     docsMgt.classList.remove('activ');
     applicationMgt.classList.remove('activ');
+    commMgt.classList.remove('activ');
     //Manage Lists
     fetchUsers();
 }
@@ -210,6 +244,7 @@ function contentManagement(){
     sectionDocumentManagement.style.display = 'none';
     sectionAppointmentManagement.style.display = 'none';
     sectionApplicationManagement.style.display = 'none';
+    sectionCourseContentManagement.style.display = 'none';
 
     userMgt.classList.remove('activ');
     contentMgt.classList.add('activ');
@@ -224,6 +259,7 @@ function contentManagement(){
     commMgt.classList.remove('activ');
     docsMgt.classList.remove('activ');
     applicationMgt.classList.remove('activ');
+    courseMgt.classList.remove('activ');
 
     fetchAbout();
 }
@@ -238,6 +274,7 @@ function leadsManagement(){
     sectionDocumentManagement.style.display = 'none';
     sectionAppointmentManagement.style.display = 'none';
     sectionApplicationManagement.style.display = 'none';
+    sectionCourseContentManagement.style.display = 'none';
 
     userMgt.classList.remove('activ');
     contentMgt.classList.remove('activ');
@@ -252,6 +289,7 @@ function leadsManagement(){
     commMgt.classList.remove('activ');
     docsMgt.classList.remove('activ');
     applicationMgt.classList.remove('activ');
+    courseMgt.classList.remove('activ');
 
     fetchLeads();
 }
@@ -265,6 +303,7 @@ function appointmentManagement(){
     sectionCommunicationManagement.style.display = 'none';
     sectionDocumentManagement.style.display = 'none';
     sectionApplicationManagement.style.display = 'none';
+    sectionCourseContentManagement.style.display = 'none';
     sectionAppointmentManagement.style.display = 'flex';
 
     userMgt.classList.remove('activ');
@@ -280,6 +319,7 @@ function appointmentManagement(){
     commMgt.classList.remove('activ');
     docsMgt.classList.remove('activ');
     applicationMgt.classList.remove('activ');
+    courseMgt.classList.remove('activ');
 
     fetchAppointments();
 }
@@ -295,6 +335,7 @@ function applicationManagement(){
     sectionDocumentManagement.style.display = 'none';
     sectionApplicationManagement.style.display = 'flex';
     sectionAppointmentManagement.style.display = 'none';
+    sectionCourseContentManagement.style.display = 'none';
 
     userMgt.classList.remove('activ');
     contentMgt.classList.remove('activ');
@@ -308,13 +349,86 @@ function applicationManagement(){
     workflowMgt.classList.remove('activ');
     commMgt.classList.remove('activ');
     docsMgt.classList.remove('activ');
+    courseMgt.classList.remove('activ');
     applicationMgt.classList.add('activ');
 
     fetchApplications();
 }
 
+function courseManagement(){
+    sectionUserManagement.style.display = 'none';
+    sectionVideoManagement.style.display = 'none';
+    sectionLeadsManagement.style.display = 'none';
+    sectionReportsManagement.style.display = 'none';
+    sectionSettingsManagement.style.display = 'none';
+    sectionWorkflowsManagement.style.display = 'none';
+    sectionCommunicationManagement.style.display = 'none';
+    sectionDocumentManagement.style.display = 'none';
+    sectionApplicationManagement.style.display = 'none';
+    sectionCourseContentManagement.style.display = 'flex';
+    sectionAppointmentManagement.style.display = 'none';
+
+    userMgt.classList.remove('activ');
+    contentMgt.classList.remove('activ');
+    aboutMgt.classList.remove('activ');
+    videoMgt.classList.remove('activ');
+    leadMgt.classList.remove('activ');
+    apptMgt.classList.remove('activ');
+    crmMgt.classList.remove('activ');
+    reportMgt.classList.remove('activ');
+    settingMgt.classList.remove('activ');
+    workflowMgt.classList.remove('activ');
+    commMgt.classList.remove('activ');
+    docsMgt.classList.remove('activ');
+    applicationMgt.classList.remove('activ');
+    courseMgt.classList.add('activ');
+
+    fetchPackages();
+}
+
+// Function to display a message
+function displayMessage(type, text) {
+    const container = document.getElementById('errorContainer');
+
+    // Create message element
+    const message = document.createElement('div');
+    message.className = `message ${type}`;
+    message.innerHTML = `
+        <p>${text}</p>
+        <div class="error-close-btn" onclick="removeMessage(this)">
+            <i class="fa-solid fa-xmark"></i>
+        </div>
+    `;
+    // Add message to the container
+    container.appendChild(message);
+
+    // Remove message after 7 seconds
+    setTimeout(() => {
+        if (message.parentElement) {
+            message.remove();
+        }
+    }, 10000);
+}
+
+// Function to remove a message with slide-left animation
+function removeMessage(button) {
+    const message = button.parentElement;
+    if (message.parentElement) {
+        // Add the slide-left class to trigger the animation
+        message.classList.add('slide-left');
+
+        // Remove the element after the animation completes
+        message.addEventListener('animationend', () => {
+            message.remove();
+        });
+    }
+}
+
 document.addEventListener("DOMContentLoaded", () => {
 
+    // Example usage
+    //displayMessage('error-display', 'This is an error message. style="color: rgb(236, 2, 2); display: flex; margin: 65px 10px 2px 10px; background-color: #fc7b7b; text-align: center; font-size: 11px; padding: 4px 15px; border-radius: 5px; position: fixed; margin-top: 65px;');
+    //displayMessage('success', 'This is a success message. style="color: rgb(236, 2, 2); display: flex; margin: 65px 10px 2px 10px; background-color: #fc7b7b; text-align: center; font-size: 11px; padding: 4px 15px; border-radius: 5px; position: fixed; margin-top: 65px;');
 
     // Fetch when the page loads
     document.getElementById('adminHero').style.display = 'block';
@@ -336,7 +450,9 @@ document.addEventListener("DOMContentLoaded", () => {
     document.getElementById('leadMgt').addEventListener('click', leadsManagement);
     document.getElementById('apptMgt').addEventListener('click', appointmentManagement);
     document.getElementById('applicationMgt').addEventListener('click', applicationManagement);
+    document.getElementById('courseMgt').addEventListener('click', courseManagement);
     btnSubmitUserData.addEventListener('click', userRegistrationOrUpdate);
+    btnSubmitPackageData.addEventListener('click', packageRegistrationOrUpdate);
     btnDownload.addEventListener('click', downloadExcel);
 });
 
@@ -360,6 +476,10 @@ function refreshUserTable(){
 function refreshApplicationTable(){
     applicationList = [];
     fetchApplications();
+}
+function refreshPackagesTable(){
+    packagesListList = [];
+    fetchPackages();
 }
 
 function refreshAbout(){
@@ -538,6 +658,27 @@ async function fetchAppointments() {
         populateAppointments();
     } catch (error) {
         console.error('Error fetching Appointments messages:', error);
+    } finally{
+        hideLoader();
+    }
+}
+
+async function fetchPackages() {
+    showLoader();
+    textLoaderText.textContent = 'Fetching Packages. Please Wait!';
+    try {
+        const response = await fetch(`${DOMAIN}packages`);
+
+        if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+
+        packagesList = await response.json();
+
+        populatePackages();
+    } catch (error) {
+        displayMessage('error-display', 'Failed to fetch Packages. Please try again');
+        console.error('Error fetching Packages messages:', error);
     } finally{
         hideLoader();
     }
@@ -790,6 +931,56 @@ async function deleteApplication(index) {
     }
 }
 
+
+function populatePackages() {
+    const dataList = document.getElementById('packageList');
+    dataList.innerHTML = ''; // Clear existing content
+
+    if (packagesList.length === 0) {
+        dataList.innerHTML = '<p style="margin: 200px; color: white; font-size: 30px; font-weight: 700; cursor: pointer; transition: all 0.5s ease;">No Captured Packages Available!</p>';
+        return;
+    }
+
+    packagesList.forEach((item, index) => {
+        const listItem = document.createElement('div');
+        listItem.classList.add('h-layout', 'item-content');
+        listItem.innerHTML = `
+      <div class="h-layout item-content" onclick="clicked(${index})">
+        <p class="item-plan-name">${item.package_name}</p>
+        <p class="item-plan-period">${item.n_period}</p>
+        <p class="item-plan-amount">${item.n_amount}</p>
+        <p class="item-plan-period">${item.b_period}</p>
+        <p class="item-plan-amount">${item.b_amount}</p>
+        <p class="item-plan-period">${item.s_period}</p>
+        <p class="item-plan-amount">${item.s_amount}</p>
+        <p class="item-plan-period">${item.g_period}</p>
+        <p class="item-plan-amount">${item.g_amount}</p>
+        <i id="leadPreviewMailBtn" onclick="updatePackages(${index})" class="fa fa-pencil-square" aria-hidden="true"></i>
+        <i id="leadDeleteBtn" onclick="deletePackage(${index})" class="fa fa-trash" aria-hidden="true"></i>
+        </div>
+      `;
+        dataList.appendChild(listItem);
+    });
+}
+
+function updatePackages(index){
+    isUpdate = true;
+    packageIndex = index;
+
+    textPackagePopupHeader.textContent = `Update Package`;
+
+    inputPlanName.value = packagesList[index].package_name;
+    inputBasicPeriod.value = packagesList[index].n_period;
+    inputBasicAmount.value = packagesList[index].n_amount;
+    inputBronzePeriod.value = packagesList[index].b_period;
+    inputBronzeAmount.value = packagesList[index].b_amount;
+    inputSilverPeriod.value = packagesList[index].s_period;
+    inputSilverAmount.value = packagesList[index].s_amount;
+    inputGoldPeriod.value = packagesList[index].g_period;
+    inputGoldAmount.value = packagesList[index].g_amount;
+
+    openPackagePopup();
+}
 
 function populateLeads() {
     const dataList = document.getElementById('leadList');
@@ -1586,6 +1777,215 @@ async function updateUser(index) {
     }
 }
 
+btnCreatePackage.addEventListener('click', function (event) {
+    textUserPopupHeader.textContent = 'Create New User';
+    isUpdate = false;
+    packageIndex = null; //not an update
+    openPackagePopup();
+});
+
+function packageRegistrationOrUpdate(){
+    if (isUpdate) {
+        // Use the stored `packageIndex` for the update
+        updatePackage(packageIndex);
+    } else {
+        registerPackage(); // Handle creating a new user
+    }
+}
+
+async function updatePackage(index){
+    validatePackageInput();
+
+    const package = {
+        id:packagesList[index].id,
+        package_name: inputPlanName.value,
+        n_period: inputBasicPeriod.value,
+        n_amount: inputBasicAmount.value,
+        b_period: inputBronzePeriod.value,
+        b_amount: inputBronzeAmount.value,
+        s_period: inputSilverPeriod.value,
+        s_amount: inputSilverAmount.value,
+        g_period: inputGoldPeriod.value,
+        g_amount: inputGoldAmount.value,
+    };
+
+    try {
+        textLoaderText.textContent = 'Updating Package. Please Wait!';
+        showLoader();
+        const response = await fetch(`${DOMAIN}packages/${packagesList[index].id}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(package),
+        });
+
+        if (response.ok) {
+            const result = await response.json();
+            errorMessages = 'Package updated successfully!';
+            displayMessage('success', errorMessages);
+            packagesList[index] = package;
+            populatePackages();
+            clearInput();
+            closePopup();
+            console.log('Updated Package:', result.package);
+        } else {
+            const errorData = await response.json();
+            alert(`Error: ${errorData.error}`);
+        }
+    } catch (error) {
+        console.error('Error updating package:', error);
+        errorMessages = 'An error occurred while updating the package.';
+        displayMessage('error-display', errorMessages);
+    } finally{
+        hideLoader();
+        textLoaderText.textContent = '';
+        isUpdate = false;
+    }
+}
+
+/**
+ * Register a new package
+ */
+function registerPackage(){
+    //validatePackageInput();
+
+    if (inputPlanName.value === '') {
+        displayMessage('error-display', 'Package Name is required!');
+        //handleErrorMessage('Package Name is required!', textErrorContainer);
+        inputPlanName.focus();
+        return;
+    }
+
+    const pairs = [
+        { period: inputBasicPeriod, amount: inputBasicAmount },
+        { period: inputBronzePeriod, amount: inputBronzeAmount },
+        { period: inputSilverPeriod, amount: inputSilverAmount },
+        { period: inputGoldPeriod, amount: inputGoldAmount }
+    ];
+
+    let isValid = false;
+
+    for (const pair of pairs) {
+        if (pair.period.value !== '' && pair.amount.value !== '') {
+            isValid = true;
+            break;
+        }
+    }
+
+    if (!isValid) {
+        displayMessage('error-display', 'At least one period and amount pair is required!');
+        handleErrorMessage('At least one period and amount pair is required!', textErrorContainer);
+        pairs[0].period.focus();
+        return;
+    }
+
+    for (const pair of pairs) {
+        if (pair.period.value !== '' && pair.amount.value === '') {
+            handleErrorMessage(`${pair.period.id.replace('-', ' ')} Amount is required!`, textErrorContainer);
+            pair.amount.focus();
+            return;
+        }
+        if (pair.period.value === '' && pair.amount.value !== '') {
+            handleErrorMessage(`${pair.amount.id.replace('-', ' ')} Period is required!`, textErrorContainer);
+            pair.period.focus();
+            return;
+        }
+    }
+
+    const package = {
+        package_name: inputPlanName.value,
+        n_period: inputBasicPeriod.value,
+        n_amount: inputBasicAmount.value,
+        b_period: inputBronzePeriod.value,
+        b_amount: inputBronzeAmount.value,
+        s_period: inputSilverPeriod.value,
+        s_amount: inputSilverAmount.value,
+        g_period: inputGoldPeriod.value,
+        g_amount: inputGoldAmount.value,
+    };
+
+    try { 
+        textLoaderText.textContent = 'Registering Package. Please Wait!';
+        showLoader();
+        fetch(`${DOMAIN}packages`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(package),
+        })
+            .then((response) => {
+                if (!response.ok) {
+                    throw new Error('Failed to create package');
+                }
+                return response.json();
+            })
+            .then((result) => {
+                errorMessages = 'Package created successfully!';
+                displayMessage('success', errorMessages);
+                fetchPackages();
+                clearInput();
+            })
+            .catch((error) => {
+                console.error('Error creating package:', error);
+                errorMessages = 'An error occurred while creating the package.';
+                displayMessage('erro-display', errorMessages);
+            })
+            .finally(() => {
+                hideLoader();
+                textLoaderText.textContent = '';
+            });
+    } catch (error) {
+        console.error('Error:', error);
+        errorMessages = 'Failed to create package. Please try again later.';
+        displayMessage('error-display', errorMessages);
+    }
+}
+
+function validatePackageInput() {
+    if (inputPlanName.value === '') {
+        handleErrorMessage('Package Name is required!', textErrorContainer);
+        inputPlanName.focus();
+        return;
+    }
+
+    const pairs = [
+        { period: inputBasicPeriod, amount: inputBasicAmount },
+        { period: inputBronzePeriod, amount: inputBronzeAmount },
+        { period: inputSilverPeriod, amount: inputSilverAmount },
+        { period: inputGoldPeriod, amount: inputGoldAmount }
+    ];
+
+    let isValid = false;
+
+    for (const pair of pairs) {
+        if (pair.period.value !== '' && pair.amount.value !== '') {
+            isValid = true;
+            break;
+        }
+    }
+
+    if (!isValid) {
+        displayMessage('error-display', 'At least one period and amount pair is required!');
+        handleErrorMessage('At least one period and amount pair is required!', textErrorContainer);
+        pairs[0].period.focus();
+        return;
+    }
+
+    for (const pair of pairs) {
+        if (pair.period.value !== '' && pair.amount.value === '') {
+            handleErrorMessage(`${pair.period.id.replace('-', ' ')} Amount is required!`, textErrorContainer);
+            pair.amount.focus();
+            return;
+        }
+        if (pair.period.value === '' && pair.amount.value !== '') {
+            handleErrorMessage(`${pair.amount.id.replace('-', ' ')} Period is required!`, textErrorContainer);
+            pair.period.focus();
+            return;
+        }
+    }
+}
 
 /**
  *
@@ -2102,6 +2502,9 @@ function openVideoRegisterPopup(){
 function openApplicationPopup(){
     applicationPopup.style.height ='100%';
 }
+function openPackagePopup() {
+    popupPackage.style.height = '100%';
+}
 /**
  * Close Popups
  */
@@ -2114,6 +2517,9 @@ function closePopup(){
     aboutVideoPopup.style.height ='0%';
     videoRegisterPopup.style.height ='0%';
     applicationPopup.style.height ='0%';
+    popupPackage.style.height ='0%';
+
+    isUpdate = false;
 }
 
 /**
