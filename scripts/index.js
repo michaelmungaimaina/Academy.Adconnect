@@ -16,6 +16,7 @@ const inputUserAccess = document.getElementById('access');
 const inputUserPassword = document.getElementById('userPassword');
 const inputUserSearch = document.getElementById('searchUserInput');
 const inputLeadSearch = document.getElementById('searchLeadsInput');
+const inputPackageSearch = document.getElementById('packageSearchInput');
 const inputAppointmentSearch = document.getElementById('searchAppointmentInput');
 const inputApplicationSearch = document.getElementById('searchApplicationInput');
 const inputAppointmentEdit = document.getElementById('appointmentInput');
@@ -128,6 +129,7 @@ const passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{6,}$/;
 const dateTimePattern = /^\d{4}-\d{2}-\d{2}, \d{2}\.\d{2} (AM|PM) - \d{2}\.\d{2} (AM|PM)$/;
 
 let isUpdate = false;
+let isUpdateMode = false;
 let isLogIn = false;
 let userIndex = null; // To store the index for updating a user
 let appointmentIndex = null; // To store the index for updating an appointment
@@ -1100,7 +1102,7 @@ const packageData = {
 };
 
 function updatePackages(index){
-    isUpdate = true;
+    isUpdateMode = true;
     packageIndex = index;
 
     textPackagePopupHeader.textContent = `Update Package`;
@@ -1946,14 +1948,15 @@ btnCreatePackage.addEventListener('click', function (event) {
 });
 
 function packageRegistrationOrUpdate(){
-    /*if (isUpdate) {
+    event.preventDefault();
+
+    if (isUpdateMode) {
         // Use the stored `packageIndex` for the update
         updatePackage(packageIndex);
-        isUpdate = false;
-    } else {*/
-        isUpdate = false;
+    } else {
+    isUpdateMode = false;
         registerPackage(); // Handle creating a new user
-    //}
+    }
 }
 
 async function updatePackage(index){
@@ -1961,16 +1964,16 @@ async function updatePackage(index){
         return;
     }
     const package = {
-        //id:packagesList[index].id,
+        id:packagesList[index].id,
         package_name: inputPlanName.value,
-        n_period: inputBasicPeriod.value,
-        n_amount: inputBasicAmount.value,
-        b_period: inputBronzePeriod.value,
-        b_amount: inputBronzeAmount.value,
-        s_period: inputSilverPeriod.value,
-        s_amount: inputSilverAmount.value,
-        g_period: inputGoldPeriod.value,
-        g_amount: inputGoldAmount.value,
+        n_period: inputBasicPeriod.value.toString().split('MONTHS').join(' Months'),
+        n_amount: parseInt(inputBasicAmount.value, 10),
+        b_period: inputBronzePeriod.value.toString().split('MONTHS').join(' Months'),
+        b_amount: parseInt(inputBronzeAmount.value, 10),
+        s_period: inputSilverPeriod.value.toString().split('MONTHS').join(' Months'),
+        s_amount: parseInt(inputSilverAmount.value, 10),
+        g_period: inputGoldPeriod.value.toString().split('MONTHS').join(' Months'),
+        g_amount: parseInt(inputGoldAmount.value, 10),
     };
 
     try {
@@ -2017,14 +2020,14 @@ async function registerPackage(){
     }
     const package = {
         package_name: inputPlanName.value,
-        n_period: inputBasicPeriod.value,
-        n_amount: inputBasicAmount.value,
-        b_period: inputBronzePeriod.value,
-        b_amount: inputBronzeAmount.value,
-        s_period: inputSilverPeriod.value,
-        s_amount: inputSilverAmount.value,
-        g_period: inputGoldPeriod.value,
-        g_amount: inputGoldAmount.value,
+        n_period: inputBasicPeriod.value.toString().split('MONTHS').join(' Months'),
+        n_amount: parseInt(inputBasicAmount.value.toString(), 10),
+        b_period: inputBronzePeriod.value.toString().split('MONTHS').join(' Months'),
+        b_amount: parseInt(inputBronzeAmount.value, 10),
+        s_period: inputSilverPeriod.value.toString().split('MONTHS').join(' Months'),
+        s_amount: parseInt(inputSilverAmount.value, 10),
+        g_period: inputGoldPeriod.value.toString().split('MONTHS').join(' Months'),
+        g_amount: parseInt(inputGoldAmount.value, 10),
     };
 
     try {
@@ -2110,6 +2113,11 @@ function validatePackageInput() {
         if (pair.period.value === '' && pair.amount.value !== '') {
             displayMessage('error-display', `${pair.amount.id.replace('-', ' ')} Period is required!`);
             pair.period.focus();
+            return false;
+        }
+        if (pair.amount.value !== '' && isNaN(parseInt(pair.amount.value, 10))) {
+            displayMessage('error-display', `${pair.amount.id.replace('-', ' ')} must be a valid number!`);
+            pair.amount.focus();
             return false;
         }
     }
@@ -2562,15 +2570,15 @@ function clearInput(){
     // Clear the file input
     inputIcon.value = '';
 
-    inputBasicAmount = '';
-    inputBasicPeriod = '';
-    inputBronzeAmount = '';
-    inputBronzePeriod = '';
-    inputSilverAmount = '';
-    inputSilverPeriod = '';
-    inputGoldAmount = '';
-    inputGoldPeriod = '';
-    inputPlanName = '';
+    inputBasicAmount.value = '';
+    inputBasicPeriod.value = '';
+    inputBronzeAmount.value = '';
+    inputBronzePeriod.value = '';
+    inputSilverAmount.value = '';
+    inputSilverPeriod.value = '';
+    inputGoldAmount.value = '';
+    inputGoldPeriod.value = '';
+    inputPlanName.value = '';
 }
 
 /**
@@ -2596,6 +2604,23 @@ inputUserSearch.addEventListener('input', function (event) {
 inputLeadSearch.addEventListener('input', function (event) {
     const filter = event.target.value.toLowerCase();
     const rows = document.querySelectorAll('#leadList .item-content');
+
+    rows.forEach(row => {
+        const text = row.textContent.toLowerCase();
+        if (text.includes(filter)) {
+            row.style.display = '';
+        } else {
+            row.style.display = 'none';
+        }
+    });
+});
+
+/**
+ * Filter Packages
+ */
+inputPackageSearch.addEventListener('input', function (event) {
+    const filter = event.target.value.toLowerCase();
+    const rows = document.querySelectorAll('#packageList .item-content');
 
     rows.forEach(row => {
         const text = row.textContent.toLowerCase();
