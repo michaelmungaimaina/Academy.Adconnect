@@ -1126,7 +1126,7 @@ button:hover{
     flex-direction: column-reverse; /* New messages appear at the bottom */
     align-items: flex-end;
     gap: 10px;
-    z-index: 1000;
+    z-index: 100000;
     /**overflow-x: auto;*/
 }
 
@@ -1204,6 +1204,34 @@ button:hover{
     background-color: #adaeae;
     margin-left: 20px;
 }
+#courseContentMgt #course-c-c{
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    align-items: start;
+    width: 100%;
+}
+#courseContentMgt #course-c-c #packages-content .h-layout.item-content{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #8c8b8b;
+    margin-bottom: 2px;
+    border-radius: 2px;
+    height: 25px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+#courseContentMgt #course-c-c #packages-content .h-layout.item-content:hover{
+    background-color: #F65730;
+}
+#courseContentMgt #course-c-c #packages-content{
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+    justify-content: start;
+    align-items: start;
+}
 #courseContentMgt .course-header{
     background-color: #d84520;
     border-radius: 5px 5px 0px 0;
@@ -1215,23 +1243,41 @@ button:hover{
     font-family: 'DM Sans';
     font-weight: 500;
     margin: 0 10px;
+    cursor: pointer;
+    user-select: none;
 }
 #courseContentMgt .course-header .c-nav{
     align-items: center;
     margin: 1px;
     background-color: #7D8489;
+    cursor: pointer;
 }
 #courseContentMgt .course-header .c-nav-end{
+    cursor: pointer;
     align-items: center;
     margin: 1px;
     background-color: #7D8489;
     border-radius: 0 5px 0 0 ;
 }
 #courseContentMgt .course-header .c-nav-start{
+    cursor: pointer;
     align-items: center;
     margin: 1px;
     background-color: #7D8489;
     border-radius: 5px 0 0 0 ;
+}
+#courseContentMgt .course-header .c-nav-end :only-child:hover{
+    #courseContentMgt .course-header .c-nav-end{
+        background-color: #F65730;
+    }
+}
+#courseContentMgt .course-header .active-tab{
+    background-color: #F65730;
+}
+#courseContentMgt .course-header .c-nav-end:hover,
+#courseContentMgt .course-header .c-nav-start:hover,
+#courseContentMgt .course-header .c-nav:hover{
+    background-color: #F65730;
 }
 #courseContentMgt #course-c-c #packages-content #package-header{
     justify-content: space-between;
@@ -1263,9 +1309,19 @@ button:hover{
     color: #08ff14;
     cursor: pointer;
 }
-
-#courseContentMgt .field-item{
-    margin-top: 85px;
+.admin-hero .content #courseContentMgt #packages-content .field-item{
+    height: 90%;
+    overflow-y: auto;
+    overflow-x: hidden;
+    margin-top: 0%;
+    padding-top: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+#packageList{
+    align-items: start;
+    height: 150px;
 }
 #courseContentMgt .field-bar{
     height: 25px;
@@ -1305,11 +1361,11 @@ button:hover{
     width: 65px;
     text-align: start;
 }
-
 #courseContentMgt .field-item{
     height: 25px;
     align-items: left;
     align-self: start;
+    align-content: start;
 }
 
 #courseContentMgt .field-item p{

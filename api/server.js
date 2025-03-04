@@ -670,6 +670,10 @@ app.delete('/api/packages/:id', (req, res) => {
         db.query(deleteQuery, [id], (err, result) => {
             if (err) {
                 console.error(err);
+                // Check for foreign key constraint error
+                if (err.code === 'ER_ROW_IS_REFERENCED_2') {
+                    return res.status(400).json({ error: 'Cannot delete package: it is referenced by another table.' });
+                }
                 return res.status(500).json({ error: 'Database error' });
             }
 

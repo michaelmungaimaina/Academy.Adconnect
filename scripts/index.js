@@ -1,3 +1,4 @@
+//const { set } = require("../api/server");
 
 console.log('Admin js Loaded');
 
@@ -87,6 +88,7 @@ const reportMgt = document.getElementById('reportMgt');
 const settingMgt = document.getElementById('settingMgt');
 const workflowMgt = document.getElementById('workflowMgt');
 const commMgt = document.getElementById('commMgt');
+const coursesMgt = document.getElementById('coursesMgt');
 const docsMgt = document.getElementById('docsMgt');
 const applicationMgt = document.getElementById('applicationMgt');
 
@@ -229,6 +231,7 @@ function userManagement(){
     docsMgt.classList.remove('activ');
     applicationMgt.classList.remove('activ');
     commMgt.classList.remove('activ');
+    coursesMgt.classList.remove('activ');
     //Manage Lists
     fetchUsers();
 }
@@ -259,7 +262,7 @@ function contentManagement(){
     commMgt.classList.remove('activ');
     docsMgt.classList.remove('activ');
     applicationMgt.classList.remove('activ');
-    courseMgt.classList.remove('activ');
+    coursesMgt.classList.remove('activ');
 
     fetchAbout();
 }
@@ -289,7 +292,7 @@ function leadsManagement(){
     commMgt.classList.remove('activ');
     docsMgt.classList.remove('activ');
     applicationMgt.classList.remove('activ');
-    courseMgt.classList.remove('activ');
+    coursesMgt.classList.remove('activ');
 
     fetchLeads();
 }
@@ -319,7 +322,7 @@ function appointmentManagement(){
     commMgt.classList.remove('activ');
     docsMgt.classList.remove('activ');
     applicationMgt.classList.remove('activ');
-    courseMgt.classList.remove('activ');
+    coursesMgt.classList.remove('activ');
 
     fetchAppointments();
 }
@@ -349,7 +352,7 @@ function applicationManagement(){
     workflowMgt.classList.remove('activ');
     commMgt.classList.remove('activ');
     docsMgt.classList.remove('activ');
-    courseMgt.classList.remove('activ');
+    coursesMgt.classList.remove('activ');
     applicationMgt.classList.add('activ');
 
     fetchApplications();
@@ -381,10 +384,127 @@ function courseManagement(){
     commMgt.classList.remove('activ');
     docsMgt.classList.remove('activ');
     applicationMgt.classList.remove('activ');
-    courseMgt.classList.add('activ');
+    coursesMgt.classList.add('activ');
+
+    packagesManagement();
+}
+
+function packagesManagement(){
+    packagesContent.style.display = 'flex';
+    coursesContent.style.display = 'none';
+    modulesContent.style.display = 'none';
+    clientsContent.style.display = 'none';
+    paymentsContent.style.display = 'none';
+    subscriptionsContent.style.display = 'none';
+
+    packageMgt.classList.add('active-tab');
+    courseMgt.classList.remove('active-tab');
+    moduleMgt.classList.remove('active-tab');
+    resourceMgt.classList.remove('active-tab');
+    clientMgt.classList.remove('active-tab');
+    paymentMgt.classList.remove('active-tab');
+    subscriptionMgt.classList.remove('active-tab');
 
     fetchPackages();
 }
+
+function courseContentManagement(){
+    packagesContent.style.display = 'none';
+    coursesContent.style.display = 'flex';
+    modulesContent.style.display = 'none';
+    clientsContent.style.display = 'none';
+    paymentsContent.style.display = 'none';
+    subscriptionsContent.style.display = 'none';
+
+    packageMgt.classList.remove('active-tab');
+    courseMgt.classList.add('active-tab');
+    moduleMgt.classList.remove('active-tab');
+    resourceMgt.classList.remove('active-tab');
+    clientMgt.classList.remove('active-tab');
+    paymentMgt.classList.remove('active-tab');
+    subscriptionMgt.classList.remove('active-tab');
+}
+function moduleManagement(){
+    packagesContent.style.display = 'none';
+    coursesContent.style.display = 'none';
+    modulesContent.style.display = 'flex';
+    clientsContent.style.display = 'none';
+    paymentsContent.style.display = 'none';
+    subscriptionsContent.style.display = 'none';
+
+    packageMgt.classList.remove('active-tab');
+    courseMgt.classList.remove('active-tab');
+    moduleMgt.classList.add('active-tab');
+    resourceMgt.classList.remove('active-tab');
+    clientMgt.classList.remove('active-tab');
+    paymentMgt.classList.remove('active-tab');
+    subscriptionMgt.classList.remove('active-tab');
+}
+function resourceManagement(){
+    packagesContent.style.display = 'none';
+    coursesContent.style.display = 'none';
+    modulesContent.style.display = 'flex';
+    clientsContent.style.display = 'none';
+    paymentsContent.style.display = 'none';
+    subscriptionsContent.style.display = 'none';
+
+    packageMgt.classList.remove('active-tab');
+    courseMgt.classList.remove('active-tab');
+    moduleMgt.classList.remove('active-tab');
+    resourceMgt.classList.add('active-tab');
+    clientMgt.classList.remove('active-tab');
+    paymentMgt.classList.remove('active-tab');
+    subscriptionMgt.classList.remove('active-tab');
+}
+function clientManagement(){
+    packagesContent.style.display = 'none';
+    coursesContent.style.display = 'none';
+    modulesContent.style.display = 'none';
+    clientsContent.style.display = 'flex';
+    paymentsContent.style.display = 'none';
+    subscriptionsContent.style.display = 'none';
+
+    packageMgt.classList.remove('active-tab');
+    courseMgt.classList.remove('active-tab');
+    moduleMgt.classList.remove('active-tab');
+    resourceMgt.classList.remove('active-tab');
+    clientMgt.classList.add('active-tab');
+    paymentMgt.classList.remove('active-tab');
+    subscriptionMgt.classList.remove('active-tab');
+}
+function paymentManagement(){
+    packagesContent.style.display = 'none';
+    coursesContent.style.display = 'none';
+    modulesContent.style.display = 'none';
+    clientsContent.style.display = 'none';
+    paymentsContent.style.display = 'flex';
+    subscriptionsContent.style.display = 'none';
+
+    packageMgt.classList.remove('active-tab');
+    courseMgt.classList.remove('active-tab');
+    moduleMgt.classList.remove('active-tab');
+    resourceMgt.classList.remove('active-tab');
+    clientMgt.classList.remove('active-tab');
+    paymentMgt.classList.add('active-tab');
+    subscriptionMgt.classList.remove('active-tab');
+}
+function subscriptionManagement(){
+    packagesContent.style.display = 'none';
+    coursesContent.style.display = 'none';
+    modulesContent.style.display = 'none';
+    clientsContent.style.display = 'none';
+    paymentsContent.style.display = 'none';
+    subscriptionsContent.style.display = 'flex';
+
+    packageMgt.classList.remove('active-tab');
+    courseMgt.classList.remove('active-tab');
+    moduleMgt.classList.remove('active-tab');
+    resourceMgt.classList.remove('active-tab');
+    clientMgt.classList.remove('active-tab');
+    paymentMgt.classList.remove('active-tab');
+    subscriptionMgt.classList.add('active-tab');
+}
+
 
 // Function to display a message
 function displayMessage(type, text) {
@@ -450,7 +570,16 @@ document.addEventListener("DOMContentLoaded", () => {
     document.getElementById('leadMgt').addEventListener('click', leadsManagement);
     document.getElementById('apptMgt').addEventListener('click', appointmentManagement);
     document.getElementById('applicationMgt').addEventListener('click', applicationManagement);
-    document.getElementById('courseMgt').addEventListener('click', courseManagement);
+    document.getElementById('coursesMgt').addEventListener('click', courseManagement);
+
+    document.getElementById('package-mgt').addEventListener('click', packagesManagement);
+    document.getElementById('course-mgt').addEventListener('click', courseContentManagement);
+    document.getElementById('module-mgt').addEventListener('click', moduleManagement);
+    document.getElementById('resource-mgt').addEventListener('click', moduleManagement);
+    document.getElementById('client-mgt').addEventListener('click', clientManagement);
+    document.getElementById('payment-mgt').addEventListener('click', paymentManagement);
+    document.getElementById('subscription-mgt').addEventListener('click', subscriptionManagement);
+
     btnSubmitUserData.addEventListener('click', userRegistrationOrUpdate);
     btnSubmitPackageData.addEventListener('click', packageRegistrationOrUpdate);
     btnDownload.addEventListener('click', downloadExcel);
@@ -478,7 +607,7 @@ function refreshApplicationTable(){
     fetchApplications();
 }
 function refreshPackagesTable(){
-    packagesListList = [];
+    packagesList = [];
     fetchPackages();
 }
 
@@ -674,6 +803,7 @@ async function fetchPackages() {
         }
 
         packagesList = await response.json();
+        console.log('Fetch Packages Data:', packagesList);
 
         populatePackages();
     } catch (error) {
@@ -945,7 +1075,6 @@ function populatePackages() {
         const listItem = document.createElement('div');
         listItem.classList.add('h-layout', 'item-content');
         listItem.innerHTML = `
-      <div class="h-layout item-content" onclick="clicked(${index})">
         <p class="item-plan-name">${item.package_name}</p>
         <p class="item-plan-period">${item.n_period}</p>
         <p class="item-plan-amount">${item.n_amount}</p>
@@ -957,11 +1086,18 @@ function populatePackages() {
         <p class="item-plan-amount">${item.g_amount}</p>
         <i id="leadPreviewMailBtn" onclick="updatePackages(${index})" class="fa fa-pencil-square" aria-hidden="true"></i>
         <i id="leadDeleteBtn" onclick="deletePackage(${index})" class="fa fa-trash" aria-hidden="true"></i>
-        </div>
       `;
         dataList.appendChild(listItem);
     });
 }
+
+// Example usage
+const packageData = {
+    basicPeriod: '3MONTHS',
+    bronzePeriod: '6MONTHS',
+    silverPeriod: '9MONTHS',
+    goldPeriod: '12MONTHS'
+};
 
 function updatePackages(index){
     isUpdate = true;
@@ -970,16 +1106,41 @@ function updatePackages(index){
     textPackagePopupHeader.textContent = `Update Package`;
 
     inputPlanName.value = packagesList[index].package_name;
-    inputBasicPeriod.value = packagesList[index].n_period;
     inputBasicAmount.value = packagesList[index].n_amount;
-    inputBronzePeriod.value = packagesList[index].b_period;
     inputBronzeAmount.value = packagesList[index].b_amount;
-    inputSilverPeriod.value = packagesList[index].s_period;
     inputSilverAmount.value = packagesList[index].s_amount;
-    inputGoldPeriod.value = packagesList[index].g_period;
     inputGoldAmount.value = packagesList[index].g_amount;
 
+    setPackagePeriods(packagesList[index].n_period);
+    setPackagePeriods(packagesList[index].b_period);
+    setPackagePeriods(packagesList[index].s_period);
+    setPackagePeriods(packagesList[index].g_period);
+
+
     openPackagePopup();
+}
+
+function setPackagePeriods(period) {
+    switch (period) {
+        case '3 months':
+            inputBasicPeriod.value =  packageData.basicPeriod;
+            break;
+        case '6 months':
+            inputBronzePeriod.value =  packageData.bronzePeriod;
+            break;
+        case '9 months':
+            inputSilverPeriod.value =  packageData.silverPeriod;
+            break;
+        case '12 months':
+            inputGoldPeriod.value =  packageData.goldPeriod;
+            break;
+        default:
+            inputBasicPeriod.value = '';
+            inputBronzePeriod.value = '';
+            inputSilverPeriod.value = '';
+            inputGoldPeriod.value = '';
+            break;
+    }
 }
 
 function populateLeads() {
@@ -1778,26 +1939,29 @@ async function updateUser(index) {
 }
 
 btnCreatePackage.addEventListener('click', function (event) {
-    textUserPopupHeader.textContent = 'Create New User';
+    textPackagePopupHeader.textContent = 'Create New User';
     isUpdate = false;
     packageIndex = null; //not an update
     openPackagePopup();
 });
 
 function packageRegistrationOrUpdate(){
-    if (isUpdate) {
+    /*if (isUpdate) {
         // Use the stored `packageIndex` for the update
         updatePackage(packageIndex);
-    } else {
+        isUpdate = false;
+    } else {*/
+        isUpdate = false;
         registerPackage(); // Handle creating a new user
-    }
+    //}
 }
 
 async function updatePackage(index){
-    validatePackageInput();
-
+    if (!validatePackageInput()) {
+        return;
+    }
     const package = {
-        id:packagesList[index].id,
+        //id:packagesList[index].id,
         package_name: inputPlanName.value,
         n_period: inputBasicPeriod.value,
         n_amount: inputBasicAmount.value,
@@ -1826,8 +1990,8 @@ async function updatePackage(index){
             displayMessage('success', errorMessages);
             packagesList[index] = package;
             populatePackages();
-            clearInput();
             closePopup();
+            clearInput();
             console.log('Updated Package:', result.package);
         } else {
             const errorData = await response.json();
@@ -1847,52 +2011,10 @@ async function updatePackage(index){
 /**
  * Register a new package
  */
-function registerPackage(){
-    //validatePackageInput();
-
-    if (inputPlanName.value === '') {
-        displayMessage('error-display', 'Package Name is required!');
-        //handleErrorMessage('Package Name is required!', textErrorContainer);
-        inputPlanName.focus();
+async function registerPackage(){
+    if (!validatePackageInput()) {
         return;
     }
-
-    const pairs = [
-        { period: inputBasicPeriod, amount: inputBasicAmount },
-        { period: inputBronzePeriod, amount: inputBronzeAmount },
-        { period: inputSilverPeriod, amount: inputSilverAmount },
-        { period: inputGoldPeriod, amount: inputGoldAmount }
-    ];
-
-    let isValid = false;
-
-    for (const pair of pairs) {
-        if (pair.period.value !== '' && pair.amount.value !== '') {
-            isValid = true;
-            break;
-        }
-    }
-
-    if (!isValid) {
-        displayMessage('error-display', 'At least one period and amount pair is required!');
-        handleErrorMessage('At least one period and amount pair is required!', textErrorContainer);
-        pairs[0].period.focus();
-        return;
-    }
-
-    for (const pair of pairs) {
-        if (pair.period.value !== '' && pair.amount.value === '') {
-            handleErrorMessage(`${pair.period.id.replace('-', ' ')} Amount is required!`, textErrorContainer);
-            pair.amount.focus();
-            return;
-        }
-        if (pair.period.value === '' && pair.amount.value !== '') {
-            handleErrorMessage(`${pair.amount.id.replace('-', ' ')} Period is required!`, textErrorContainer);
-            pair.period.focus();
-            return;
-        }
-    }
-
     const package = {
         package_name: inputPlanName.value,
         n_period: inputBasicPeriod.value,
@@ -1905,49 +2027,56 @@ function registerPackage(){
         g_amount: inputGoldAmount.value,
     };
 
-    try { 
+    try {
         textLoaderText.textContent = 'Registering Package. Please Wait!';
+        // Show loader before the request
         showLoader();
-        fetch(`${DOMAIN}packages`, {
+
+        // Make API call
+        const response = await fetch(`${DOMAIN}packages`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify(package),
-        })
-            .then((response) => {
-                if (!response.ok) {
-                    throw new Error('Failed to create package');
-                }
-                return response.json();
-            })
-            .then((result) => {
-                errorMessages = 'Package created successfully!';
+        });
+
+        // Handle response
+        if (response.ok) {
+            let result;
+            try {
+                result = await response.json(); // Attempt to parse JSON
+            } catch {
+                result = { message: 'Package created successfully!' }; // Fallback if response isn't JSON
+            }
+            console.log('Response:', result);
+            errorMessages = 'Package created successfully!';
                 displayMessage('success', errorMessages);
+                console.log('Package created:', result.package);
                 fetchPackages();
+                console.log('Fetching Packages');
+                closePopup();
                 clearInput();
-            })
-            .catch((error) => {
-                console.error('Error creating package:', error);
-                errorMessages = 'An error occurred while creating the package.';
-                displayMessage('erro-display', errorMessages);
-            })
-            .finally(() => {
-                hideLoader();
-                textLoaderText.textContent = '';
-            });
+        } else {
+            const errorData = await response.json();
+            const errorMessage = errorData.error || 'An unknown error occurred';
+            displayMessage('error-display', `Error: ${errorMessage}`);
+        }
     } catch (error) {
         console.error('Error:', error);
-        errorMessages = 'Failed to create package. Please try again later.';
-        displayMessage('error-display', errorMessages);
+        displayMessage('error-display', 'Failed to create package. Please try again later.');
+    } finally {
+        // Hide loader after the request
+        hideLoader();
+        textLoaderText.textContent = '';
     }
 }
 
 function validatePackageInput() {
     if (inputPlanName.value === '') {
-        handleErrorMessage('Package Name is required!', textErrorContainer);
+        displayMessage('error-display', 'Package Name is required!');
         inputPlanName.focus();
-        return;
+        return false;
     }
 
     const pairs = [
@@ -1968,23 +2097,24 @@ function validatePackageInput() {
 
     if (!isValid) {
         displayMessage('error-display', 'At least one period and amount pair is required!');
-        handleErrorMessage('At least one period and amount pair is required!', textErrorContainer);
         pairs[0].period.focus();
-        return;
+        return false;
     }
 
     for (const pair of pairs) {
         if (pair.period.value !== '' && pair.amount.value === '') {
-            handleErrorMessage(`${pair.period.id.replace('-', ' ')} Amount is required!`, textErrorContainer);
+            displayMessage('error-display', `${pair.period.id.replace('-', ' ')} Amount is required!`);
             pair.amount.focus();
-            return;
+            return false;
         }
         if (pair.period.value === '' && pair.amount.value !== '') {
-            handleErrorMessage(`${pair.amount.id.replace('-', ' ')} Period is required!`, textErrorContainer);
+            displayMessage('error-display', `${pair.amount.id.replace('-', ' ')} Period is required!`);
             pair.period.focus();
-            return;
+            return false;
         }
     }
+
+    return true;
 }
 
 /**
@@ -1995,27 +2125,27 @@ async function registerUser() {
     // Validate user input fields
     if (inputUserName.value.trim() === '') {
         inputUserName.focus();
-        handleErrorMessage('Full Name is required!', textErrorContainer);
+        displayMessage('error-display', 'Full Name is required!');
         return;
     }
     if (!twoWordsPattern.test(inputUserName.value.trim())) {
         inputUserName.focus();
-        handleErrorMessage('A full name must contain two or more words!', textErrorContainer);
+        displayMessage('A full name must contain two or more words!', textErrorContainer);
         return;
     }
     if (inputUserEmail.value.trim() === '') {
         inputUserEmail.focus();
-        handleErrorMessage('Email is required!', textErrorContainer);
+        displayMessage('Email is required!', textErrorContainer);
         return;
     }
     if (!emailPattern.test(inputUserEmail.value)) {
         inputUserEmail.focus();
-        handleErrorMessage('Please enter a valid email address!', textErrorContainer);
+        displayMessage('error-display', 'Please enter a valid email address!')
         return;
     }
     if (inputUserPassword.value.trim() === '') {
         inputUserPassword.focus();
-        handleErrorMessage('Password is required!', textErrorContainer);
+        displayMessage('error-display', 'Password is required!')
         return;
     }
     if (!passwordPattern.test(inputUserPassword.value)) {
@@ -2340,6 +2470,31 @@ async function deleteVideo(index){
         }
     }
 }
+async function deletePackage(index) {
+    if (confirm('Are you sure you want to delete this Package?')) {
+        try {
+            showLoader();
+            const response = await fetch(`${DOMAIN}packages/${packagesList[index].id}`, { method: 'DELETE' });
+            if (!response.ok) {
+                const errorData = await response.json();
+                throw new Error(errorData.error || 'Failed to delete Package');
+            }
+            errorMessages = 'Package deleted successfully';
+            displayMessage('success', errorMessages);
+            packagesList.splice(index, 1);
+            populatePackages();
+        } catch (error) {
+            console.error('Error deleting Package:', error);
+            if (error.message.includes('constraint')) {
+                displayMessage('error-display', 'Cannot delete package: it is referenced by another table.');
+            } else {
+                displayMessage('error-display', error.message);
+            }
+        } finally {
+            hideLoader();
+        }
+    }
+}
 
 function validateUserInput(){
     if (inputUserName.value.trim() === '') {
@@ -2406,6 +2561,16 @@ function clearInput(){
     inputMission.value = '';
     // Clear the file input
     inputIcon.value = '';
+
+    inputBasicAmount = '';
+    inputBasicPeriod = '';
+    inputBronzeAmount = '';
+    inputBronzePeriod = '';
+    inputSilverAmount = '';
+    inputSilverPeriod = '';
+    inputGoldAmount = '';
+    inputGoldPeriod = '';
+    inputPlanName = '';
 }
 
 /**

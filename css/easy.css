@@ -476,6 +476,9 @@ body main .page-sec {
     color: #ffffff;
     background: #302E2C;
 }
+.active-tab{
+    background-color: #F65730;
+}
 
 .overlay {
     position: absolute;
