@@ -27,6 +27,13 @@ app.use(cors({
     allowedHeaders: ['Content-Type', 'Authorization'],
 }));
 
+app.use((req, res, next) => {
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+    next();
+});
+
 
 //
 app.use((req, res, next) => {
@@ -858,6 +865,10 @@ app.delete('/api/courses/:id', (req, res) => {
         db.query(deleteQuery, [id], (err, result) => {
             if (err) {
                 console.error(err);
+                // Check for foreign key constraint error
+                if (err.code === 'ER_ROW_IS_REFERENCED_2') {
+                    return res.status(400).json({ error: 'Cannot delete Course: it is referenced by another table.' });
+                }
                 return res.status(500).json({ error: 'Database error' });
             }
 

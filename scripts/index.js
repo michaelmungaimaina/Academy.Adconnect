@@ -37,10 +37,16 @@ const inputSilverAmount = document.getElementById('silver-amount');
 const inputGoldPeriod = document.getElementById('gold-period');
 const inputGoldAmount = document.getElementById('gold-amount');
 
+const inputCourseTitle = document.getElementById('input-title');
+const inputCourseDescription = document.getElementById('input-description');
+const inputCoursePreviewLink = document.getElementById('input-preview-link');
+const inputCoursePlan = document.getElementById('input-course-plan');
+
 const textUsernameSession = document.getElementById('usernameSession');
 const textUserPopupHeader = document.getElementById('popupHeaderText');
 const textUserPopupHeaderAppt = document.getElementById('popupHeaderTextAppt');
 const textAboutPopupHeader = document.getElementById('popupHeaderTextAbout');
+const textCoursePopupHeader = document.getElementById('popupHeaderTextCourse');
 const textPackagePopupHeader = document.getElementById('popupPackageHeaderText');
 const textApplicationPopupHeader = document.getElementById('popupHeaderTextApplication');
 const textApplicationContent = document.getElementById('titleTextApplication');
@@ -65,6 +71,7 @@ const btnUpdateAbout = document.getElementById('btnUpdateAbout');
 const btnRegisterAbout = document.getElementById('btnRegisterAbout');
 const btnDownload = document.getElementById('downloadButton');
 const btnCreatePackage = document.getElementById('btnCreatePackage');
+const btnCreateCourse = document.getElementById('btnCreateCourse');
 
 const sectionUserManagement = document.getElementById('userContentMgt');
 const sectionVideoManagement = document.getElementById('videoContentMgt');
@@ -104,6 +111,7 @@ const subscriptionMgt = document.getElementById('subscription-mgt');
 const popupUserMgt = document.getElementById('userPopUp');
 const popupAppointment = document.getElementById('appointmentPopup');
 const popupAbout = document.getElementById('aboutPopup');
+const popupCourseRegister = document.getElementById('courseRegisterPopup');
 const popupLoader = document.getElementById('loaderPopup');
 const popupPackage = document.getElementById('package-popup');
 const aboutRegisterPopup = document.getElementById('aboutRegisterPopup');
@@ -144,6 +152,9 @@ let isInvestment = false;
 
 let userList = [];
 let leadList = [];
+let courseList = [];
+let modulesList = [];
+let resourcesList = [];
 let appointmentList = [];
 let aboutList = [];
 let videoList = [];
@@ -425,6 +436,9 @@ function courseContentManagement(){
     clientMgt.classList.remove('active-tab');
     paymentMgt.classList.remove('active-tab');
     subscriptionMgt.classList.remove('active-tab');
+
+    fetchCourses();
+    fetchPackages();
 }
 function moduleManagement(){
     packagesContent.style.display = 'none';
@@ -441,6 +455,8 @@ function moduleManagement(){
     clientMgt.classList.remove('active-tab');
     paymentMgt.classList.remove('active-tab');
     subscriptionMgt.classList.remove('active-tab');
+
+    fetchModules();
 }
 function resourceManagement(){
     packagesContent.style.display = 'none';
@@ -546,8 +562,42 @@ function removeMessage(button) {
     }
 }
 
-document.addEventListener("DOMContentLoaded", () => {
+function applyTooltipToElement(descriptionElement, id) {
+        const description = document.getElementById(id);
+        //const descriptionElement = document.querySelector(".item-course-description");
+        
+        // Create overlay element
+        const tooltipOverlay = document.createElement("div");
+        tooltipOverlay.classList.add("tooltip-overlay");
+        tooltipOverlay.textContent = descriptionElement.textContent; // Set the full text to show in the overlay
+        
+        // Append overlay to the description element
+        description.appendChild(tooltipOverlay);
 
+        // Show overlay on hover
+        // Event listener to show the overlay when hovering over the description
+        descriptionElement.addEventListener("mouseenter", function () {
+            tooltipOverlay.style.visibility = "visible"; // Make tooltip visible
+            tooltipOverlay.style.display = "block"; // Ensure the overlay is displayed
+        });
+
+        // Event listener to track the cursor's position and move the tooltip accordingly
+        descriptionElement.addEventListener("mousemove", function (event) {
+            const cursorX = event.clientX - 250; // Offset the tooltip slightly from the cursor
+            const cursorY = event.clientY - 30; // Offset the tooltip slightly from the cursor
+
+            // Update the position of the tooltip relative to the cursor
+            tooltipOverlay.style.left = `${cursorX}px`;
+            tooltipOverlay.style.top = `${cursorY}px`;
+        });
+
+        // Hide overlay when hover ends
+        descriptionElement.addEventListener("mouseleave", function () {
+            console.log('Hovered Out');
+            tooltipOverlay.style.display = "none";
+        });
+    }
+document.addEventListener("DOMContentLoaded", () => {
     // Example usage
     //displayMessage('error-display', 'This is an error message. style="color: rgb(236, 2, 2); display: flex; margin: 65px 10px 2px 10px; background-color: #fc7b7b; text-align: center; font-size: 11px; padding: 4px 15px; border-radius: 5px; position: fixed; margin-top: 65px;');
     //displayMessage('success', 'This is a success message. style="color: rgb(236, 2, 2); display: flex; margin: 65px 10px 2px 10px; background-color: #fc7b7b; text-align: center; font-size: 11px; padding: 4px 15px; border-radius: 5px; position: fixed; margin-top: 65px;');
@@ -602,6 +652,10 @@ function activeClass(nav) {
 function refreshUserTable(){
     userList = [];
     fetchUsers();
+}
+function refreshCoursesTable(){
+    courseList = [];
+    fetchCourses();
 }
 
 function refreshApplicationTable(){
@@ -806,6 +860,8 @@ async function fetchPackages() {
 
         packagesList = await response.json();
         console.log('Fetch Packages Data:', packagesList);
+        // Populate the select element with packages
+        populateSelect(packagesList);
 
         populatePackages();
     } catch (error) {
@@ -814,6 +870,81 @@ async function fetchPackages() {
     } finally{
         hideLoader();
     }
+}
+
+async function fetchCourses() {
+    showLoader();
+    textLoaderText.textContent = 'Fetching Courses. Please Wait!';
+    try {
+        const response = await fetch(`${DOMAIN}courses`);
+
+        if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+
+        courseList = await response.json();
+        console.log('Fetch Courses Data:', courseList);
+
+        populateCourses();
+    } catch (error) {
+        displayMessage('error-display', 'Failed to fetch Courses. Please try again');
+        console.error('Error fetching Courses Data:', error);
+    } finally{
+        hideLoader();
+    }
+}
+async function fetchModules() {
+    showLoader();
+    textLoaderText.textContent = 'Fetching Modules. Please Wait!';
+    try {
+        const response = await fetch(`${DOMAIN}modules`);
+
+        if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+
+        modulesList = await response.json();
+        console.log('Fetch Modules Data:', modulesList);
+
+        populateModules();
+    } catch (error) {
+        displayMessage('error-display', 'Failed to fetch Modules. Please try again');
+        console.error('Error fetching Modules Data:', error);
+    }
+
+    try {
+        const response = await fetch(`${DOMAIN}resources`);
+
+        if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+
+        resourcesList = await response.json();
+        console.log('Fetch Resources Data:', resourcesList);
+
+        populateResources();
+    } catch (error) {
+        displayMessage('error-display', 'Failed to fetch Resources. Please try again');
+        console.error('Error fetching Resources Data:', error);
+    } finally{
+        hideLoader();
+    }
+}
+
+// Function to populate the select element with packages
+function populateSelect(packages) {
+    inputCoursePlan.innerHTML = ''; // Clear existing content
+    const option = document.createElement('option');
+    option.value = '';
+    option.textContent = 'Select a Package';
+    option.disabled = true;
+    inputCoursePlan.appendChild(option);
+    packages.forEach(pkg => {
+        const opt = document.createElement('option');
+        opt.value = pkg.id;
+        opt.textContent = pkg.package_name;
+        inputCoursePlan.appendChild(opt);
+    });
 }
 
 async function fetchApplications() {
@@ -1064,6 +1195,102 @@ async function deleteApplication(index) {
 }
 
 
+function populateCourses() {
+    const dataList = document.getElementById('courseList');
+    dataList.innerHTML = ''; // Clear existing content
+
+    if (courseList.length === 0) {
+        dataList.innerHTML = '<p style="margin: 200px; color: white; font-size: 30px; font-weight: 700; cursor: pointer; transition: all 0.5s ease;">No Captured Courses Available!</p>';
+        return;
+    }
+
+    courseList.forEach((item, index) => {
+        const listItem = document.createElement('div');
+        listItem.classList.add('h-layout', 'item-content');
+        listItem.innerHTML = `
+        <p class="item-course-name">${item.title}</p>
+        <p class="item-course-description">${item.description}</p>
+        <div class="item-course-view" onclick="previewCourse(${index})"><p>VIEW</p></div>
+        <div class="item-course-view"><p>VIEW</p></div>
+        <i id="leadPreviewMailBtn" onclick="courseUpdate(${index})" class="fa fa-pencil-square" aria-hidden="true"></i>
+        <i id="leadDeleteBtn" onclick="deleteCourse(${index})" class="fa fa-trash" aria-hidden="true"></i>
+      `;
+        dataList.appendChild(listItem);
+    });
+
+    // Get all the descriptions with the class .item-course-description
+    const descriptionElements = document.querySelectorAll(".item-course-description");
+
+    // Apply the tooltip to each description element (including duplicates)
+    descriptionElements.forEach(function (descriptionElement) {
+        applyTooltipToElement(descriptionElement, 'courseList');
+    });
+}
+
+function populateResources() {
+    const dataList = document.getElementById('resourceList');
+    dataList.innerHTML = ''; // Clear existing content
+
+    if (resourcesList.length === 0) {
+        dataList.innerHTML = '<p style="margin:100px 200px; color: white; font-size: 30px; font-weight: 700; cursor: pointer; transition: all 0.5s ease;">No Captured Resources Available!</p>';
+        return;
+    }
+
+    resourcesList.forEach((item, index) => {
+        const listItem = document.createElement('div');
+        listItem.classList.add('h-layout', 'item-content');
+        listItem.innerHTML = `
+        <p class="item-module-name">${item.title}</p>
+        <p class="item-module-description">${item.mname}</p>
+        <div class="item-module-view" onclick="previewCourse(${index})"><p>VIEW</p></div>
+        <i id="leadPreviewMailBtn" onclick="resourceUpdate(${index})" class="fa fa-pencil-square" aria-hidden="true"></i>
+        <i id="leadDeleteBtn" onclick="deleteResource(${index})" class="fa fa-trash" aria-hidden="true"></i>
+      `;
+        dataList.appendChild(listItem);
+    });
+
+    // Get all the descriptions with the class .item-course-description
+    const descriptionElements = document.querySelectorAll(".item-course-description");
+
+    // Apply the tooltip to each description element (including duplicates)
+    descriptionElements.forEach(function (descriptionElement) {
+        applyTooltipToElement(descriptionElement, 'moduleList');
+    });
+}
+
+function populateModules() {
+    const dataList = document.getElementById('moduleList');
+    dataList.innerHTML = ''; // Clear existing content
+
+    if (modulesList.length === 0) {
+        dataList.innerHTML = '<p style="margin: 200px; color: white; font-size: 30px; font-weight: 700; cursor: pointer; transition: all 0.5s ease;">No Captured Courses Available!</p>';
+        return;
+    }
+
+    modulesList.forEach((item, index) => {
+        const listItem = document.createElement('div');
+        listItem.classList.add('h-layout', 'item-content');
+        listItem.innerHTML = `
+        <p class="item-module-name">${item.title}</p>
+        <p class="item-module-description">${item.about}</p>
+        <div class="item-module-view" onclick="previewModule(${index})"><p>VIEW</p></div>
+        <p class="item-module-course">${item.pname}</p>
+        <p class="item-module-resource">${item.resource}</p>
+        <i id="leadPreviewMailBtn" onclick="moduleUpdate(${index})" class="fa fa-pencil-square" aria-hidden="true"></i>
+        <i id="leadDeleteBtn" onclick="deleteModule(${index})" class="fa fa-trash" aria-hidden="true"></i>
+      `;
+        dataList.appendChild(listItem);
+    });
+
+    // Get all the descriptions with the class .item-course-description
+    const descriptionElements = document.querySelectorAll(".item-module-description");
+
+    // Apply the tooltip to each description element (including duplicates)
+    descriptionElements.forEach(function (descriptionElement) {
+        applyTooltipToElement(descriptionElement, 'moduleList');
+    });
+}
+
 function populatePackages() {
     const dataList = document.getElementById('packageList');
     dataList.innerHTML = ''; // Clear existing content
@@ -1120,6 +1347,27 @@ function updatePackages(index){
 
 
     openPackagePopup();
+}
+
+function courseUpdate(index){
+    isUpdateMode = true;
+    packageIndex = index;
+
+    textCoursePopupHeader.textContent = `Update Course`;
+
+    inputCourseTitle.value = courseList[index].title;
+    inputCourseDescription.value = courseList[index].description;
+    inputCoursePreviewLink.value = courseList[index].preview;
+
+    // Set the active option based on the current course's pname
+    const options = inputCoursePlan.options;
+    for (let i = 0; i < options.length; i++) {
+        if (options[i].value === courseList[index].package) {
+            options[i].selected = true;
+            break;
+        }
+    }
+    openCoursePopup();
 }
 
 function setPackagePeriods(period) {
@@ -1941,11 +2189,206 @@ async function updateUser(index) {
 }
 
 btnCreatePackage.addEventListener('click', function (event) {
-    textPackagePopupHeader.textContent = 'Create New User';
+    textPackagePopupHeader.textContent = 'Create New Package';
     isUpdate = false;
     packageIndex = null; //not an update
     openPackagePopup();
 });
+
+btnCreateCourse.addEventListener('click', function (event) {
+    textCoursePopupHeader.textContent = 'Create New Course';
+    isUpdate = false;
+    packageIndex = null; //not an update
+    openCoursePopup();
+});
+
+function previewCourse(index){
+    event.preventDefault();
+    const videoUrl = courseList[index].preview;
+    const videoId = videoUrl.split('v=')[1];
+    const embedUrl = `https://www.youtube.com/embed/${videoId}`;
+    aboutVideoViewArea.src = embedUrl;
+    console.log('Course Preview:', embedUrl);
+    openVideoPreviewPopup()
+}
+
+function registerOrUpdateCourse(){
+    event.preventDefault();
+
+    if (isUpdateMode) {
+        // Use the stored `packageIndex` for the update
+        updateCourse(packageIndex);
+    } else {
+    isUpdateMode = false;
+        registerCourse(); // Handle creating a new user
+    }
+}
+
+async function registerCourse(){
+    if (!validateCourseInput()) {
+        return;
+    }
+    if (!inputCoursePlan.value) {
+        console.error('Error: inputCoursePlan is empty or not assigned.');
+    } else {
+        console.log('Input Plan Name:', inputCoursePlan.value); // Log the inputPlanName value
+    }
+    // Find the matching package in the packageList
+    const selectedPackage = packagesList.find(pkg => pkg.id === inputCoursePlan.value);
+
+    if (!selectedPackage) {
+        displayMessage('error-display', 'Selected package not found!');
+        return;
+    }
+    const course = {
+        title: inputCourseTitle.value,
+        description: inputCourseDescription.value,
+        preview: inputCoursePreviewLink.value,
+        package: selectedPackage.id,
+    };
+
+    try {
+        textLoaderText.textContent = 'Registering Course. Please Wait!';
+        showLoader();
+        const response = await fetch(`${DOMAIN}courses`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(course),
+        });
+
+        if (response.ok) {
+            const result = await response.json();
+            errorMessages = 'Course created successfully!';
+            displayMessage('success', errorMessages);
+            console.log('Course created:', result.course);
+            fetchCourses();
+            closePopup();
+            clearInput();
+        } else {
+            const errorData = await response.json();
+            displayMessage('error-display', `Error: ${errorData.error}`);
+        }
+    } catch (error) {
+        console.error('Error:', error);
+        errorMessages = 'An error occurred while creating the course.';
+        displayMessage('error-display', errorMessages);
+    } finally{
+        hideLoader();
+        textLoaderText.textContent = '';
+        isUpdateMode = false;
+    }
+}
+
+async function updateCourse(index){
+    if (!validateCourseInput()) {
+        return;
+    }
+    console.log('Input Plan Name:', inputCoursePlan.value); // Log the inputPlanName value
+    // Find the matching package in the packageList
+    const selectedPackage = packagesList.find(pkg => pkg.id === inputCoursePlan.value);
+
+    if (!selectedPackage) {
+        displayMessage('error-display', 'Selected package not found!');
+        return;
+    }
+    const course = {
+        id:courseList[index].id,
+        title: inputCourseTitle.value,
+        description: inputCourseDescription.value,
+        preview: inputCoursePreviewLink.value,
+        package: selectedPackage.id,
+    };
+
+    try {
+        textLoaderText.textContent = 'Updating Course. Please Wait!';
+        showLoader();
+        const response = await fetch(`${DOMAIN}courses/${courseList[index].id}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(course),
+        });
+
+        if (response.ok) {
+            const result = await response.json();
+            errorMessages = 'Course updated successfully!';
+            displayMessage('success', errorMessages);
+            courseList[index] = course;
+            populateCourses();
+            closePopup();
+            clearInput();
+            console.log('Updated Course:', result.course);
+        } else {
+            const errorData = await response.json();
+            displayMessage('error-display', `Error: ${errorData.error}`);
+        }
+    } catch (error) {
+        console.error('Error updating course:', error);
+        errorMessages = 'An error occurred while updating the course.';
+        displayMessage('error-display', errorMessages);
+    } finally{
+        hideLoader();
+        textLoaderText.textContent = '';
+        isUpdateMode = false;
+    }
+}
+
+function validateCourseInput() {
+    if (inputCourseTitle.value === '') {
+        displayMessage('error-display', 'Course Title is required!');
+        inputCourseTitle.focus();
+        return false;
+    }
+
+    if (inputCourseDescription.value === '') {
+        displayMessage('error-display', 'Course Description is required!');
+        inputCourseDescription.focus();
+        return false;
+    }
+
+    if (inputCoursePreviewLink.value === '') {
+        displayMessage('error-display', 'Course Preview Link is required!');
+        inputCoursePreviewLink.focus();
+        return false;
+    }
+
+    if (inputCoursePlan.value === '') {
+        displayMessage('error-display', 'Course Package is required!');
+        inputCoursePlan.focus();
+        return false;
+    }
+
+    return true;
+}
+
+async function deleteCourse(index){
+    if (confirm('Are you sure you want to delete this Course?')) {
+        try {
+            showLoader();
+            const response = await fetch(`${DOMAIN}courses/${courseList[index].id}`, { method: 'DELETE' });
+            if (!response.ok) {
+                const errorData = await response.json();
+                throw new Error(errorData.error || 'Failed to delete Course');
+            }
+            errorMessages = 'Course deleted successfully';
+            displayMessage('success', errorMessages);
+            courseList.splice(index, 1);
+            populateCourses();
+        } catch (error) {
+            console.error('Error deleting Course:', error);
+            if (error.message.includes('constraint')) {
+                displayMessage('error-display', 'Cannot delete Course: it is referenced by another table.');
+            } else {
+                displayMessage('error-display', error.message);
+            }
+        } finally {
+            hideLoader();
+        }
+    }
+}
 
 function packageRegistrationOrUpdate(){
     event.preventDefault();
@@ -2579,6 +3022,10 @@ function clearInput(){
     inputGoldAmount.value = '';
     inputGoldPeriod.value = '';
     inputPlanName.value = '';
+    inputCoursePlan.value = '';
+    inputCourseTitle.value = '';
+    inputCourseDescription.value = '';
+    inputCoursePreviewLink.value = '';
 }
 
 /**
@@ -2695,6 +3142,9 @@ function openApplicationPopup(){
 function openPackagePopup() {
     popupPackage.style.height = '100%';
 }
+function openCoursePopup() {
+    popupCourseRegister.style.height = '100%';
+}
 /**
  * Close Popups
  */
@@ -2702,6 +3152,7 @@ function closePopup(){
     popupUserMgt.style.height ='0%';
     popupAppointment.style.height ='0%';
     popupAbout.style.height ='0%';
+    popupCourseRegister.style.height ='0%';
     aboutRegisterPopup.style.height ='0%';
     aboutPhotoPopup.style.height ='0%';
     aboutVideoPopup.style.height ='0%';
@@ -2710,6 +3161,9 @@ function closePopup(){
     popupPackage.style.height ='0%';
 
     isUpdate = false;
+    isUpdateMode = false;
+
+    clearInput();
 }
 
 /**

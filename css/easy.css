@@ -392,6 +392,7 @@ body main .page-sec {
     color: #009a08;
 }
 .fa-refresh{
+    margin-left: 15px;
     color: #ffffff;
     cursor: pointer;
 }
@@ -417,9 +418,19 @@ body main .page-sec {
 .fa-check-circle{
     color: #009a08;
 }
+.fa-plus-square{
+    height: 25px;
+    width: 25px;
+    color: #009a08;
+    cursor: pointer;
+}
 
-.fa-refresh,
-.fa-pencil-square.fa-trash,
+.fa-plus-square:hover,
+.fa-refresh:hover{
+    color: #F65730;
+}
+.fa-pencil-square:hover,
+.fa-trash:hover,
 .fa-download:hover,
 .fa-video-camera:hover,
 .fa-calendar:hover,

@@ -1212,7 +1212,7 @@ button:hover{
     align-items: start;
     width: 100%;
 }
-#courseContentMgt #course-c-c #packages-content .h-layout.item-content{
+#courseContentMgt #course-c-c #packages-content .h-layout .item-content{
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -1279,12 +1279,12 @@ button:hover{
 #courseContentMgt .course-header .c-nav:hover{
     background-color: #F65730;
 }
-#courseContentMgt #course-c-c #packages-content #package-header{
+#courseContentMgt #course-c-c #package-header{
     justify-content: space-between;
     width: 100%;
     margin-top: 10px;
 }
-#courseContentMgt #course-c-c #packages-content #package-header div{
+#courseContentMgt #course-c-c #package-header div{
     background-color: #7D8489;
     border-radius: 3px;
     height: 20px;
@@ -1303,12 +1303,6 @@ button:hover{
     color: #d0d0d0;
     border: none;
 }
-#courseContentMgt #course-c-c #packages-content #package-header .fa-plus-square{
-    height: 20px;
-    width: 20px;
-    color: #08ff14;
-    cursor: pointer;
-}
 .admin-hero .content #courseContentMgt #packages-content .field-item{
     height: 90%;
     overflow-y: auto;
@@ -1321,7 +1315,6 @@ button:hover{
 }
 #packageList{
     align-items: start;
-    height: 150px;
 }
 #courseContentMgt .field-bar{
     height: 25px;
@@ -1406,3 +1399,197 @@ button:hover{
 #submitNewPackage:hover{
     background-color: #F65730;
 }
+
+#courses-content .field-item{
+    height: 90%;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding-top: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+#courses-content{
+    align-items: start;
+    justify-content: start;
+    justify-self: start;
+    height: 100%;
+    width: 85%;
+}
+#courses-content .title-course-name{
+    margin: 0 5px 0 5px;
+    width: 200px;
+    text-align: start;
+}
+#courses-content .title-course-description{
+    margin: 0 5px 0 5px;
+    width: 200px;
+    text-align: start;
+}
+#courses-content .title-course-preview{
+    margin: 0 5px 0 5px;
+    width: 100px;
+    text-align: start;
+}
+#courses-content .title-course-payment{
+    margin: 0 5px 0 5px;
+    width: 100px;
+    text-align: start;
+}
+#courses-content .title-course-action{
+    margin: 0 5px 0 35px;
+    width: 70px;
+    text-align: start;
+}
+#courses-content .item-course-name{
+    margin: 0 5px 0 5px;
+    width: 200px;
+    text-align: start;
+}
+#courses-content .item-course-description {
+    margin: 0 25px 0 5px;
+    width: 200px;
+    text-align: start;
+    cursor: pointer; /* Indicate hoverable text */
+    position: relative; /* Position the overlay relative to the description */
+}
+
+/* Style for the overlay */
+.tooltip-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: none; /* Hidden by default */
+    background-image: linear-gradient(90deg, rgba(0, 0, 0, 0.0)70%, rgba(0, 0, 0, 0.0)70%), url(/resources/dialogue.png);
+    background-position: center;
+    background-size: cover;
+    color: #fff;
+    padding: 15px 10px 10px 10px;
+    border-radius: 5px;
+    z-index: 10;
+    height: fit-content;
+    width: 300px; /* Adjust based on your need */
+    white-space: normal; /* Allow text to wrap */
+    text-overflow: ellipsis;
+    overflow: hidden;
+    font-size: 11px;
+    font-weight: lighter;
+    font-family: 'DM Sans';
+}
+
+/* Optional: to make sure overlay appears above everything */
+.item-course-description:hover .tooltip-overlay {
+    display: block;
+}
+/* Optional: to make sure overlay appears above everything */
+.item-module-description:hover .tooltip-overlay {
+    display: block;
+}
+#courses-content .item-course-view{
+    margin: 0 20px 0 10px;
+    width: 80px;
+    text-align: start;
+    border: 0.5px solid #F65730;
+    border-radius: 3px;
+    background-color: #c1c1c193;
+    display: flex;
+    justify-content: center;
+    cursor: pointer;
+    user-select: none;
+}
+
+#modules-content{
+    align-items: start;
+    justify-content: start;
+    justify-self: start;
+    height: 100%;
+    width: 45%;
+}
+
+#modules-content .field-item{
+    height: 90%;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding-top: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+#modules-content{
+    align-items: start;
+    justify-content: start;
+    justify-self: start;
+    height: 100%;
+    width: 85%;
+}
+#modules-content .title-module-name{
+    margin: 0 5px 0 5px;
+    width: 200px;
+    text-align: start;
+}
+#modules-content .title-module-description{
+    margin: 0 5px 0 5px;
+    width: 200px;
+    text-align: start;
+}
+#modules-content .title-module-preview{
+    margin: 0 5px 0 28px;
+    width: 100px;
+    text-align: start;
+}
+#modules-content .title-module-course{
+    margin: 0 10px 0 5px;
+    width: 100px;
+    text-align: start;
+}
+#modules-content .title-module-resource{
+    margin: 0 10px 0 50px;
+    width: 70px;
+    text-align: start;
+}
+#modules-content .title-module-action{
+    margin: 0 5px 0 10px;
+    width: 58px;
+    text-align: start;
+}
+#modules-content .title-resource-action{
+    margin: 0 5px 0 25px;
+    width: 58px;
+    text-align: start;
+}
+#modules-content .item-module-name{
+    margin: 0 5px 0 5px;
+    width: 200px;
+    text-align: start;
+}
+#modules-content .item-module-course{
+    margin: 0 5px 0 5px;
+    width: 150px;
+    text-align: start;
+}#modules-content .item-module-resource{
+    margin: 0 10px 0 10px;
+    width: 50px;
+    text-align: start;
+}
+#modules-content .item-module-description {
+    margin: 0 25px 0 5px;
+    width: 200px;
+    text-align: start;
+    cursor: pointer; /* Indicate hoverable text */
+    position: relative; /* Position the overlay relative to the description */
+}
+#modules-content .item-module-view{
+    margin: 0 20px 0 10px;
+    width: 80px;
+    text-align: start;
+    border: 0.5px solid #F65730;
+    border-radius: 3px;
+    background-color: #c1c1c193;
+    display: flex;
+    justify-content: center;
+    cursor: pointer;
+    user-select: none;
+}
+

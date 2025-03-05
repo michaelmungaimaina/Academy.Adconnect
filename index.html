@@ -393,8 +393,8 @@
                     </div>
                 </div>
                 <div id="course-c-c" class="v-layout">
-                    <div id="packages-content" class="v-layout">
-                        <div class="v-layout" >
+                    <div id="packages-content" class="v-layout hidden">
+                        <div class="v-layout">
                             <div id="package-header" class="h-layout">
                                 <div class="h-layout">
                                     <img src="/resources/search-icon.png" alt="" />
@@ -448,8 +448,146 @@
                             </div>
                         </div>
                     </div>
-                    <div id="courses-content" class="v-layout hidden"></div>
-                    <div id="modules-content" class="v-layout hidden"></div>
+                    <div id="courses-content" class="v-layout hidden">
+                        <div class="v-layout">
+                            <div id="package-header" class="h-layout">
+                                <div class="h-layout">
+                                    <img src="/resources/search-icon.png" alt="" />
+                                    <input id="courseSearchInput" type="text" placeholder="Search Course" />
+                                </div>
+                                <div class="h-layout" style="background-color: rgba(240, 248, 255, 0)">
+                                    <i id="btnCreateCourse" class="fa fa-plus-square" aria-hidden="true"></i>
+                                    <i onclick="refreshCoursesTable()" class="fa fa-refresh" aria-hidden="true"></i>
+                                </div>
+                            </div>
+                            <div class="h-layout field-bar">
+                                <p class="title-course-name">COURSE</p>
+                                <p class="title-course-description">DESCRIPTION</p>
+                                <p class="title-course-preview">PREVIEW VIDEO</p>
+                                <p class="title-course-payment">PAYMENT PLAN</p>
+                                <p class="title-course-action">ACTIONS</p>
+                            </div>
+                        </div>
+                        <div id="courseList" class="v-layout field-item">
+                            <!-- Control Data -->
+                            <div class="h-layout item-content">
+                                <p class="item-course-name">Digital Marketing</p>
+                                <p class="item-course-description">
+                                    3 Months3 Months3 Months3 Months3 Months3 Months3 Months3 Months3 Months3 Months3
+                                    Months3 Months3 Months3 Months3 Months3 Months
+                                </p>
+                                <div class="item-course-view">
+                                    <p>VIEW</p>
+                                </div>
+                                <div class="item-course-view">
+                                    <p>VIEW</p>
+                                </div>
+                                <i id="leadPreviewMailBtn" class="fa fa-pencil-square" aria-hidden="true"></i>
+                                <i id="leadDeleteBtn" class="fa fa-trash" aria-hidden="true"></i>
+                            </div>
+                            <div class="h-layout item-content">
+                                <p class="item-course-name">Digital Marketing</p>
+                                <p class="item-course-description">
+                                    3 Months3 Months3 Months3 Months3 Months3 Months3 Months3 Months3 Months3 Months3
+                                    Months3 Months3 Months3 Months3 Months3 Months
+                                </p>
+                                <div class="item-course-view">
+                                    <p>VIEW</p>
+                                </div>
+                                <div class="item-course-view">
+                                    <p>VIEW</p>
+                                </div>
+                                <i id="leadPreviewMailBtn" class="fa fa-pencil-square" aria-hidden="true"></i>
+                                <i id="leadDeleteBtn" class="fa fa-trash" aria-hidden="true"></i>
+                            </div>
+                            <div class="h-layout item-content">
+                                <p class="item-course-name">Digital Marketing</p>
+                                <p class="item-course-description">
+                                    weruytrewert
+                                </p>
+                                <div class="item-course-view">
+                                    <p>VIEW</p>
+                                </div>
+                                <div class="item-course-view">
+                                    <p>VIEW</p>
+                                </div>
+                                <i id="leadPreviewMailBtn" class="fa fa-pencil-square" aria-hidden="true"></i>
+                                <i id="leadDeleteBtn" class="fa fa-trash" aria-hidden="true"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="modules-content" class="v-layout">
+                        <div class="v-layout">
+                            <div id="package-header" class="h-layout">
+                                <div class="h-layout">
+                                    <img src="/resources/search-icon.png" alt="" />
+                                    <input id="moduleSearchInput" type="text" placeholder="Search Module" />
+                                </div>
+                                <div class="h-layout" style="background-color: rgba(240, 248, 255, 0)">
+                                    <i id="btnCreateCourse" class="fa fa-plus-square" aria-hidden="true"></i>
+                                    <i onclick="refreshModulesTable()" class="fa fa-refresh" aria-hidden="true"></i>
+                                </div>
+                            </div>
+                            <div class="h-layout field-bar">
+                                <p class="title-module-name">MODULE</p>
+                                <p class="title-module-description">ABOUT MODULE</p>
+                                <p class="title-module-preview">PREVIEW VIDEO</p>
+                                <p class="title-module-course">COURSE</p>
+                                <p class="title-module-resource">R-STATUS</p>
+                                <p class="title-module-action">ACTIONS</p>
+                            </div>
+                        </div>
+                        <div id="moduleList" class="v-layout field-item">
+                            <!-- Control Data -->
+                            <div class="h-layout item-content">
+                                <p class="item-module-name">Digital Marketing</p>
+                                <p class="item-module-description">
+                                    3 Months3 Months3 Months3 Months3 Months3 Months3 Months3 Months3 Months3 Months3
+                                    Months3 Months3 Months3 Months3 Months3 Months
+                                </p>
+                                <div class="item-module-view">
+                                    <p>VIEW</p>
+                                </div>
+                                <p class="item-module-course">Digital Marketing Courses</p>
+                                <p class="item-module-resource">TRUE</p>
+                                <i id="leadPreviewMailBtn" class="fa fa-pencil-square" aria-hidden="true"></i>
+                                <i id="leadDeleteBtn" class="fa fa-trash" aria-hidden="true"></i>
+                            </div>
+                        </div>
+                        <div class="v-layout">
+                            <div id="package-header" class="h-layout">
+                                <div class="h-layout">
+                                    <img src="/resources/search-icon.png" alt="" />
+                                    <input id="resourceSearchInput" type="text" placeholder="Search Resource" />
+                                </div>
+                                <div class="h-layout" style="background-color: rgba(240, 248, 255, 0)">
+                                    <i id="btnCreateResource" class="fa fa-plus-square" aria-hidden="true"></i>
+                                    <i onclick="refreshResourceTable()" class="fa fa-refresh" aria-hidden="true"></i>
+                                </div>
+                            </div>
+                            <div class="h-layout field-bar">
+                                <p class="title-module-name">TITLE</p>
+                                <p class="title-module-description">MODULE</p>
+                                <p class="title-module-preview">PREVIEW VIDEO</p>
+                                <p class="title-resource-action">ACTIONS</p>
+                            </div>
+                        </div>
+                        <div id="resourceList" class="v-layout field-item">
+                            <!-- Control Data -->
+                            <div class="h-layout item-content">
+                                <p class="item-module-name">Digital Marketing</p>
+                                <p class="item-module-description">
+                                    3 Months3 Months3 Months3 Months3 Months3 Months3 Months3 Months3 Months3 Months3
+                                    Months3 Months3 Months3 Months3 Months3 Months
+                                </p>
+                                <div class="item-module-view">
+                                    <p>VIEW</p>
+                                </div>
+                                <i id="leadPreviewMailBtn" class="fa fa-pencil-square" aria-hidden="true"></i>
+                                <i id="leadDeleteBtn" class="fa fa-trash" aria-hidden="true"></i>
+                            </div>
+                        </div>
+                    </div>
                     <div id="resources-content" class="v-layout hidden"></div>
                     <div id="clients-content" class="v-layout hidden"></div>
                     <div id="payments-content" class="v-layout hidden"></div>
@@ -817,6 +955,85 @@
         </div>
     </section>
 
+    <!-- New Course Registration Popup -->
+    <section id="courseRegisterPopup" class="background-tint-black" style="height: 0%">
+        <div id="btnClosePopup" onclick="closePopup()" class="btn_hover1" style="position: fixed">
+            <i class="fa-solid fa-xmark"></i>
+        </div>
+        <div class="appointment-layout outer-container">
+            <div class="h-layout" style="
+            justify-content: space-between;
+            width: 100%;
+            padding-right: 20px;
+          ">
+                <div class="slash-rect"></div>
+                <p id="popupHeaderTextCourse" class="header-text" style="font-size: 16px">
+                    Course Registration
+                </p>
+                <div class="slash-rect"></div>
+            </div>
+            <div class="v-layout">
+                <label for="input-title" style="
+              font-size: 13px;
+              font-family: 'DM Sans';
+              margin: 10px 0;
+              color: azure;
+            ">Course Title</label>
+                <input id="input-title" type="text"class="input-field" placeholder="Title Goes Here" style="width: 300px;">
+                <label for="input-description" style="
+              font-size: 13px;
+              font-family: 'DM Sans';
+              margin: 10px 0;
+              color: azure;
+            ">Course Description</label>
+                <textarea id="input-description" type="text" style="
+              height: 80px;
+              width: 300px;
+              max-width: 500px;
+              max-height: 250px;
+              visibility: visible;
+              text-align: start;
+              text-overflow: clip;
+              padding: 15px;
+              margin-top: 5px;
+            " class="input-field" placeholder="Course Description Goes Here">
+          </textarea>
+                <label for="input-preview-link" style="
+              font-size: 13px;
+              font-family: 'DM Sans';
+              margin: 10px 0;
+              color: azure;
+            ">Course Preview Video Link</label>
+                <input id="input-preview-link" type="text" style="
+              width: 300px;
+            " 
+            class="input-field" placeholder="https://www.youtube.com/watch?v=XyQ0zsK3X34">
+                <label for="input-course-plan" style="
+              font-size: 13px;
+              font-family: 'DM Sans';
+              margin: 10px 0;
+              color: azure;
+            ">Course Payment Plan</label>
+                <select id="input-course-plan" class="input-field" style="width: 300px;">
+                    <option value="" disabled selected>Select Package</option>
+                </select>
+                <button id="btnRegisterCourse" onclick="registerOrUpdateCourse()" style="
+              height: 30px;
+              visibility: visible;
+              margin: 10px 0;
+              color: azure;
+              background-color: coral;
+              border-radius: 5px;
+              font-size: 13px;
+              font-weight: bold;
+              font-family: 'DM Sans';
+              padding: 5px 30px;
+            ">
+                    SUBMIT
+                </button>
+            </div>
+        </div>
+    </section>
     <!-- Appointment Popup -->
     <section id="appointmentPopup" class="background-tint-black">
         <div id="btnClosePopup" onclick="closePopup()" class="btn_hover1" style="position: fixed">
