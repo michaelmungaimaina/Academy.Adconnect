@@ -1592,4 +1592,53 @@ button:hover{
     cursor: pointer;
     user-select: none;
 }
+#moduleRegistration .outer-container{
+    margin-top: 50px;
+    display: flex;
+    flex-direction: column;
+    background: linear-gradient(to left, #646464, #4D4C4B);
+    height: fit-content;
+    border: 1.5px solid #7D8489;
+    border-radius: 10px;
+    align-items: start;
+    padding: 5px 20px;
+}
+#moduleRegistration .outer-container .bordered-container{
+    display: flex;
+    flex-direction: column;
+    background: linear-gradient(to left, #646464, #4D4C4B);
+    height: fit-content;
+    border: 1.5px solid #7D8489;
+    border-radius: 10px;
+    align-items: start;
+    padding: 5px 20px;
+    margin-top: 10px;
+    margin-bottom: 30px;
+}
 
+#module-description{
+    max-height: 300px;
+    overflow-y: auto;
+    min-height: 70px;
+    min-width: 300px;
+    max-width: 300px;
+    padding: 10px;
+}
+#textHeaderModulePopup{
+    color: #fff5f2;
+    font-size: 15px;
+    font-weight: 500;
+    font-family: 'DM Sans';
+    width: fit-content;
+    margin: 10px 0;
+    text-align: center;
+}
+#btnSubmitModule{
+    width: 300px;
+    height: 25px;
+    margin-bottom: 10px;
+    background-color: #F65730;
+}
+#btnSubmitModule:hover{
+    background-color: #009a08;
+}

@@ -1143,6 +1143,34 @@ app.get('/api/resources/:id', (req, res) => {
     });
 });
 
+// Endpoint to check if a module ID is referenced in the resources table
+app.get('/api/resources/check-module/:id', (req, res) => {
+    const moduleId = req.params.id;
+
+    // Query to check if the module ID exists in the resources table
+    const query = `
+        SELECT EXISTS(
+            SELECT 1 
+            FROM resources 
+            WHERE module = ?
+        ) AS isReferenced;
+    `;
+
+    // Execute the query
+    db.query(query, [moduleId], (err, results) => {
+        if (err) {
+            console.error('Error executing query:', err);
+            return res.status(500).json({ error: 'Database error' });
+        }
+
+        // Extract the result (true or false)
+        const isReferenced = results[0].isReferenced === 1;
+
+        // Return the response
+        res.json({ isReferenced });
+    });
+});
+
 // Endpoint to get resources for all modules
 app.get('/api/resources', (req, res) => {
     const query = 'SELECT resources.*, modules.title AS mname FROM resources JOIN modules ON resources.module = modules.id';

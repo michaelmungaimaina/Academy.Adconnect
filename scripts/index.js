@@ -17,6 +17,8 @@ const inputUserPassword = document.getElementById('userPassword');
 const inputUserSearch = document.getElementById('searchUserInput');
 const inputLeadSearch = document.getElementById('searchLeadsInput');
 const inputPackageSearch = document.getElementById('packageSearchInput');
+const inputModuleSearch = document.getElementById('moduleSearchInput');
+const inputResourceSearch = document.getElementById('resourceSearchInput');
 const inputAppointmentSearch = document.getElementById('searchAppointmentInput');
 const inputApplicationSearch = document.getElementById('searchApplicationInput');
 const inputAppointmentEdit = document.getElementById('appointmentInput');
@@ -36,6 +38,21 @@ const inputSilverPeriod = document.getElementById('silver-period');
 const inputSilverAmount = document.getElementById('silver-amount');
 const inputGoldPeriod = document.getElementById('gold-period');
 const inputGoldAmount = document.getElementById('gold-amount');
+const inputModuleTitle = document.getElementById('module-title');
+const inputModuleDescription = document.getElementById('module-title');
+const inputModuleVideo = document.getElementById('module-video-link');
+const inputModuleCourse = document.getElementById('module-course');
+const inputModuleResource = document.getElementById('module-resource');
+const inputResourceTitle = document.getElementById('resource-title');
+const inputResourceLink = document.getElementById('resource-link');
+const inputResourceFile = document.getElementById('input-resource');
+
+const addMoreResource = document.getElementById('addMoreResources');
+const btnPreviousResource = document.getElementById('prevResource');
+const btnNextResource = document.getElementById('nextResource');
+const textResourceCounter = document.getElementById('counterDisplay');
+
+const inputResourceContainer = document.getElementById('resourceContainer');
 
 const inputCourseTitle = document.getElementById('input-title');
 const inputCourseDescription = document.getElementById('input-description');
@@ -46,6 +63,8 @@ const textUsernameSession = document.getElementById('usernameSession');
 const textUserPopupHeader = document.getElementById('popupHeaderText');
 const textUserPopupHeaderAppt = document.getElementById('popupHeaderTextAppt');
 const textAboutPopupHeader = document.getElementById('popupHeaderTextAbout');
+const textModulePopupHeader = document.getElementById('textHeaderModulePopup');
+const textResourcePopupHeader = document.getElementById('textHeaderResourcePopup');
 const textCoursePopupHeader = document.getElementById('popupHeaderTextCourse');
 const textPackagePopupHeader = document.getElementById('popupPackageHeaderText');
 const textApplicationPopupHeader = document.getElementById('popupHeaderTextApplication');
@@ -72,6 +91,7 @@ const btnRegisterAbout = document.getElementById('btnRegisterAbout');
 const btnDownload = document.getElementById('downloadButton');
 const btnCreatePackage = document.getElementById('btnCreatePackage');
 const btnCreateCourse = document.getElementById('btnCreateCourse');
+const btnCreateModule = document.getElementById('btnSubmitModule');
 
 const sectionUserManagement = document.getElementById('userContentMgt');
 const sectionVideoManagement = document.getElementById('videoContentMgt');
@@ -112,6 +132,7 @@ const popupUserMgt = document.getElementById('userPopUp');
 const popupAppointment = document.getElementById('appointmentPopup');
 const popupAbout = document.getElementById('aboutPopup');
 const popupCourseRegister = document.getElementById('courseRegisterPopup');
+const popupModuleRegister = document.getElementById('moduleRegistration');
 const popupLoader = document.getElementById('loaderPopup');
 const popupPackage = document.getElementById('package-popup');
 const aboutRegisterPopup = document.getElementById('aboutRegisterPopup');
@@ -156,6 +177,7 @@ let courseList = [];
 let modulesList = [];
 let resourcesList = [];
 let appointmentList = [];
+let resourceToRegisterList = [];
 let aboutList = [];
 let videoList = [];
 let applicationList = [];
@@ -666,6 +688,14 @@ function refreshPackagesTable(){
     packagesList = [];
     fetchPackages();
 }
+function refreshModulesTable(){
+    modulesList = [];
+    fetchModules();
+}
+function refreshResourceTable(){
+    resourcesList = [];
+    fetchResources();
+}
 
 function refreshAbout(){
     aboutList = [];
@@ -906,12 +936,36 @@ async function fetchModules() {
         modulesList = await response.json();
         console.log('Fetch Modules Data:', modulesList);
 
+        populateCourseSelect(modulesList);
+
         populateModules();
     } catch (error) {
         displayMessage('error-display', 'Failed to fetch Modules. Please try again');
         console.error('Error fetching Modules Data:', error);
     }
 
+    try {
+        const response = await fetch(`${DOMAIN}resources`);
+
+        if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+
+        resourcesList = await response.json();
+        console.log('Fetch Resources Data:', resourcesList);
+
+        populateResources();
+    } catch (error) {
+        displayMessage('error-display', 'Failed to fetch Resources. Please try again');
+        console.error('Error fetching Resources Data:', error);
+    } finally{
+        hideLoader();
+    }
+}
+
+async function fetchResources() {
+    showLoader();
+    textLoaderText.textContent = 'Fetching Resources. Please Wait!';
     try {
         const response = await fetch(`${DOMAIN}resources`);
 
@@ -944,6 +998,22 @@ function populateSelect(packages) {
         opt.value = pkg.id;
         opt.textContent = pkg.package_name;
         inputCoursePlan.appendChild(opt);
+    });
+}
+
+// Function to populate the select element with courses
+function populateCourseSelect(courses) {
+    inputModuleCourse.innerHTML = ''; // Clear existing content
+    const option = document.createElement('option');
+    option.value = '';
+    option.textContent = 'Select a Course';
+    option.disabled = true;
+    inputModuleCourse.appendChild(option);
+    courses.forEach(pkg => {
+        const opt = document.createElement('option');
+        opt.value = pkg.id;
+        opt.textContent = pkg.cname;
+        inputModuleCourse.appendChild(opt);
     });
 }
 
@@ -1242,7 +1312,7 @@ function populateResources() {
         listItem.innerHTML = `
         <p class="item-module-name">${item.title}</p>
         <p class="item-module-description">${item.mname}</p>
-        <div class="item-module-view" onclick="previewCourse(${index})"><p>VIEW</p></div>
+        <div class="item-module-view" onclick="previewResource(${index})"><p>VIEW</p></div>
         <i id="leadPreviewMailBtn" onclick="resourceUpdate(${index})" class="fa fa-pencil-square" aria-hidden="true"></i>
         <i id="leadDeleteBtn" onclick="deleteResource(${index})" class="fa fa-trash" aria-hidden="true"></i>
       `;
@@ -1250,7 +1320,7 @@ function populateResources() {
     });
 
     // Get all the descriptions with the class .item-course-description
-    const descriptionElements = document.querySelectorAll(".item-course-description");
+    const descriptionElements = document.querySelectorAll(".item-module-description");
 
     // Apply the tooltip to each description element (including duplicates)
     descriptionElements.forEach(function (descriptionElement) {
@@ -1274,7 +1344,7 @@ function populateModules() {
         <p class="item-module-name">${item.title}</p>
         <p class="item-module-description">${item.about}</p>
         <div class="item-module-view" onclick="previewModule(${index})"><p>VIEW</p></div>
-        <p class="item-module-course">${item.pname}</p>
+        <p class="item-module-course">${item.cname}</p>
         <p class="item-module-resource">${item.resource}</p>
         <i id="leadPreviewMailBtn" onclick="moduleUpdate(${index})" class="fa fa-pencil-square" aria-hidden="true"></i>
         <i id="leadDeleteBtn" onclick="deleteModule(${index})" class="fa fa-trash" aria-hidden="true"></i>
@@ -1347,6 +1417,112 @@ function updatePackages(index){
 
 
     openPackagePopup();
+}
+
+function moduleUpdate(index){
+    isUpdateMode = true;    
+
+    textModulePopupHeader.textContent = `Update Module`;
+    inputResourceContainer.style.display = 'flex';
+
+    inputModuleTitle.value = modulesList[index].title;
+    inputModuleDescription.value = modulesList[index].about;
+    inputModuleCourse.value = modulesList[index].cname;
+    inputModuleResource.value = modulesList[index].resource;
+    inputModuleVideo.value = modulesList[index].video;
+
+    // Set the active option based on the current modules's pname
+    const options = inputModuleCourse.options;
+    for (let i = 0; i < options.length; i++) {
+        if (options[i].value === modulesList[index].cname) {
+            options[i].selected = true;
+            break;
+        }
+    }
+
+    if (isModuleReferenced(modulesList[index].id)) {
+        textResourcePopupHeader.textContent = `Update Resource`;
+
+        getResources(modulesList[index].id);
+
+        inputResourceTitle.value = resourceToRegisterList[0].title;
+        inputResourceLink.value = resourceToRegisterList[0].video;
+        inputResourceFile.value = resourceToRegisterList[0].video;
+
+        textResourceCounter = resourceToRegisterList.length;
+
+        btnPreviousResource.addEventListener('click', moveToPreviousResource());
+        btnPreviousResource.addEventListener('click', moveToNextResource());
+    } else {
+        displayMessage('success', 'No modules to update for this module unless you register new resources.');
+        textResourcePopupHeader.textContent = `Register Resource`;
+    }
+    openModulePopup();
+}
+
+let control = 0;
+function moveToPreviousResource(){
+    if (control === 0){
+        displayMessage('success', 'You are at the beginning of the resource list content. Please press next button to view other resources.')
+    } else {
+        inputResourceTitle.value = resourceToRegisterList[control].title;
+        inputResourceLink.value = resourceToRegisterList[control].video;
+        inputResourceFile.value = resourceToRegisterList[control].video;
+
+        control--;
+    }
+}
+
+function moveToNextResource(){
+    if (control === 0){
+        displayMessage('success', 'You are at the beginning of the resource list content. Please press previous button to view other resources.')
+    } else {
+        inputResourceTitle.value = resourceToRegisterList[control].title;
+        inputResourceLink.value = resourceToRegisterList[control].video;
+        inputResourceFile.value = resourceToRegisterList[control].video;
+
+        control++;
+    }
+}
+async function isModuleReferenced(moduleId){
+    try {
+        // Call the API
+        const response = await fetch(`${DOMAIN}resources/check-module/${moduleId}`);
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+
+        const data = await response.json();
+
+        // Display the result
+        if (data.isReferenced) {
+            return true;
+        } else {
+            return false;
+        }
+    } catch (error) {
+        console.error('Error:', error);
+        displayMessage('error-display', 'An error occurred while checking the module ID.');
+    }
+
+    return false;
+}
+
+async function getResources(moduleId){
+    try {
+        // Call the API
+        const response = await fetch(`${DOMAIN}resources/${moduleId}`);
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+
+        resourceToRegisterList = await response.json();
+        console.log('Resources:', resourceToRegisterList);
+
+    } catch (error) {
+        console.error('Error:', error);
+        displayMessage('error-display', 'An error occurred while fetching resources.');
+    }
 }
 
 function courseUpdate(index){
@@ -2205,6 +2381,24 @@ btnCreateCourse.addEventListener('click', function (event) {
 function previewCourse(index){
     event.preventDefault();
     const videoUrl = courseList[index].preview;
+    const videoId = videoUrl.split('v=')[1];
+    const embedUrl = `https://www.youtube.com/embed/${videoId}`;
+    aboutVideoViewArea.src = embedUrl;
+    console.log('Course Preview:', embedUrl);
+    openVideoPreviewPopup()
+}
+function previewModule(index){
+    event.preventDefault();
+    const videoUrl = modulesList[index].video;
+    const videoId = videoUrl.split('v=')[1];
+    const embedUrl = `https://www.youtube.com/embed/${videoId}`;
+    aboutVideoViewArea.src = embedUrl;
+    console.log('Module Preview:', embedUrl);
+    openVideoPreviewPopup()
+}
+function previewCourses(index){
+    event.preventDefault();
+    const videoUrl = modulesList[index].video;
     const videoId = videoUrl.split('v=')[1];
     const embedUrl = `https://www.youtube.com/embed/${videoId}`;
     aboutVideoViewArea.src = embedUrl;
@@ -3080,6 +3274,39 @@ inputPackageSearch.addEventListener('input', function (event) {
 });
 
 /**
+ * Filter Resources
+ */
+inputResourceSearch.addEventListener('input', function (event) {
+    const filter = event.target.value.toLowerCase();
+    const rows = document.querySelectorAll('#resourceList .item-content');
+
+    rows.forEach(row => {
+        const text = row.textContent.toLowerCase();
+        if (text.includes(filter)) {
+            row.style.display = '';
+        } else {
+            row.style.display = 'none';
+        }
+    });
+});
+/**
+ * Filter Modules
+ */
+inputModuleSearch.addEventListener('input', function (event) {
+    const filter = event.target.value.toLowerCase();
+    const rows = document.querySelectorAll('#moduleList .item-content');
+
+    rows.forEach(row => {
+        const text = row.textContent.toLowerCase();
+        if (text.includes(filter)) {
+            row.style.display = '';
+        } else {
+            row.style.display = 'none';
+        }
+    });
+});
+
+/**
  * Filter leads
  */
 inputAppointmentSearch.addEventListener('input', function (event) {
@@ -3142,6 +3369,9 @@ function openApplicationPopup(){
 function openPackagePopup() {
     popupPackage.style.height = '100%';
 }
+function openModulePopup() {
+    popupModuleRegister.style.height = '100%';
+}
 function openCoursePopup() {
     popupCourseRegister.style.height = '100%';
 }
@@ -3159,6 +3389,7 @@ function closePopup(){
     videoRegisterPopup.style.height ='0%';
     applicationPopup.style.height ='0%';
     popupPackage.style.height ='0%';
+    popupModuleRegister.style.height ='0%';
 
     isUpdate = false;
     isUpdateMode = false;

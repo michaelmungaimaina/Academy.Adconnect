@@ -562,7 +562,7 @@
                                 </div>
                                 <div class="h-layout" style="background-color: rgba(240, 248, 255, 0)">
                                     <i id="btnCreateResource" class="fa fa-plus-square" aria-hidden="true"></i>
-                                    <i onclick="refreshResourceTable()" class="fa fa-refresh" aria-hidden="true"></i>
+                                    <i onclick="refreshResourcesTable()" class="fa fa-refresh" aria-hidden="true"></i>
                                 </div>
                             </div>
                             <div class="h-layout field-bar">
@@ -1034,6 +1034,93 @@
             </div>
         </div>
     </section>
+
+    <!----------------------------------- Module Registration ---------------------------------------->
+  <section id="moduleRegistration" class="background-tint-black" style="height: 100%;">
+    <div id="btnClosePopup" onclick="closePopup()" class="btn_hover1" style="position: fixed">
+        <i class="fa-solid fa-xmark"></i>
+    </div>
+    <div class="outer-container">
+      <div class="h-layout">
+        <div class="slash-rect"></div>
+        <p class="header-text">Manage Modules</p>
+      </div>
+      <img class="elipsis" src="/resources/elipsis-line.png" alt="elipsis-line" />
+      <div class="bordered-container" style="flex-direction: row;">
+        <div class="v-layout">
+        <p id="textHeaderModulePopup">Register Module</p>
+        <img src="/resources/base-line.png" alt="">
+        <form class="form-module" style="margin-bottom: 20px;">
+            <div>
+              <label class="label" for="module-title">Module Title</label>
+              <img src="/resources/starr.png" alt="">
+            </div>
+            <input id="module-title" type="text" class="input-field" placeholder="Mindset for Success in Digital Marketing"style="width: 300px;">
+            <div>
+              <label class="label" for="module-description">About Module (Description)</label>
+              <img src="/resources/starr.png" alt="">
+            </div>
+            <textarea id="module-description" type="text" class="input-field" placeholder="Enter about the module here." style="width: 300px;"></textarea>
+            <div>
+              <label class="label" for="module-video-link">Module Video Link</label>
+              <img src="/resources/starr.png" alt="">
+            </div>
+            <input id="module-video-link" type="text" class="input-field" placeholder="https://www.youtube.com/watch?v=XyQ0zsK3X34" style="width: 300px;">
+          <div>
+            <label class="label" for="module-course">Module Course</label>
+            <img src="/resources/starr.png" alt="">
+          </div>
+          <select id="module-course" class="input-field" style="width: 300px;">
+            <option value="" disabled selected>Select Course</option>
+        </select>
+          <div>
+            <label class="label" for="module-resource">Resource Status</label>
+            <img src="/resources/starr.png" alt="">
+          </div>
+          <select id="module-resource" class="input-field" style="width: 300px;">
+            <option value="" disabled selected>Select Resource Status</option>
+            <option value="TRUE">TRUE</option>
+            <option value="FALSE">FALSE</option>
+        </select>
+        </form> <!-- End of Module Form -->
+        </div>
+        <div id="resourceContainer" class="v-layout" style="margin: 60px 30px 15px; display: flex;">
+        <div class="bordered-container">
+            <div class="h-layout" style="width: 100%; align-items: center; justify-content: space-between;">
+                <div class="v-layout">
+            <p id="textHeaderResourcePopup">Register Resources</p>
+            <img src="/resources/base-line.png" alt="">
+            </div>
+            <i id="addMoreResources" class="fa fa-plus-square" aria-hidden="true"></i>
+            </div>
+            <form class="v-layout" style="display: flex;">
+                <div>
+                  <label class="label" for="resource-title">Resource Title</label>
+                  <img src="/resources/starr.png" alt="">
+                </div>
+                <input id="resource-title" type="text" class="input-field" placeholder="Mindset for Success in Digital Marketing"style="width: 255px; margin-bottom: 9px;">
+                <div>
+                    <label class="label" for="resource-link">Resource Document Link</label>
+                    <img src="/resources/starr.png" alt="">
+                </div>
+                <input id="resource-link" type="text" class="input-field" placeholder="https://www.youtube.com/watch?v=XyQ0zsK3X34"style="width: 255px; margin-bottom: 9px; margin-top: 9px;">
+                <label for="input-resource" class="label">Select Resource</label>
+                <input type="file" id="input-resource" accept=".pdf,.docx,.odf,.docs,.csv,.xls,.png,.jpeg" required="true">
+            </form>
+            <div class="h-layout" style="justify-content: center; gap: 40px; width: 100%; align-items: center; margin-top: 20px;">
+                <i id="prevResource" class="fa fa-chevron-circle-right" style="rotate: 180deg;" aria-hidden="true"></i>
+                <i id="nextResource" class="fa fa-chevron-circle-right" aria-hidden="true"></i>
+                <p style="color: aliceblue; font-size: 11px; font-family: 'DM Sans';">Counter</p>
+                <p id="counterDisplay" style="color: white; font-size: 11px; font-family: 'DM Sans'; margin-bottom: 20px;">0</p>
+            </div>
+        </div>
+        </div>
+      </div>
+      <div class="h-layout" style="justify-content: center; width: 100%;">
+        <button id="btnSubmitModule" class="button">SUBMIT</button>
+    </div>
+    </div>
+  </section>
     <!-- Appointment Popup -->
     <section id="appointmentPopup" class="background-tint-black">
         <div id="btnClosePopup" onclick="closePopup()" class="btn_hover1" style="position: fixed">
