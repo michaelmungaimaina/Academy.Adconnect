@@ -939,7 +939,7 @@ app.get('/api/modules', (req, res) => {
 // Endpoint to get all modules for a single course
 app.get('/api/modules/:id', (req, res) => {
     const id = req.params.id;
-    const query = 'SELECT modules.*, courses.title AS cname FROM modules JOIN courses ON modules.course = courses.id WHERE modules.course = ?';
+    const query = 'SELECT modules.*, courses.title AS ctitle FROM modules JOIN courses ON modules.course = courses.id WHERE modules.id = ?';
 
     db.query(query, [id], (err, module) => {
         if (err) {
@@ -1188,10 +1188,10 @@ app.get('/api/resources', (req, res) => {
 // Endpoint to update a resource
 app.put('/api/resources/:id', upload.single('resource'), (req, res) => {
     const { id } = req.params;
-    const { title, module } = req.body;
+    const { title, module, resource } = req.body;
 
     // Validate that at least one field is provided for update
-    if (!title && !module && !req.file) {
+    if (!title && !module && !req.file && !resource) {
         return res.status(400).json({ error: 'At least one field is required for update.' });
     }
 
@@ -1207,7 +1207,7 @@ app.put('/api/resources/:id', upload.single('resource'), (req, res) => {
             return res.status(404).json({ error: 'Resource not found.' });
         }
 
-        resource = rows[0];
+        const existingResource = rows[0];
 
         // Prepare the update query and values
         let updateQuery = 'UPDATE resources SET ';
@@ -1223,24 +1223,32 @@ app.put('/api/resources/:id', upload.single('resource'), (req, res) => {
             updateValues.push(module);
         }
 
-        // Handle file upload (resource)
+        let fileStatus = 'File not Changed'; // Default status
         let resourceUrl = null;
+
+        // Handle file upload (resource)
         if (req.file) {
             const serverUrl = `${req.protocol}://${req.get('host')}`;
             const firstSection = `${serverUrl}/api/`;
             const secondSection = `uploads/${req.file.filename}`;
             resourceUrl = `${firstSection}${secondSection}`;
-            fieldsToUpdate.push('resource = ?');
-            updateValues.push(secondSection);
 
-            // Delete the existing resource file if it exists
-            if (resource.resource) {
-                const existingResourcePath = path.join(__dirname, 'uploads', path.basename(resource.resource));
-                fs.unlink(existingResourcePath, (err) => {
-                    if (err) {
-                        console.error('Failed to delete existing resource file:', err);
-                    }
-                });
+            // Check if the incoming file path is different from the stored file path
+            if (existingResource.resource !== secondSection) {
+                fieldsToUpdate.push('resource = ?');
+                updateValues.push(secondSection);
+
+                fileStatus = 'File Changed'; // Update status
+
+                // Delete the existing resource file if it exists
+                if (existingResource.resource) {
+                    const existingResourcePath = path.join(__dirname, 'uploads', path.basename(existingResource.resource));
+                    fs.unlink(existingResourcePath, (err) => {
+                        if (err) {
+                            console.error('Failed to delete existing resource file:', err);
+                        }
+                    });
+                }
             }
         }
 
@@ -1272,6 +1280,7 @@ app.put('/api/resources/:id', upload.single('resource'), (req, res) => {
                 res.status(200).json({
                     message: 'Resource updated successfully',
                     resource: updatedResource,
+                    fileStatus: fileStatus, // Include the file status in the response
                 });
             });
         });

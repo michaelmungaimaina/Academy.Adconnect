@@ -524,7 +524,7 @@
                                     <input id="moduleSearchInput" type="text" placeholder="Search Module" />
                                 </div>
                                 <div class="h-layout" style="background-color: rgba(240, 248, 255, 0)">
-                                    <i id="btnCreateCourse" class="fa fa-plus-square" aria-hidden="true"></i>
+                                    <i id="btnCreateModule" class="fa fa-plus-square" aria-hidden="true"></i>
                                     <i onclick="refreshModulesTable()" class="fa fa-refresh" aria-hidden="true"></i>
                                 </div>
                             </div>
@@ -1036,7 +1036,7 @@
     </section>
 
     <!----------------------------------- Module Registration ---------------------------------------->
-  <section id="moduleRegistration" class="background-tint-black" style="height: 100%;">
+  <section id="moduleRegistration" class="background-tint-black" style="height: 0%;">
     <div id="btnClosePopup" onclick="closePopup()" class="btn_hover1" style="position: fixed">
         <i class="fa-solid fa-xmark"></i>
     </div>
@@ -1088,7 +1088,7 @@
         <div class="bordered-container">
             <div class="h-layout" style="width: 100%; align-items: center; justify-content: space-between;">
                 <div class="v-layout">
-            <p id="textHeaderResourcePopup">Register Resources</p>
+            <p id="textHeaderResourcePopup" style="color: white; font-size: 14px; font-family: 'DM Sans'; font-weight: 500;">Register Resources</p>
             <img src="/resources/base-line.png" alt="">
             </div>
             <i id="addMoreResources" class="fa fa-plus-square" aria-hidden="true"></i>

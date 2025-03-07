@@ -39,7 +39,7 @@ const inputSilverAmount = document.getElementById('silver-amount');
 const inputGoldPeriod = document.getElementById('gold-period');
 const inputGoldAmount = document.getElementById('gold-amount');
 const inputModuleTitle = document.getElementById('module-title');
-const inputModuleDescription = document.getElementById('module-title');
+const inputModuleDescription = document.getElementById('module-description');
 const inputModuleVideo = document.getElementById('module-video-link');
 const inputModuleCourse = document.getElementById('module-course');
 const inputModuleResource = document.getElementById('module-resource');
@@ -83,6 +83,7 @@ const loader = document.getElementById('loader');
 
 const btnClosePopup = document.getElementById('btnClosePopup');
 const btnSubmitUserData = document.getElementById('submitButton');
+const btnSubmitModule = document.getElementById('btnSubmitModule');
 const btnSubmitPackageData = document.getElementById('submitNewPackage');
 const btnCreateUser = document.getElementById('createUserButton');
 const btnReschedule = document.getElementById('btnReschedule');
@@ -91,7 +92,7 @@ const btnRegisterAbout = document.getElementById('btnRegisterAbout');
 const btnDownload = document.getElementById('downloadButton');
 const btnCreatePackage = document.getElementById('btnCreatePackage');
 const btnCreateCourse = document.getElementById('btnCreateCourse');
-const btnCreateModule = document.getElementById('btnSubmitModule');
+const btnCreateModule = document.getElementById('btnCreateModule');
 
 const sectionUserManagement = document.getElementById('userContentMgt');
 const sectionVideoManagement = document.getElementById('videoContentMgt');
@@ -655,6 +656,8 @@ document.addEventListener("DOMContentLoaded", () => {
     document.getElementById('subscription-mgt').addEventListener('click', subscriptionManagement);
 
     btnSubmitUserData.addEventListener('click', userRegistrationOrUpdate);
+    btnSubmitModule.addEventListener('click', registerOrUpdateModule);
+    addMoreResource.addEventListener('click', addResource);
     btnSubmitPackageData.addEventListener('click', packageRegistrationOrUpdate);
     btnDownload.addEventListener('click', downloadExcel);
 });
@@ -915,6 +918,8 @@ async function fetchCourses() {
         courseList = await response.json();
         console.log('Fetch Courses Data:', courseList);
 
+        populateCourseSelect(courseList);
+
         populateCourses();
     } catch (error) {
         displayMessage('error-display', 'Failed to fetch Courses. Please try again');
@@ -925,6 +930,7 @@ async function fetchCourses() {
 }
 async function fetchModules() {
     showLoader();
+    fetchCourses();
     textLoaderText.textContent = 'Fetching Modules. Please Wait!';
     try {
         const response = await fetch(`${DOMAIN}modules`);
@@ -935,8 +941,6 @@ async function fetchModules() {
 
         modulesList = await response.json();
         console.log('Fetch Modules Data:', modulesList);
-
-        populateCourseSelect(modulesList);
 
         populateModules();
     } catch (error) {
@@ -1012,7 +1016,7 @@ function populateCourseSelect(courses) {
     courses.forEach(pkg => {
         const opt = document.createElement('option');
         opt.value = pkg.id;
-        opt.textContent = pkg.cname;
+        opt.textContent = pkg.title;
         inputModuleCourse.appendChild(opt);
     });
 }
@@ -1419,11 +1423,12 @@ function updatePackages(index){
     openPackagePopup();
 }
 
-function moduleUpdate(index){
-    isUpdateMode = true;    
+async function moduleUpdate(index){
+    packageIndex = index;
+    isUpdateMode = true;
+    addMoreResource.style.cssText = 'pointer-events: none; opacity: 0.3;';
 
     textModulePopupHeader.textContent = `Update Module`;
-    inputResourceContainer.style.display = 'flex';
 
     inputModuleTitle.value = modulesList[index].title;
     inputModuleDescription.value = modulesList[index].about;
@@ -1431,7 +1436,7 @@ function moduleUpdate(index){
     inputModuleResource.value = modulesList[index].resource;
     inputModuleVideo.value = modulesList[index].video;
 
-    // Set the active option based on the current modules's pname
+    // Set the active option based on the current modules's cname
     const options = inputModuleCourse.options;
     for (let i = 0; i < options.length; i++) {
         if (options[i].value === modulesList[index].cname) {
@@ -1442,45 +1447,67 @@ function moduleUpdate(index){
 
     if (isModuleReferenced(modulesList[index].id)) {
         textResourcePopupHeader.textContent = `Update Resource`;
-
-        getResources(modulesList[index].id);
-
-        inputResourceTitle.value = resourceToRegisterList[0].title;
-        inputResourceLink.value = resourceToRegisterList[0].video;
-        inputResourceFile.value = resourceToRegisterList[0].video;
-
-        textResourceCounter = resourceToRegisterList.length;
-
-        btnPreviousResource.addEventListener('click', moveToPreviousResource());
-        btnPreviousResource.addEventListener('click', moveToNextResource());
+        inputResourceContainer.style.display = 'flex';
+    
+        // Wait for getResources to complete
+        await getResources(modulesList[index].id);
+    
+        // Ensure resourceToRegisterList is populated and has at least one element
+        if (resourceToRegisterList.length > 0) {
+            inputResourceTitle.value = resourceToRegisterList[0].title;
+            inputResourceLink.value = resourceToRegisterList[0].resource;
+            //inputResourceFile.value = resourceToRegisterList[0].resource;
+    
+            textResourceCounter.textContent = resourceToRegisterList.length;
+    
+            btnPreviousResource.addEventListener('click', moveToPreviousResource);
+            btnNextResource.addEventListener('click', moveToNextResource);
+        } else {
+            console.error("No resources found for this module.");
+            displayMessage('error-display', 'No resources found for this module.');
+        }
     } else {
-        displayMessage('success', 'No modules to update for this module unless you register new resources.');
+    displayMessage('success', 'No modules to update for this module unless you\'d like to register new resources. \nPress the + button to add.');
         textResourcePopupHeader.textContent = `Register Resource`;
+        addMoreResource.style.cssText = 'pointer-events: auto; opacity: 1;';
     }
     openModulePopup();
 }
 
 let control = 0;
 function moveToPreviousResource(){
-    if (control === 0){
-        displayMessage('success', 'You are at the beginning of the resource list content. Please press next button to view other resources.')
+    if (control === 0) {
+        displayMessage('error-display', 'You are at the beginning of the resource list content. Please press next button to view other resources.');
     } else {
         inputResourceTitle.value = resourceToRegisterList[control].title;
-        inputResourceLink.value = resourceToRegisterList[control].video;
-        inputResourceFile.value = resourceToRegisterList[control].video;
+        inputResourceLink.value = resourceToRegisterList[control].resource;
+        //inputResourceFile.value = resourceToRegisterList[control].resource;
 
         control--;
     }
 }
 
+let newFile = null;
+inputResourceFile.addEventListener('change', (event) => {
+    const file = event.target.files[0];
+    if (file) {
+        newFile = file; // Store the new file
+        console.log('New file selected:', file.name);
+        resourceToRegisterList[control].resource = newFile;
+        console.log(`File to Update: ${resourceToRegisterList[control].resource}`)
+        newFile = null;
+    } else {
+        newFile = null; // No new file selected
+    }
+});
+
 function moveToNextResource(){
-    if (control === 0){
-        displayMessage('success', 'You are at the beginning of the resource list content. Please press previous button to view other resources.')
+    if (control === resourceToRegisterList.length - 1) {
+        displayMessage('error-display', 'You are at the end of the resource list content. Please press previous button to view other resources.');
     } else {
         inputResourceTitle.value = resourceToRegisterList[control].title;
-        inputResourceLink.value = resourceToRegisterList[control].video;
-        inputResourceFile.value = resourceToRegisterList[control].video;
-
+        inputResourceLink.value = resourceToRegisterList[control].resource;
+        //inputResourceFile.value = resourceToRegisterList[control].resource;
         control++;
     }
 }
@@ -2378,6 +2405,14 @@ btnCreateCourse.addEventListener('click', function (event) {
     openCoursePopup();
 });
 
+btnCreateModule.addEventListener('click', function (event) {
+    textModulePopupHeader.textContent = 'Create New Module';
+    resourceToRegisterList = [];
+    isUpdateMode = false;
+    packageIndex = null; //not an update
+    openModulePopup();
+});
+
 function previewCourse(index){
     event.preventDefault();
     const videoUrl = courseList[index].preview;
@@ -2404,6 +2439,281 @@ function previewCourses(index){
     aboutVideoViewArea.src = embedUrl;
     console.log('Course Preview:', embedUrl);
     openVideoPreviewPopup()
+}
+
+function registerOrUpdateModule(){
+    event.preventDefault();
+
+    if (isUpdateMode) {
+        // Use the stored `packageIndex` for the update
+        updateModule(packageIndex);
+    } else {
+        registerModule(); // Handle creating a new module
+    }
+    resourceToRegisterList = [];
+}
+
+async function updateModule(index){
+    if (!validateModuleInput()){
+        return;
+    }
+
+    if (!inputModuleCourse.value) {
+        console.error('Error: Course is empty or not assigned.');
+    } else {
+        console.log('Input Plan Name:', inputModuleCourse.value); // Log the inputPlanName value
+    }
+    // Find the matching package in the courseList
+    const selectedCourse = courseList.find(pkg => pkg.id === inputModuleCourse.value);
+
+    if (!selectedCourse) {
+        displayMessage('error-display', 'Selected Course not found!');
+        return;
+    }
+
+    const module = {
+        title: inputModuleTitle.value,
+        about: inputModuleDescription.value,
+        video: inputModuleCourse.value,
+        resource: inputModuleResource.value,
+        course: selectedCourse.id,
+    };
+
+    try {
+        textLoaderText.textContent = 'Updating Module. Please Wait!';
+        showLoader();
+        const response = await fetch(`${DOMAIN}modules/${modulesList[index].id}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(module),
+        });
+
+        if (response.ok) {
+            const result = await response.json();
+            errorMessages = 'Module updated successfully!';
+            displayMessage('success', errorMessages);
+            console.log('Module created:', result.module);
+            await fetchModules();
+            console.log(inputModuleResource.value)
+            if (inputModuleResource.value == 'TRUE'){
+                console.log('Condition met: inputModuleResource.value is TRUE');
+
+                // Update resources if the list is not empty
+                console.log('resourceToRegisterList:', resourceToRegisterList);
+                // update resources if the list is not empty
+                if (resourceToRegisterList.length > 0) {
+                    console.log('Resources found in resourceToRegisterList');
+                    for (const resource of resourceToRegisterList) {
+                        console.log('Updating resource:', resource);
+                        await updateResource(resource); // Update each resource
+                    }
+                } else {
+                    console.log('No resources found in resourceToRegisterList');
+                }
+            }
+
+            fetchResources();
+            clearInput();
+            closePopup();
+            isUpdateMode = false;
+            resourceToRegisterList = [];
+           
+        } else {
+            const errorData = await response.json();
+            displayMessage('error-display', `Error: ${errorData.error}`);
+        }
+    } catch (error) {
+        console.error('Error:', error);
+        errorMessages = 'An error occurred while creating the Module.';
+        displayMessage('error-display', errorMessages);
+    } finally{
+        hideLoader();
+        textLoaderText.textContent = '';
+        isUpdateMode = false;
+    }
+}
+
+async function updateResource(resource) {
+    const resourceData = {
+        id: resource.id,
+        title: resource.title,
+        resource: resource.resource,
+        module: resource.moduleId,
+    };
+
+    try {
+        const response = await fetch(`${DOMAIN}resources/${resource.id}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(resourceData),
+        });
+
+        if (response.ok) {
+            const result = await response.json();
+            console.log('Resource updated:', result);
+            displayMessage('success', `Resource ${resource.title} updated successfully!`);
+        } else {
+            const errorData = await response.json();
+            console.error('Error updating resource:', errorData.error);
+            displayMessage('error-display', `Error: ${errorData.error}`);
+        }
+    } catch (error) {
+        console.error('Error:', error);
+        displayMessage('error-display', 'An error occurred while updating the resource.');
+    }
+}
+
+
+async function  registerModule(){
+    if (!validateModuleInput()){
+        return;
+    }
+
+    if (!inputModuleCourse.value) {
+        console.error('Error: Course is empty or not assigned.');
+    } else {
+        console.log('Input Plan Name:', inputModuleCourse.value); // Log the inputPlanName value
+    }
+
+    const module = {
+        title: inputModuleTitle.value,
+        about: inputModuleDescription.value,
+        video: inputModuleCourse.value,
+        resource: inputModuleResource.value,
+        course: inputModuleCourse.value,
+    };
+
+    try {
+        textLoaderText.textContent = 'Registering Module. Please Wait!';
+        showLoader();
+        const response = await fetch(`${DOMAIN}modules`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(module),
+        });
+
+        if (response.ok) {
+            const result = await response.json();
+            errorMessages = 'Module created successfully!';
+            displayMessage('success', errorMessages);
+            console.log('Module created:', result.module);
+            fetchModules();
+
+            if (inputModuleResource.value == 'TRUE'){
+                // Register resources if the list is not empty
+                if (resourceToRegisterList.length > 0) {
+                    for (const resource of resourceToRegisterList) {
+                        await registerResource(result.module.id,resource); // register each resource
+                    }
+                }
+            } 
+
+            fetchResources();
+            clearInput();
+            isUpdateMode = false;
+            resourceToRegisterList = [];
+        } else {
+            const errorData = await response.json();
+            displayMessage('error-display', `Error: ${errorData.error}`);
+        }
+    } catch (error) {
+        console.error('Error:', error);
+        errorMessages = 'An error occurred while creating the Module.';
+        displayMessage('error-display', errorMessages);
+    } finally{
+        hideLoader();
+        textLoaderText.textContent = '';
+        isUpdateMode = false;
+    }
+}
+
+
+async function registerResource(moduleId,resource) {
+    const resourceData = {
+        title: resource.title,
+        resource: resource.resource,
+        module: moduleId,
+    };
+
+    try {
+        const response = await fetch(`${DOMAIN}resources`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(resourceData),
+        });
+
+        if (response.ok) {
+            const result = await response.json();
+            console.log('Resource updated:', result);
+            displayMessage('success', `Resource ${resource.title} added successfully!`);
+        } else {
+            const errorData = await response.json();
+            console.error('Error updating resource:', errorData.error);
+            displayMessage('error-display', `Error: ${errorData.error}`);
+        }
+    } catch (error) {
+        console.error('Error:', error);
+        displayMessage('error-display', 'An error occurred while updating the resource.');
+    }
+}
+
+function addResource(){
+    control = 0;
+    if (inputResourceTitle.value === '') {
+        displayMessage('error-display', 'Resource Title is required!');
+        inputResourceTitle.focus();
+        return;
+    }
+    if (!(inputResourceFile.files[0].size > 0)) {
+        displayMessage('error-display', 'Please Select Resource File!');
+        inputResourceFile.focus();
+        return;
+    }
+
+    resourceToRegisterList.push({
+        title: inputResourceTitle.value,
+        resource: inputResourceFile.value
+    });
+
+    // Clear input fields
+    inputResourceTitle.value = '';
+    inputResourceLink.value = '';
+    inputResourceFile.value = '';
+}
+
+function validateModuleInput(){
+    if (inputModuleTitle.value === '') {
+        displayMessage('error-display', 'Module Title is required!');
+        inputModuleTitle.focus();
+        return false;
+    }
+
+    if (inputModuleDescription.value === '') {
+        displayMessage('error-display', 'Module Description is required!');
+        inputModuleDescription.focus();
+        return false;
+    }
+
+    if (inputModuleCourse.value === '') {
+        displayMessage('error-display', 'Module Course is required!');
+        inputModuleCourse.focus();
+        return false;
+    }
+    if (inputModuleResource.value === '') {
+        displayMessage('error-display', 'Module Video Link is required!');
+        inputModuleResource.focus();
+        return false;
+    }
+
+    return true;
 }
 
 function registerOrUpdateCourse(){
@@ -3220,6 +3530,16 @@ function clearInput(){
     inputCourseTitle.value = '';
     inputCourseDescription.value = '';
     inputCoursePreviewLink.value = '';
+
+    inputModuleCourse.value = '';
+    inputModuleResource.value = '';
+    inputModuleVideo.value = '';
+    inputModuleDescription.value = '';
+    inputModuleTitle.value = '';
+
+    inputResourceTitle.value = '';
+    inputResourceFile.value = '';
+    inputResourceLink.value = '';
 }
 
 /**
@@ -3371,6 +3691,15 @@ function openPackagePopup() {
 }
 function openModulePopup() {
     popupModuleRegister.style.height = '100%';
+    inputModuleResource.addEventListener('change', (event) => {
+        const selectedValue = inputModuleResource.value; // Get the selected value
+    
+        if (selectedValue === 'TRUE') {
+            inputResourceContainer.style.display = 'flex'; // Show the container
+        } else {
+            inputResourceContainer.style.display = 'none'; // Hide the container
+        }
+    });
 }
 function openCoursePopup() {
     popupCourseRegister.style.height = '100%';
