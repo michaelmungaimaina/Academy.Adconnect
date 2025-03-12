@@ -1332,6 +1332,19 @@ function populateResources() {
     });
 }
 
+function previewResource(index){
+    // Construct the URL to the document
+    const documentUrl = `${DOMAIN}${resourcesList[index].resource}`;
+
+    // Set the iframe source to the document URL
+    const documentFrame = document.getElementById('documentFrame');
+    documentFrame.src = documentUrl;
+
+    // Open the modal
+    const modal = new bootstrap.Modal(document.getElementById('documentModal'));
+    modal.show();
+}
+
 function populateModules() {
     const dataList = document.getElementById('moduleList');
     dataList.innerHTML = ''; // Clear existing content
@@ -1432,14 +1445,14 @@ async function moduleUpdate(index){
 
     inputModuleTitle.value = modulesList[index].title;
     inputModuleDescription.value = modulesList[index].about;
-    inputModuleCourse.value = modulesList[index].cname;
+    //inputModuleCourse.value = modulesList[index].cname;
     inputModuleResource.value = modulesList[index].resource;
     inputModuleVideo.value = modulesList[index].video;
 
     // Set the active option based on the current modules's cname
     const options = inputModuleCourse.options;
     for (let i = 0; i < options.length; i++) {
-        if (options[i].value === modulesList[index].cname) {
+        if (options[i].value === modulesList[index].ctitle) {
             options[i].selected = true;
             break;
         }
@@ -1493,8 +1506,9 @@ inputResourceFile.addEventListener('change', (event) => {
     if (file) {
         newFile = file; // Store the new file
         console.log('New file selected:', file.name);
+        displayMessage('success', `You have selected ${file.name}`);
         resourceToRegisterList[control].resource = newFile;
-        console.log(`File to Update: ${resourceToRegisterList[control].resource}`)
+        console.log(`File to Update: ${resourceToRegisterList}`)
         newFile = null;
     } else {
         newFile = null; // No new file selected
@@ -2450,7 +2464,6 @@ function registerOrUpdateModule(){
     } else {
         registerModule(); // Handle creating a new module
     }
-    resourceToRegisterList = [];
 }
 
 async function updateModule(index){
@@ -2495,15 +2508,14 @@ async function updateModule(index){
             errorMessages = 'Module updated successfully!';
             displayMessage('success', errorMessages);
             console.log('Module created:', result.module);
-            await fetchModules();
             console.log(inputModuleResource.value)
             if (inputModuleResource.value == 'TRUE'){
                 console.log('Condition met: inputModuleResource.value is TRUE');
-
-                // Update resources if the list is not empty
-                console.log('resourceToRegisterList:', resourceToRegisterList);
+                console.log('ResourceToUpdate Length: ', resourceToRegisterList.length);
                 // update resources if the list is not empty
                 if (resourceToRegisterList.length > 0) {
+                    // Update resources if the list is not empty
+                    console.log('resourceToRegisterList:', resourceToRegisterList);
                     console.log('Resources found in resourceToRegisterList');
                     for (const resource of resourceToRegisterList) {
                         console.log('Updating resource:', resource);
@@ -2513,13 +2525,10 @@ async function updateModule(index){
                     console.log('No resources found in resourceToRegisterList');
                 }
             }
-
+            await fetchModules();
             fetchResources();
             clearInput();
             closePopup();
-            isUpdateMode = false;
-            resourceToRegisterList = [];
-           
         } else {
             const errorData = await response.json();
             displayMessage('error-display', `Error: ${errorData.error}`);
@@ -3540,6 +3549,9 @@ function clearInput(){
     inputResourceTitle.value = '';
     inputResourceFile.value = '';
     inputResourceLink.value = '';
+
+    resourceToRegisterList = [];
+    isUpdateMode = false;
 }
 
 /**
