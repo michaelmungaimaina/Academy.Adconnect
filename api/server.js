@@ -1233,10 +1233,13 @@ app.put('/api/resources/:id', upload.single('resource'), (req, res) => {
             const secondSection = `uploads/${req.file.filename}`;
             resourceUrl = `${firstSection}${secondSection}`;
 
-            // Check if the incoming file path is different from the stored file path
-            if (existingResource.resource !== secondSection) {
-                fieldsToUpdate.push('resource = ?');
-                updateValues.push(secondSection);
+        // Check if the incoming resource is an object or a string
+        // Check if the incoming file path is different from the stored file path
+        if (existingResource.resource !== secondSection) {
+            //if (typeof resource === 'object' && resource !== null) {
+            // If the resource is an object, the file has changed
+            fieldsToUpdate.push('resource = ?');
+            updateValues.push(secondSection);
 
                 fileStatus = 'File Changed'; // Update status
 

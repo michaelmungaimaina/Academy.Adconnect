@@ -1492,11 +1492,10 @@ function moveToPreviousResource(){
     if (control === 0) {
         displayMessage('error-display', 'You are at the beginning of the resource list content. Please press next button to view other resources.');
     } else {
+        control--;
         inputResourceTitle.value = resourceToRegisterList[control].title;
         inputResourceLink.value = resourceToRegisterList[control].resource;
         //inputResourceFile.value = resourceToRegisterList[control].resource;
-
-        control--;
     }
 }
 
@@ -1507,9 +1506,10 @@ inputResourceFile.addEventListener('change', (event) => {
         newFile = file; // Store the new file
         console.log('New file selected:', file.name);
         displayMessage('success', `You have selected ${file.name}`);
-        resourceToRegisterList[control].resource = newFile;
+        updateResource(resourceToRegisterList[control].id, control, newFile);
+        //resourceToRegisterList[control].resource = newFile;
         console.log(`File to Update: ${resourceToRegisterList}`)
-        newFile = null;
+        
     } else {
         newFile = null; // No new file selected
     }
@@ -1519,12 +1519,13 @@ function moveToNextResource(){
     if (control === resourceToRegisterList.length - 1) {
         displayMessage('error-display', 'You are at the end of the resource list content. Please press previous button to view other resources.');
     } else {
+        control++;
         inputResourceTitle.value = resourceToRegisterList[control].title;
         inputResourceLink.value = resourceToRegisterList[control].resource;
         //inputResourceFile.value = resourceToRegisterList[control].resource;
-        control++;
     }
 }
+
 async function isModuleReferenced(moduleId){
     try {
         // Call the API
@@ -2564,7 +2565,39 @@ async function updateResource(resource) {
         if (response.ok) {
             const result = await response.json();
             console.log('Resource updated:', result);
-            displayMessage('success', `Resource ${resource.title} updated successfully!`);
+            displayMessage('success', `Resource ${resource.title} updated successfully! \n${result.message}\n${result.fileStatus}`);
+        } else {
+            const errorData = await response.json();
+            console.error('Error updating resource:', errorData.error);
+            displayMessage('error-display', `Error: ${errorData.error}`);
+        }
+    } catch (error) {
+        console.error('Error:', error);
+        displayMessage('error-display', 'An error occurred while updating the resource.');
+    }
+}
+
+async function updateResource(id, index, file) {
+    const resourceData = {
+        resource: file
+    };
+
+    displayMessage('success', `Updating file in the backgroung!`);
+    try {
+        const response = await fetch(`${DOMAIN}resources/${id}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(resourceData),
+        });
+
+        if (response.ok) {
+            const result = await response.json();
+            console.log('Resource updated:', result);
+            displayMessage('success', `Resource file updated successfully!`);
+            resourceToRegisterList[index].resource = `${result.resource.resource}`;
+            newFile = null;
         } else {
             const errorData = await response.json();
             console.error('Error updating resource:', errorData.error);

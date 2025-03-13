@@ -1670,10 +1670,11 @@ button:hover{
 
 .modal-content {
     background-color: #666565;
-    margin: 10% auto;
+    margin: 20px auto;
     padding: 20px;
     border: 1px solid #888;
     width: 80%;
+    height: 60%;
     max-width: 800px;
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
@@ -1713,4 +1714,19 @@ button:hover{
 
 .close:hover {
     color: #000;
+}
+
+#documentModal button{
+    background-color: #d84520;
+    cursor: pointer;
+}
+#documentModal button:hover{
+    background-color: #ff613a;
+    cursor: pointer;
+}
+
+#documentModal h5{
+    color: #d0d0d0;
+    font-family: 'DM Sans';
+    font-size: 17px;
 }
