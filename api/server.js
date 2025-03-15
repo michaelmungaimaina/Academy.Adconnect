@@ -1188,10 +1188,10 @@ app.get('/api/resources', (req, res) => {
 // Endpoint to update a resource
 app.put('/api/resources/:id', upload.single('resource'), (req, res) => {
     const { id } = req.params;
-    const { title, module, resource } = req.body;
+    const { title, module} = req.body;
 
     // Validate that at least one field is provided for update
-    if (!title && !module && !req.file && !resource) {
+    if (!title && !module && !req.file) {
         return res.status(400).json({ error: 'At least one field is required for update.' });
     }
 

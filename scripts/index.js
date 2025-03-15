@@ -620,7 +620,13 @@ function applyTooltipToElement(descriptionElement, id) {
             tooltipOverlay.style.display = "none";
         });
     }
+
+    const resourceForm = document.getElementById('resource-form');
 document.addEventListener("DOMContentLoaded", () => {
+    
+    resourceForm.addEventListener('submit', (event) => {
+        event.preventDefault(); // Prevent the form from submitting
+    });
     // Example usage
     //displayMessage('error-display', 'This is an error message. style="color: rgb(236, 2, 2); display: flex; margin: 65px 10px 2px 10px; background-color: #fc7b7b; text-align: center; font-size: 11px; padding: 4px 15px; border-radius: 5px; position: fixed; margin-top: 65px;');
     //displayMessage('success', 'This is a success message. style="color: rgb(236, 2, 2); display: flex; margin: 65px 10px 2px 10px; background-color: #fc7b7b; text-align: center; font-size: 11px; padding: 4px 15px; border-radius: 5px; position: fixed; margin-top: 65px;');
@@ -1332,18 +1338,47 @@ function populateResources() {
     });
 }
 
-function previewResource(index){
-    // Construct the URL to the document
+async function previewResource(index) {
     const documentUrl = `${DOMAIN}${resourcesList[index].resource}`;
-
-    // Set the iframe source to the document URL
     const documentFrame = document.getElementById('documentFrame');
-    documentFrame.src = documentUrl;
+    const excelViewer = document.getElementById('excelViewer');
+
+    // Hide the iframe and show the Excel viewer
+    documentFrame.style.display = 'none';
+    excelViewer.style.display = 'block';
+
+    // Check if the file is an Excel file
+    if (documentUrl.endsWith('.xlsx')) {
+        try {
+            // Fetch the Excel file
+            const response = await fetch(documentUrl);
+            const arrayBuffer = await response.arrayBuffer();
+
+            // Parse the Excel file
+            const workbook = XLSX.read(arrayBuffer, { type: 'array' });
+
+            // Convert the first sheet to HTML
+            const sheet = workbook.Sheets[workbook.SheetNames[0]];
+            const html = XLSX.utils.sheet_to_html(sheet);
+
+            // Display the HTML in the Excel viewer
+            excelViewer.innerHTML = html;
+        } catch (error) {
+            console.error('Error loading Excel file:', error);
+            excelViewer.innerHTML = '<p>Failed to load Excel file.</p>';
+        }
+    } else {
+        // For non-Excel files, use the iframe
+        documentFrame.style.display = 'block';
+        excelViewer.style.display = 'none';
+        documentFrame.src = documentUrl;
+    }
 
     // Open the modal
     const modal = new bootstrap.Modal(document.getElementById('documentModal'));
     modal.show();
 }
+
 
 function populateModules() {
     const dataList = document.getElementById('moduleList');
@@ -1500,20 +1535,62 @@ function moveToPreviousResource(){
 }
 
 let newFile = null;
-inputResourceFile.addEventListener('change', (event) => {
+inputResourceFile.addEventListener('change', async (event) => {
+    event.preventDefault();
     const file = event.target.files[0];
     if (file) {
         newFile = file; // Store the new file
         console.log('New file selected:', file.name);
         displayMessage('success', `You have selected ${file.name}`);
-        updateResource(resourceToRegisterList[control].id, control, newFile);
-        //resourceToRegisterList[control].resource = newFile;
-        console.log(`File to Update: ${resourceToRegisterList}`)
-        
+
+        // Upload the new file and get the updated file path
+        const filePath = await uploadFile(newFile);
+
+        if (filePath) {
+            // Update the resource with the new file path
+            resourceToRegisterList[control].resource = filePath;
+            //await updateResource(resource); // Update the resource on the server
+        }
     } else {
         newFile = null; // No new file selected
     }
 });
+
+// Function to upload the file and return the file path
+async function uploadFile(file) {
+    const formData = new FormData();
+    formData.append('resource', file); // Append the file to FormData
+    console.log('Row to update:', resourceToRegisterList[control].id);
+
+    try {
+        const response = await fetch(`${DOMAIN}resources/${resourceToRegisterList[control].id}`, {
+            method: 'PUT',
+            body: formData, // Send the file as FormData
+        });
+
+        if (!response.ok) {
+            const errorData = await response.json();
+            console.error('Error uploading file:', errorData.error);
+            displayMessage('error-display', `Error: ${errorData.error}`);
+            return null;
+        }
+
+        const result = await response.json();
+        if (!result.resource || !result.resource.resource) {
+            console.error('Invalid server response:', result);
+            displayMessage('error-display', 'Invalid server response.');
+            return null;
+        }
+
+        console.log('File updated successfully:', result.resource.resource);
+        displayMessage('success', `File updated successfully!`);
+        return result.resource.resource; // Return the file path from the server
+    } catch (error) {
+        console.error('Error:', error);
+        displayMessage('error-display', 'An error occurred while uploading the file.');
+        return null;
+    }
+}
 
 function moveToNextResource(){
     if (control === resourceToRegisterList.length - 1) {
