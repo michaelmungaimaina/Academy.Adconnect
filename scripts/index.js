@@ -46,6 +46,7 @@ const inputModuleResource = document.getElementById('module-resource');
 const inputResourceTitle = document.getElementById('resource-title');
 const inputResourceLink = document.getElementById('resource-link');
 const inputResourceFile = document.getElementById('input-resource');
+const inputResourceModule = document.getElementById('resource-module');
 
 const addMoreResource = document.getElementById('addMoreResources');
 const btnPreviousResource = document.getElementById('prevResource');
@@ -84,6 +85,7 @@ const loader = document.getElementById('loader');
 const btnClosePopup = document.getElementById('btnClosePopup');
 const btnSubmitUserData = document.getElementById('submitButton');
 const btnSubmitModule = document.getElementById('btnSubmitModule');
+const btnSubmitResource = document.getElementById('btnSubmitResource');
 const btnSubmitPackageData = document.getElementById('submitNewPackage');
 const btnCreateUser = document.getElementById('createUserButton');
 const btnReschedule = document.getElementById('btnReschedule');
@@ -134,6 +136,7 @@ const popupAppointment = document.getElementById('appointmentPopup');
 const popupAbout = document.getElementById('aboutPopup');
 const popupCourseRegister = document.getElementById('courseRegisterPopup');
 const popupModuleRegister = document.getElementById('moduleRegistration');
+const popupResourceRegister = document.getElementById('resourceRegistration');
 const popupLoader = document.getElementById('loaderPopup');
 const popupPackage = document.getElementById('package-popup');
 const aboutRegisterPopup = document.getElementById('aboutRegisterPopup');
@@ -624,9 +627,10 @@ function applyTooltipToElement(descriptionElement, id) {
     const resourceForm = document.getElementById('resource-form');
 document.addEventListener("DOMContentLoaded", () => {
     
-    resourceForm.addEventListener('submit', (event) => {
+    /*resourceForm.addEventListener('submit', (event) => {
         event.preventDefault(); // Prevent the form from submitting
-    });
+        console.log("Form submission prevented");
+    });*/
     // Example usage
     //displayMessage('error-display', 'This is an error message. style="color: rgb(236, 2, 2); display: flex; margin: 65px 10px 2px 10px; background-color: #fc7b7b; text-align: center; font-size: 11px; padding: 4px 15px; border-radius: 5px; position: fixed; margin-top: 65px;');
     //displayMessage('success', 'This is a success message. style="color: rgb(236, 2, 2); display: flex; margin: 65px 10px 2px 10px; background-color: #fc7b7b; text-align: center; font-size: 11px; padding: 4px 15px; border-radius: 5px; position: fixed; margin-top: 65px;');
@@ -662,6 +666,7 @@ document.addEventListener("DOMContentLoaded", () => {
     document.getElementById('subscription-mgt').addEventListener('click', subscriptionManagement);
 
     btnSubmitUserData.addEventListener('click', userRegistrationOrUpdate);
+    btnSubmitResource.addEventListener('click', registerOrUpdateResource);
     btnSubmitModule.addEventListener('click', registerOrUpdateModule);
     addMoreResource.addEventListener('click', addResource);
     btnSubmitPackageData.addEventListener('click', packageRegistrationOrUpdate);
@@ -948,6 +953,7 @@ async function fetchModules() {
         modulesList = await response.json();
         console.log('Fetch Modules Data:', modulesList);
 
+        populateModuleSelect(modulesList);
         populateModules();
     } catch (error) {
         displayMessage('error-display', 'Failed to fetch Modules. Please try again');
@@ -1024,6 +1030,22 @@ function populateCourseSelect(courses) {
         opt.value = pkg.id;
         opt.textContent = pkg.title;
         inputModuleCourse.appendChild(opt);
+    });
+}
+
+// Function to populate the select element with modules
+function populateModuleSelect(courses) {
+    inputResourceModule.innerHTML = ''; // Clear existing content
+    const option = document.createElement('option');
+    option.value = '';
+    option.textContent = 'Select a Module';
+    option.disabled = true;
+    inputResourceModule.appendChild(option);
+    courses.forEach(pkg => {
+        const opt = document.createElement('option');
+        opt.value = pkg.id;
+        opt.textContent = pkg.title;
+        inputResourceModule.appendChild(opt);
     });
 }
 
@@ -1522,6 +1544,26 @@ async function moduleUpdate(index){
     openModulePopup();
 }
 
+async function moduleUpdate(index){
+    packageIndex = index;
+    isUpdateMode = true;
+
+    textResourcePopupHeader.textContent = `Update Resource`;
+
+    inputResourceTitle.value = resourcesList[index].title;
+
+    // Set the active option based on the current modules's cname
+    const options = inputModuleResource.options;
+    for (let i = 0; i < options.length; i++) {
+        if (options[i].value === resourcesList[index].mname) {
+            options[i].selected = true;
+            break;
+        }
+    }
+
+    openResourcePopup();
+}
+
 let control = 0;
 function moveToPreviousResource(){
     if (control === 0) {
@@ -1533,28 +1575,6 @@ function moveToPreviousResource(){
         //inputResourceFile.value = resourceToRegisterList[control].resource;
     }
 }
-
-let newFile = null;
-inputResourceFile.addEventListener('change', async (event) => {
-    event.preventDefault();
-    const file = event.target.files[0];
-    if (file) {
-        newFile = file; // Store the new file
-        console.log('New file selected:', file.name);
-        displayMessage('success', `You have selected ${file.name}`);
-
-        // Upload the new file and get the updated file path
-        const filePath = await uploadFile(newFile);
-
-        if (filePath) {
-            // Update the resource with the new file path
-            resourceToRegisterList[control].resource = filePath;
-            //await updateResource(resource); // Update the resource on the server
-        }
-    } else {
-        newFile = null; // No new file selected
-    }
-});
 
 // Function to upload the file and return the file path
 async function uploadFile(file) {
@@ -1572,23 +1592,28 @@ async function uploadFile(file) {
             const errorData = await response.json();
             console.error('Error uploading file:', errorData.error);
             displayMessage('error-display', `Error: ${errorData.error}`);
-            return null;
+            return;
         }
 
         const result = await response.json();
+
+        // Check if the response contains the expected file path
         if (!result.resource || !result.resource.resource) {
             console.error('Invalid server response:', result);
             displayMessage('error-display', 'Invalid server response.');
-            return null;
+            return;
         }
 
         console.log('File updated successfully:', result.resource.resource);
-        displayMessage('success', `File updated successfully!`);
-        return result.resource.resource; // Return the file path from the server
+        displayMessage('success', `File updated successfully: ${result.resource.resource}`);
+
+        resourceToRegisterList[control].resource = filePath;
+        // Return the file path from the server
+        //return result.resource.resource;
     } catch (error) {
         console.error('Error:', error);
         displayMessage('error-display', 'An error occurred while uploading the file.');
-        return null;
+        //return null;
     }
 }
 
@@ -2533,6 +2558,142 @@ function previewCourses(index){
     openVideoPreviewPopup()
 }
 
+function registerOrUpdateResource(){
+    event.preventDefault();
+
+    if (isUpdateMode) {
+        // Use the stored `packageIndex` for the update
+        updateResource(packageIndex);
+    } else {
+        registerResource(); // Handle creating a new module
+    }
+}
+
+let isChanged = false;
+inputModuleResource.addEventListener('change', (event) => {
+   isChanged = true;
+});
+
+async function updateModule(index){
+    if (!validateResourceInput()){
+        return;
+    }
+
+    if (!inputResourceModule.value) {
+        console.error('Error: Module is empty or not assigned.');
+    } else {
+        console.log('Input Module Name:', inputResourceModule.value); // Log the inputPlanName value
+    }
+    // Find the matching package in the courseList
+    const selectedModule = courseList.find(pkg => pkg.id === inputResourceModule.value);
+
+    if (!selectedModule) {
+        displayMessage('error-display', 'Selected Course not found!');
+        return;
+    }
+
+    let resource = [];
+    if (isChanged) {
+        resource = {
+            title: inputResourceTitle.value,
+            resource: inputModuleResource.files[0],
+            module: selectedModule.id,
+        };
+    } else {
+        resource = {
+            title: inputResourceTitle.value,
+            module: selectedModule.id,
+        };
+    }
+
+    try {
+        textLoaderText.textContent = 'Updating Resource. Please Wait!';
+        showLoader();
+        const response = await fetch(`${DOMAIN}resources/${resourcesList[index].id}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(resource),
+        });
+
+        if (response.ok) {
+            const result = await response.json();
+            errorMessages = 'Resource updated successfully!';
+            displayMessage('success', errorMessages);
+            console.log('Resource created:', result.module);
+            console.log(inputResourceModule.value)
+            
+            await fetchResources();
+            clearInput();
+            closePopup();
+        } else {
+            const errorData = await response.json();
+            displayMessage('error-display', `Error: ${errorData.error}`);
+        }
+    } catch (error) {
+        console.error('Error:', error);
+        errorMessages = 'An error occurred while updating the resources.';
+        displayMessage('error-display', errorMessages);
+    } finally{
+        hideLoader();
+        textLoaderText.textContent = '';
+        isUpdateMode = false;
+    }
+}
+
+async function  registerResource(){
+    if (!validateResourceInput()){
+        return;
+    }
+
+    if (!inputResourceModule.value) {
+        console.error('Error: Module is empty or not assigned.');
+    } else {
+        console.log('Input Module Name:', inputResourceModule.value); // Log the inputPlanName value
+    }
+
+    const resource = {
+        title: inputResourceTitle.value,
+        resource: inputModuleResource.files[0],
+        module: selectedModule.id,
+    };
+
+    try {
+        textLoaderText.textContent = 'Registering Resource. Please Wait!';
+        showLoader();
+        const response = await fetch(`${DOMAIN}resources`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(resource),
+        });
+
+        if (response.ok) {
+            const result = await response.json();
+            errorMessages = 'Resource created successfully!';
+            displayMessage('success', errorMessages);
+            console.log('Resources created:', result.resource);
+
+            fetchResources();
+            clearInput();
+            isUpdateMode = false;
+        } else {
+            const errorData = await response.json();
+            displayMessage('error-display', `Error: ${errorData.error}`);
+        }
+    } catch (error) {
+        console.error('Error:', error);
+        errorMessages = 'An error occurred while creating the Resource.';
+        displayMessage('error-display', errorMessages);
+    } finally{
+        hideLoader();
+        textLoaderText.textContent = '';
+        isUpdateMode = false;
+    }
+}
+
 function registerOrUpdateModule(){
     event.preventDefault();
 
@@ -2587,22 +2748,7 @@ async function updateModule(index){
             displayMessage('success', errorMessages);
             console.log('Module created:', result.module);
             console.log(inputModuleResource.value)
-            if (inputModuleResource.value == 'TRUE'){
-                console.log('Condition met: inputModuleResource.value is TRUE');
-                console.log('ResourceToUpdate Length: ', resourceToRegisterList.length);
-                // update resources if the list is not empty
-                if (resourceToRegisterList.length > 0) {
-                    // Update resources if the list is not empty
-                    console.log('resourceToRegisterList:', resourceToRegisterList);
-                    console.log('Resources found in resourceToRegisterList');
-                    for (const resource of resourceToRegisterList) {
-                        console.log('Updating resource:', resource);
-                        await updateResource(resource); // Update each resource
-                    }
-                } else {
-                    console.log('No resources found in resourceToRegisterList');
-                }
-            }
+            
             await fetchModules();
             fetchResources();
             clearInput();

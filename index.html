@@ -1098,7 +1098,7 @@
             </div>
             <i id="addMoreResources" class="fa fa-plus-square" aria-hidden="true"></i>
             </div>
-            <form id="resource-form" class="v-layout" style="display: flex;">
+            <div id="resource-form" class="v-layout" style="display: flex;">
                 <div>
                   <label class="label" for="resource-title">Resource Title</label>
                   <img src="/resources/starr.png" alt="">
@@ -1109,9 +1109,9 @@
                     <img src="/resources/starr.png" alt="">
                 </div>
                 <input id="resource-link" type="text" class="input-field" placeholder="https://www.youtube.com/watch?v=XyQ0zsK3X34"style="width: 255px; margin-bottom: 9px; margin-top: 9px;">
-                <label for="input-resource" class="label">Select Resource</label>
-                <input type="file" id="input-resource" accept=".pdf,.docx,.odf,.docs,.csv,.xls,.png,.jpeg" required="true">
-            </form>
+                <!--label for="input-resource" class="label">Select Resource</label>
+                <input type="file" id="input-resource" accept=".pdf,.docx,.odf,.docs,.csv,.xls,.png,.jpeg" required="true"-->
+            </div>
             <div class="h-layout" style="justify-content: center; gap: 40px; width: 100%; align-items: center; margin-top: 20px;">
                 <i id="prevResource" class="fa fa-chevron-circle-right" style="rotate: 180deg;" aria-hidden="true"></i>
                 <i id="nextResource" class="fa fa-chevron-circle-right" aria-hidden="true"></i>
@@ -1126,6 +1126,53 @@
     </div>
     </div>
   </section>
+
+    <!-- Resource Registration Popup -->
+    <section id="resourceRegistration" class="background-tint-black" style="height: 100%;">
+        <div id="btnClosePopup" onclick="closePopup()" class="btn_hover1" style="position: fixed">
+            <i class="fa-solid fa-xmark"></i>
+        </div>
+        <div class="outer-container">
+          <div class="h-layout">
+            <div class="slash-rect"></div>
+            <p class="header-text">Manage Resources</p>
+          </div>
+          <img class="elipsis" src="/resources/elipsis-line.png" alt="elipsis-line" />
+          <div class="bordered-container" style="flex-direction: row;">
+            <div id="resourceContainer" class="v-layout" style="margin: 60px 30px 15px; display: flex;">
+            <div class="bordered-container">
+                <div class="h-layout" style="width: 100%; align-items: center; justify-content: space-between;">
+                    <div class="v-layout">
+                <p id="textHeaderResourcePopup" style="color: white; font-size: 14px; font-family: 'DM Sans'; font-weight: 500;">Register Resources</p>
+                <img src="/resources/base-line.png" alt="">
+                </div>
+                <i id="addMoreResources" class="fa fa-plus-square" style="visibility: collapse;" aria-hidden="true"></i>
+                </div>
+                <div id="resource-form" class="v-layout" style="display: flex; padding-bottom: 20px;">
+                    <div>
+                      <label class="label" for="resource-title">Resource Title</label>
+                      <img src="/resources/starr.png" alt="">
+                    </div>
+                    <input id="resource-title" type="text" class="input-field" style="width: 300px;" placeholder="Mindset for Success in Digital Marketing"style="width: 255px; margin-bottom: 9px;">
+                    <div>
+                        <label class="label" for="resource-module">Resource Module</label>
+                        <img src="/resources/starr.png" alt="">
+                    </div>
+                    <select id="resource-module" class="input-field" style="width: 300px;">
+                        <option value="" disabled selected>Select Resource File</option>
+                    </select>
+                    <label for="input-resource" style="margin-top: 10px;"  class="label">Select Resource</label>
+                    <input type="file" id="input-resource" accept=".pdf,.docx,.odf,.docs,.csv,.xls,.png,.jpeg" required="true">
+                </div>
+            </div>
+            </div>
+          </div>
+          <div class="h-layout" style="justify-content: center; width: 100%;">
+            <button id="btnSubmitResource" class="button">SUBMIT</button>
+        </div>
+        </div>
+      </section>
+
     <!-- Appointment Popup -->
     <section id="appointmentPopup" class="background-tint-black">
         <div id="btnClosePopup" onclick="closePopup()" class="btn_hover1" style="position: fixed">
